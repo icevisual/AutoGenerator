@@ -12,12 +12,12 @@
             <li class="active">General Elements</li>
           </ol>
         </section>
-
         <!-- Main content -->
         <section class="content">
           <div class="row">
             <!-- left column -->
-            <div class="col-md-6">
+            <div class="col-md-6" id="formDemo">
+              <common-form :formConfig="formConfig" caption="设备绑定" @btnclick="btnclickHd" ></common-form>
               <!-- general form elements -->
               <div class="box box-primary">
                 <div class="box-header with-border">
@@ -31,13 +31,24 @@
                       <input type="email" class="form-control"  placeholder="Enter email">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputPassword1">Password</label>
-                      <input type="password" class="form-control"  placeholder="Password">
-                    </div>
-                    <div class="form-group">
                       <label for="exampleInputFile">File input</label>
                       <input type="file" id="exampleInputFile">
                       <p class="help-block">Example block-level help text here.</p>
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputPassword1">Password</label>
+                      <input type="password" class="form-control"  placeholder="Password">
+                    </div>
+                    <!-- select -->
+                    <div class="form-group">
+                      <label>Select</label>
+                      <select class="form-control">
+                        <option>option 1</option>
+                        <option>option 2</option>
+                        <option>option 3</option>
+                        <option>option 4</option>
+                        <option>option 5</option>
+                      </select>
                     </div>
                     <div class="checkbox">
                       <label>

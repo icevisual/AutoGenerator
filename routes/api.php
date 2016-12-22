@@ -16,97 +16,13 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
+
 Route::get('/sidebar', [
     'as' => 'api_sidebar',
-    'uses' => function (Request $request) {
-        $data = [
-            [
-                'group' => 'MAIN NAVIGATION',
-                'menus' => [
-                    [
-                        'icon' => 'fa-dashboard',
-                        'title' => 'Dashboard',
-                        'active' => true,
-                        'submenus' => [
-                            [
-                                'active' => true,
-                                'href' => '/list',
-                                'icon' => 'fa-circle-o',
-                                'title' => 'List Demo'
-                            ],
-                            [
-                                'href' => '/form',
-                                'icon' => 'fa-circle-o',
-                                'title' => 'Form Demo'
-                            ]
-                        ]
-                    ],
-                    [
-                        'icon' => 'fa-files-o',
-                        'title' => 'Layout Options',
-                        'submenus' => [
-                            [
-                                'href' => '../../index.html',
-                                'icon' => 'fa-circle-o',
-                                'title' => 'Top Navigation'
-                            ],
-                            [
-                                'href' => '../../index1.html',
-                                'icon' => 'fa-circle-o',
-                                'title' => 'Boxed'
-                            ],
-                            [
-                                'href' => '../../index1.html',
-                                'icon' => 'fa-circle-o',
-                                'title' => 'Fixed'
-                            ],
-                            [
-                                'href' => '../../index1.html',
-                                'icon' => 'fa-circle-o',
-                                'title' => 'Collapsed Sidebar'
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ];
-        
-        $aa = [
-            'icon' => 'fa-files-o',
-            'title' => 'Layout Options',
-            'submenus' => [
-                [
-                    'href' => '../../index.html',
-                    'icon' => 'fa-circle-o',
-                    'title' => 'Top Navigation'
-                ],
-                [
-                    'href' => '../../index1.html',
-                    'icon' => 'fa-circle-o',
-                    'title' => 'Boxed'
-                ],
-                [
-                    'href' => '../../index1.html',
-                    'icon' => 'fa-circle-o',
-                    'title' => 'Fixed'
-                ],
-                [
-                    'href' => '../../index1.html',
-                    'icon' => 'fa-circle-o',
-                    'title' => 'Collapsed Sidebar'
-                ]
-            ]
-        ];
-        
-        for ($i = 0; $i < 10; $i ++) {
-            $data[0]['menus'][] = $aa;
-        }
-        return \Response::json([
-            'code' => 1,
-            'msg' => 'ok',
-            'data' => $data
-        ]);
-    }
+    'uses' => 'SystemArchitecture\IndexController@sidebarMenu'
 ]);
 
-
+Route::get('/formConfig', [
+    'as' => 'api_formConfig',
+    'uses' => 'SystemArchitecture\IndexController@formConfig'
+]);
