@@ -55,6 +55,5 @@ define(['Vue','jQuery'],function(Vue,$) {
             },
         },
     });
-    
-    
+    return Vue;
 });

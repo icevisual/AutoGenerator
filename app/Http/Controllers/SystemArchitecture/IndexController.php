@@ -22,6 +22,7 @@ class IndexController extends Controller
                     'type' => 'input',
                     'attrs' => [
                         'type' => 'text',
+                        'default' => 'asdda',
                         'placeholder' => '开发者 AccessKey'
                     ],
                     'value' => ''
@@ -36,9 +37,10 @@ class IndexController extends Controller
                     ],
                     'type' => 'input',
                     'attrs' => [
-                        'type' => 'text'
+                        'type' => 'text',
+                        'placeholder' => '开发者 AccessSecret'
                     ],
-                    'value' => 'POVX1lgIvo8q1KHYpoD9'
+                    'value' => ''
                 ],
                 'logLevel' => [
                     'name' => '日志级别',
@@ -97,7 +99,6 @@ class IndexController extends Controller
             'msg' => 'ok',
             'data' => $data
         ]);
-        
     }
 
     public function sidebarMenu()
