@@ -26,16 +26,18 @@ Route::get('/sidebar', [
                     [
                         'icon' => 'fa-dashboard',
                         'title' => 'Dashboard',
+                        'active' => true,
                         'submenus' => [
                             [
-                                'href' => '../../index.html',
+                                'active' => true,
+                                'href' => '/list',
                                 'icon' => 'fa-circle-o',
-                                'title' => 'Dashboard v1'
+                                'title' => 'List Demo'
                             ],
                             [
-                                'href' => '../../index1.html',
+                                'href' => '/form',
                                 'icon' => 'fa-circle-o',
-                                'title' => 'Dashboard v2'
+                                'title' => 'Form Demo'
                             ]
                         ]
                     ],
@@ -99,7 +101,6 @@ Route::get('/sidebar', [
         for ($i = 0; $i < 10; $i ++) {
             $data[0]['menus'][] = $aa;
         }
-        
         return \Response::json([
             'code' => 1,
             'msg' => 'ok',

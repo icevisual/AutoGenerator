@@ -60,7 +60,7 @@
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
-@section('nav')
+@section('contentWrapper')
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
@@ -392,18 +392,5 @@
 @include('backend.layouts.ControlSidebar')
     </div><!-- ./wrapper -->
     <script data-main="js/main" src="dist/js/require.js"></script>
-    
-    <!-- jQuery 2.1.4 -->
-<!--     <script src="../../plugins/jQuery/jQuery-2.1.4.min.js"></script> -->
-    <!-- Bootstrap 3.3.5 -->
-<!--     <script src="../../bootstrap/js/bootstrap.min.js"></script> -->
-    <!-- Slimscroll -->
-<!--     <script src="../../plugins/slimScroll/jquery.slimscroll.min.js"></script> -->
-    <!-- FastClick -->
-<!--     <script src="../../plugins/fastclick/fastclick.min.js"></script> -->
-    <!-- AdminLTE App -->
-<!--     <script src="../../dist/js/app.min.js"></script> -->
-    <!-- AdminLTE for demo purposes -->
-<!--     <script src="../../dist/js/demo.js"></script> -->
   </body>
 </html>

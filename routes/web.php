@@ -11,6 +11,11 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/list', function () {
     return view('backend.common.simple');
+});
+
+
+Route::get('/form', function () {
+    return view('backend.common.general');
 });
