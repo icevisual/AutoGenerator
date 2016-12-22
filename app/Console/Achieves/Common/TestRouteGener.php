@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\Common;
+namespace App\Console\Achieves\Common;
 
 use Route;
 use App\Models\Common\Parameters;

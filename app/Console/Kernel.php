@@ -14,6 +14,9 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         //
+        Commands\Apidoc::class,
+        Commands\TestRoute::class,
+        Commands\Upgrade::class,
     ];
 
     /**

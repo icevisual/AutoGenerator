@@ -3,7 +3,7 @@
 /**
  * Auto
  */
-namespace App\Services\Adag;
+namespace App\Console\Achieves\Adag;
     
 interface AnnParserConstInter 
 {

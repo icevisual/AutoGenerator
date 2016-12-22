@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\Adag;
+namespace App\Console\Achieves\Adag;
 
 use Route;
 use App\Models\Common\Parameters;
