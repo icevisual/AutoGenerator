@@ -10,4 +10,61 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    
+    public static function setHeaders()
+    {
+        $header['Access-Control-Allow-Origin'] = '*';
+        $header['Access-Control-Allow-Methods'] = 'GET, PUT, POST, DELETE, HEAD, OPTIONS';
+        $header['Access-Control-Allow-Headers'] = 'X-Requested-With, Origin, X-Csrftoken, Content-Type, Accept';
+    
+        if ($header) {
+            foreach ($header as $head => $value) {
+                header("{$head}: {$value}");
+            }
+        }
+    }
+    
+    public static function setHeader()
+    {
+        static $_setted = false;
+        if (! $_setted) {
+            if (! \App::environment('testing')) {
+                self::setHeaders();
+                $_setted = true;
+            }
+            $_setted = true;
+        }
+    }
+    
+    /**
+     *
+     * @param number $code
+     * @param string $msg
+     * @param array $data
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function __json()
+    {
+        return call_user_func_array([
+            \JsonReturn::class,
+            'json'
+        ], func_get_args());
+    }
+    
+    /**
+     *
+     * @param number $code
+     * @param string $msg
+     * @param array $data
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function __jsonp()
+    {
+        return call_user_func_array([
+            \JsonReturn::class,
+            'jsonp'
+        ], func_get_args());
+    }
+    
+    
 }

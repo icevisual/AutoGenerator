@@ -23,13 +23,16 @@ require.config({
         'app' : ['jQuery','jQuery.slimscroll','bootstrap','fastclick'],
     }
 });
-define(['Vue','jQuery','Components','Utils'],function(Vue,$) {
+define(['Vue','jQuery','Components','Utils','app'],function(Vue,$) {
     var vm = new Vue({
         'el' : '#sidebar-menu-vue',
         'mounted' : function() {
             $.ajax({
                 'url' : '/api/sidebar',
                 'dataType' : 'json',
+                'data' : {
+                    pathname : window.location.pathname
+                },
                 'success' : function(data) {
                     vm.sidebar = data.data;
                 },

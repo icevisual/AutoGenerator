@@ -1,32 +1,12 @@
 require.config({
     paths : {
-//        'jQuery' : '../plugins/jQuery/jQuery-2.1.4.min', 
-//        'bootstrap' : '../bootstrap/js/bootstrap.min',
-//        'jQuery.slimscroll' : '../plugins/slimScroll/jquery.slimscroll.min',
-//        'fastclick' : '../plugins/fastclick/fastclick.min',
-//        'app' : '../dist/js/app.min',
-//        'demo' : '../dist/js/demo',
-//        'Vue' : '../dist/js/vue.v2.1.6.min',
-//        'Components' : 'Components',
-//        'Utils' : 'Utils',
         'initialize' : 'initialize',
     },
-//    shim : {
-//        'jQuery' : {
-//            exports : '$'
-//        },
-//        'Components' : {
-//            exports : 'Vue'
-//        },
-//        'jQuery.slimscroll' : ['jQuery'],
-//        'bootstrap' : ['jQuery'],
-//        'demo' : ['jQuery'],
-//        'app' : ['jQuery','jQuery.slimscroll','bootstrap','fastclick','initialize'],
-//    }
 });
-require(['initialize' ], function($) {
-//    require([ 'jQuery','Vue','Utils','app','demo','Components' ], function($) {
-    var $ = require('jQuery'),Vue = require('Vue'),Utils = require('Utils');
+require(['initialize' ], function() {
+    var $ = require('jQuery'),
+        Vue = require('Vue'),
+        Utils = require('Utils');
     var formTableConfig = {
         'formConfig' : {
             'accessKey' : {
@@ -111,7 +91,6 @@ require(['initialize' ], function($) {
             },
         }
     };
-    
     $.ajax({
         'url' : '/api/formConfig',
         'dataType' : 'json',
@@ -119,6 +98,7 @@ require(['initialize' ], function($) {
             var vmForm = new Vue({
                 'el' : '#formDemo',
                 'data' : d.data,
+//                'data' : formTableConfig,
                 'methods' : {
                     'btnclickHd' : function(){
                         console.log(arguments);
@@ -127,14 +107,4 @@ require(['initialize' ], function($) {
             });
         }
     });
-    
-//    var vmForm = new Vue({
-//        'el' : '#formDemo',
-//        'data' : formTableConfig,
-//        'methods' : {
-//            'btnclickHd' : function(){
-//                console.log(arguments);
-//            }
-//        }
-//    });
 })

@@ -9,3 +9,8 @@
 Homestead.json
 Homestead.yaml
 .env
+storage/request/
+storage/sqlLog/
+storage/debug/
+
+

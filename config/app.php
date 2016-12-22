@@ -2,6 +2,32 @@
 
 return [
 
+
+    /**
+     * 是否返回HTTP 状态码
+     */
+    'useHttpStatus' => env('USE_HTTP_STATUS', true),
+    
+    /**
+     * 是否记录请求日志
+     */
+    'logRequest' => env('LOG_REQUEST', true),
+    
+    'logRequestDB' => [
+        'time_usage' => 0,
+        'memory_usage' => 0,
+    ],
+    
+    'logRequestRange' => [
+        'only' => [
+            'api/*'
+        ],
+        //         'except' => []
+    ],
+    
+    
+    
+    
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -120,7 +146,7 @@ return [
     |
     */
 
-    'log' => env('APP_LOG', 'single'),
+    'log' => 'daily',//env('APP_LOG', 'single'),
 
     'log_level' => env('APP_LOG_LEVEL', 'debug'),
 
@@ -227,6 +253,13 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        'Input' => Illuminate\Support\Facades\Input::class,
+        
+        'JsonReturn' => App\Extensions\Common\JsonReturn::class,
+        'HttpStatus' => App\Extensions\Common\HttpStatus::class,
+        'ErrorCode' => App\Extensions\Common\ErrorCode::class,
+        'Com' => App\Extensions\Common\Common::class,
+        
     ],
 
 ];

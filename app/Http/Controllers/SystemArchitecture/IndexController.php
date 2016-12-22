@@ -94,11 +94,7 @@ class IndexController extends Controller
             ]
         ];
         
-        return \Response::json([
-            'code' => 1,
-            'msg' => 'ok',
-            'data' => $data
-        ]);
+        return $this->__json($data);
     }
 
     public function sidebarMenu()
@@ -155,40 +151,8 @@ class IndexController extends Controller
             ]
         ];
         
-        $aa = [
-            'icon' => 'fa-files-o',
-            'title' => 'Layout Options',
-            'submenus' => [
-                [
-                    'href' => '../../index.html',
-                    'icon' => 'fa-circle-o',
-                    'title' => 'Top Navigation'
-                ],
-                [
-                    'href' => '../../index1.html',
-                    'icon' => 'fa-circle-o',
-                    'title' => 'Boxed'
-                ],
-                [
-                    'href' => '../../index1.html',
-                    'icon' => 'fa-circle-o',
-                    'title' => 'Fixed'
-                ],
-                [
-                    'href' => '../../index1.html',
-                    'icon' => 'fa-circle-o',
-                    'title' => 'Collapsed Sidebar'
-                ]
-            ]
-        ];
-        for ($i = 0; $i < 10; $i ++) {
-            $data[0]['menus'][] = $aa;
-        }
-        return \Response::json([
-            'code' => 1,
-            'msg' => 'ok',
-            'data' => $data
-        ]);
+        
+        return $this->__json($data);
     }
 }
 
