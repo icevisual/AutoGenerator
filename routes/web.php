@@ -11,18 +11,24 @@
 |
 */
 
-Route::get('/list', function () {
-    return view('backend.common.simple');
-});
+Route::get('/demo', [
+    'as' => 'demo_list',
+    'uses' => 'SystemArchitecture\WebController@demo_list'
+]);
 
+Route::get('/demo/create', [
+    'as' => 'demo_create',
+    'uses' => 'SystemArchitecture\WebController@demo_create'
+]);
 
-Route::get('/form', function () {
-    return view('backend.common.general');
-});
+Route::get('/components', [
+    'as' => 'components_list',
+    'uses' => 'SystemArchitecture\WebController@components_list'
+]);
 
-
-
-
-
+Route::get('/components/create', [
+    'as' => 'components_create',
+    'uses' => 'SystemArchitecture\WebController@components_create'
+]);
 
 

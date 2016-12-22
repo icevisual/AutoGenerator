@@ -391,6 +391,6 @@
       
 @include('backend.layouts.ControlSidebar')
     </div><!-- ./wrapper -->
-    <script data-main="js/main" src="dist/js/require.js"></script>
+    <script data-main="/js/main" src="/dist/js/require.js"></script>
   </body>
 </html>

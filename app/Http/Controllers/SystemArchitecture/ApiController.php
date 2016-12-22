@@ -105,17 +105,17 @@ class ApiController extends Controller
                 'menus' => [
                     [
                         'icon' => 'fa-dashboard',
-                        'title' => 'Dashboard',
+                        'title' => 'Demo',
                         'active' => true,
                         'submenus' => [
                             [
                                 'active' => true,
-                                'href' => '/list',
+                                'href' => route('demo_list'),
                                 'icon' => 'fa-circle-o',
                                 'title' => 'List Demo'
                             ],
                             [
-                                'href' => '/form',
+                                'href' => route('demo_create'),
                                 'icon' => 'fa-circle-o',
                                 'title' => 'Form Demo'
                             ]
