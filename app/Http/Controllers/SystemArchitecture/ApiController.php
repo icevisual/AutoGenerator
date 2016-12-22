@@ -4,7 +4,7 @@ namespace App\Http\Controllers\SystemArchitecture;
 use App\Http\Controllers\Controller;
 use App\Exceptions\ServiceException;
 
-class IndexController extends Controller
+class ApiController extends Controller
 {
 
     public function formConfig()

@@ -19,10 +19,10 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/sidebar', [
     'as' => 'api_sidebar',
-    'uses' => 'SystemArchitecture\IndexController@sidebarMenu'
+    'uses' => 'SystemArchitecture\ApiController@sidebarMenu'
 ]);
 
 Route::get('/formConfig', [
     'as' => 'api_formConfig',
-    'uses' => 'SystemArchitecture\IndexController@formConfig'
+    'uses' => 'SystemArchitecture\ApiController@formConfig'
 ]);

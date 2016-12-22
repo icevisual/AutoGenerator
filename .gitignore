@@ -12,5 +12,5 @@ Homestead.yaml
 storage/request/
 storage/sqlLog/
 storage/debug/
-
+public/doc/
 
