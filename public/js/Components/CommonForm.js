@@ -38,10 +38,6 @@ define(['Vue','jQuery'],function(Vue,$) {
             return {
                 formConfig: this.dataSelector, 
             };
-            console.log(this.dataSelector);
-            return {
-                formConfig: this.$parent[this.dataSelector], 
-            };
         },
         'methods' : {
             'doFormValidate' : function(formSelector,inputData){
