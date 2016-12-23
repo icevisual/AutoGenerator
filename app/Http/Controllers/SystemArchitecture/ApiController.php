@@ -11,89 +11,100 @@ class ApiController extends Controller
     {
         $data = [
             'formConfig' => [
-                'accessKey' => [
-                    'name' => '开发者 AccessKey',
-                    'validate' => [
-                        'rules' => 'required|max:20',
-                        'message' => [
-                            'require' => '请填写 开发者 AccessKey'
+                'attrs' => [
+                    'caption' => 'TABLE DEMO',
+                ],
+                'fields' => [
+                    'accessKey' => [
+                        'name' => '开发者 AccessKey',
+                        'validate' => [
+                            'rules' => 'required|max:20',
+                            'message' => [
+                                'require' => '请填写 开发者 AccessKey'
+                            ]
+                        ],
+                        'type' => 'input',
+                        'attrs' => [
+                            'type' => 'text',
+                            'default' => 'asdda',
+                            'placeholder' => '开发者 AccessKey'
+                        ],
+                        'value' => ''
+                    ],
+                    'accessSecret' => [
+                        'name' => '开发者 AccessSecret',
+                        'validate' => [
+                            'rules' => 'required|max:20',
+                            'message' => [
+                                'require' => '请填写 开发者 AccessSecret'
+                            ]
+                        ],
+                        'type' => 'input',
+                        'attrs' => [
+                            'type' => 'text',
+                            'placeholder' => '开发者 AccessSecret'
+                        ],
+                        'value' => ''
+                    ],
+                    'logLevel' => [
+                        'name' => '日志级别',
+                        'type' => 'select',
+                        'value' => 'debug',
+                        'attrs' => [
+                            'multiple' => 'multiple'
+                        ],
+                        'data' => [
+                            '0' => [
+                                'value' => 'debug',
+                                'text' => 'debug'
+                            ],
+                            '1' => [
+                                'value' => 'info',
+                                'text' => 'info'
+                            ],
+                            '2' => [
+                                'value' => 'notice',
+                                'text' => 'notice'
+                            ],
+                            '3' => [
+                                'value' => 'warning',
+                                'text' => 'warning'
+                            ],
+                            '4' => [
+                                'value' => 'error',
+                                'text' => 'error'
+                            ]
                         ]
                     ],
-                    'type' => 'input',
-                    'attrs' => [
-                        'type' => 'text',
-                        'default' => 'asdda',
-                        'placeholder' => '开发者 AccessKey'
-                    ],
-                    'value' => ''
-                ],
-                'accessSecret' => [
-                    'name' => '开发者 AccessSecret',
-                    'validate' => [
-                        'rules' => 'required|max:20',
-                        'message' => [
-                            'require' => '请填写 开发者 AccessSecret'
-                        ]
-                    ],
-                    'type' => 'input',
-                    'attrs' => [
-                        'type' => 'text',
-                        'placeholder' => '开发者 AccessSecret'
-                    ],
-                    'value' => ''
-                ],
-                'logLevel' => [
-                    'name' => '日志级别',
-                    'type' => 'select',
-                    'value' => 'debug',
-                    'attrs' => [
-                        'multiple' => 'multiple'
-                    ],
-                    'data' => [
-                        '0' => [
-                            'value' => 'debug',
-                            'text' => 'debug'
-                        ],
-                        '1' => [
-                            'value' => 'info',
-                            'text' => 'info'
-                        ],
-                        '2' => [
-                            'value' => 'notice',
-                            'text' => 'notice'
-                        ],
-                        '3' => [
-                            'value' => 'warning',
-                            'text' => 'warning'
-                        ],
-                        '4' => [
-                            'value' => 'error',
-                            'text' => 'error'
-                        ]
-                    ]
-                ],
-                'env' => [
-                    'name' => '环境',
-                    'type' => 'select',
-                    'value' => 'local',
-                    'data' => [
-                        '0' => [
-                            'value' => 'local',
-                            'text' => '本地(192.168.5.61:8083)'
-                        ],
-                        '1' => [
-                            'value' => 'test',
-                            'text' => '测试(121.41.33.141:8083)'
-                        ],
-                        '2' => [
-                            'value' => 'production',
-                            'text' => '正式(120.26.109.169:8083)'
+                    'env' => [
+                        'name' => '环境',
+                        'type' => 'select',
+                        'value' => 'local',
+                        'data' => [
+                            '0' => [
+                                'value' => 'local',
+                                'text' => '本地(192.168.5.61:8083)'
+                            ],
+                            '1' => [
+                                'value' => 'test',
+                                'text' => '测试(121.41.33.141:8083)'
+                            ],
+                            '2' => [
+                                'value' => 'production',
+                                'text' => '正式(120.26.109.169:8083)'
+                            ]
                         ]
                     ]
                 ]
+                
             ]
         ];
         
+        $pathname = \Input::get('pathname');
+        
+        if('/components/create' != $pathname){
+            return $this->__json($data);
+        }
         
         $data = [
             'componentForm' => [

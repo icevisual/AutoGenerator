@@ -17,9 +17,9 @@
           <div class="row">
             <!-- left column -->
             <div class="col-md-6">
-              <common-form :data-selector="componentForm" @btnclick="btnclickHd" ></common-form>
+              <common-form :data-selector="componentForm" @btnclick="btnclickHd1" ></common-form>
               
-              <common-form :data-selector="attrForm" @btnclick="btnclickHd" ></common-form>
+              <common-form :data-selector="attrForm" @btnclick="btnclickHd2" ></common-form>
               
             </div><!--/.col (left) -->
             
@@ -89,6 +89,7 @@
                   </ul>
                 </div>
               </div><!-- /.box -->
+              
               <horizontal-form :data-selector="attrBindForm" @btnclick="btnclickHd" ></horizontal-form>
               
             </div><!--/.col (right) -->
