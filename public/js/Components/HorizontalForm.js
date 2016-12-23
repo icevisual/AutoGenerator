@@ -27,14 +27,31 @@ define(['Vue','jQuery'],function(Vue,$) {
       </template>\
     </div><!-- /.box-body -->\
     <div class="box-footer">\
-      <button type="submit" class="btn btn-default">Cancel</button>\
-      <button type="submit" class="btn btn-info pull-right" v-on:click.prevent="btnclick"  >Submit</button>\
+      <template v-for="(item,key) in formConfig.attrs.buttons">\
+        <template v-if="key > 0">\
+            <button v-if="\'submit\' == item" type="submit" class="btn btn-info pull-right" :data-event="item" v-on:click.prevent="btnclick">Submit</button>\
+            <button v-else type="submit" style="margin-right:5px;" class="btn btn-default pull-right" :data-event="item" v-on:click.prevent="btnclick">{{item}}</button>\
+        </template>\
+        <template v-else>\
+            <button v-if="\'submit\' == item" type="submit" class="btn btn-info pull-right" :data-event="item" v-on:click.prevent="btnclick">Submit</button>\
+            <button v-else type="submit" class="btn btn-default pull-right" :data-event="item" v-on:click.prevent="btnclick">{{item}}</button>\
+        </template>\
+      </template>\
     </div><!-- /.box-footer -->\
   </form>\
 </div><!-- /.box -->\
 ',
         'props' : ['caption','dataSelector'],
         'data' : function () {
+            
+            var btnDefault = {
+                'cancel' : true,
+                'submit' : true,
+            };
+            var btnDefault = ['submit','cancel'];
+            if(!this.dataSelector.attrs['buttons']){
+                this.dataSelector.attrs['buttons'] = btnDefault;
+            }
             return {
                 formConfig: this.dataSelector, 
             };
@@ -54,8 +71,13 @@ define(['Vue','jQuery'],function(Vue,$) {
                 }
                 return ret;
             },
-            'btnclick' : function(){
-                this.$emit('btnclick',this.doFormValidate(this.$el,this.$data));
+            'btnclick' : function(e){
+                var emitEventType = e.target.getAttribute("data-event");
+                if('submit' == emitEventType){
+                    this.$emit('formsubmit',this.doFormValidate(this.$el,this.$data));
+                }else{
+                    this.$emit('form' + emitEventType,[]);
+                }
             },
             'defaultValue':function(v,d){
                 return v?v:d;

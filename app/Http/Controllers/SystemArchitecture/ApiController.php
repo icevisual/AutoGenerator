@@ -12,7 +12,7 @@ class ApiController extends Controller
         $data = [
             'formConfig' => [
                 'attrs' => [
-                    'caption' => 'TABLE DEMO',
+                    'caption' => 'TABLE DEMO'
                 ],
                 'fields' => [
                     'accessKey' => [
@@ -96,20 +96,62 @@ class ApiController extends Controller
                         ]
                     ]
                 ]
-                
             ]
         ];
         
         $pathname = \Input::get('pathname');
         
-        if('/components/create' != $pathname){
+        if ('/components/create' != $pathname) {
             return $this->__json($data);
         }
         
         $data = [
-            'componentForm' => [
+            'attrs_list' => [
+                '1' => [
+                    'attr_id' => '1',
+                    'attr_name_cn' => 'attr_name_cn',
+                    'attr_name_en' => 'attr_name_en',
+                    'attr_type' => 'attr_type'
+                ]
+            ],
+            'component_attrs_table' => [
+                'attrs' => [
+                    'caption' => '组件属性表',
+                    'header' => [
+                        [
+                            'name' => '#',
+                            'width' => '10px'
+                        ],
+                        [
+                            'name' => '属性名中',
+                        ],
+                        [
+                            'name' => '属性名英',
+                        ],
+                        [
+                            'name' => '数据类型',
+                        ],
+                        [
+                            'name' => '默认值',
+                        ]
+                    ]
+                ],
+                'list' => [
+                    [
+                        'attr_name_cn' => 'Update software',
+                        'attr_name_en' => 'Update software',
+                        'attr_type' => 'attr_type',
+                        'default_value' => 'default_value'
+                    ]
+                ]
+            ],
+            'component_form' => [
                 'attrs' => [
                     'caption' => '组件',
+                    'buttons' => [
+                        'submit',
+                        'cancel',
+                    ]
                 ],
                 'fields' => [
                     'component_name' => [
@@ -130,34 +172,23 @@ class ApiController extends Controller
                             'placeholder' => '组件描述'
                         ],
                         'value' => ''
-                    ],
+                    ]
                 ]
             ],
-            'attrBindForm' => [
+            'attr_bind_form' => [
                 'attrs' => [
-                    'caption' => '添加属性',
+                    'caption' => '添加属性'
                 ],
                 'fields' => [
                     'attr_id' => [
-                        'name' => '属性ID',
+                        'name' => '属性',
                         'type' => 'select',
                         'value' => 'string',
+                        'default' => 'string',
                         'data' => [
                             [
                                 'value' => 'string',
                                 'text' => 'string'
-                            ],
-                            [
-                                'value' => 'integer',
-                                'text' => 'integer'
-                            ],
-                            [
-                                'value' => 'float',
-                                'text' => 'float'
-                            ],
-                            [
-                                'value' => 'boolean',
-                                'text' => 'boolean'
                             ],
                         ]
                     ],
@@ -169,10 +200,10 @@ class ApiController extends Controller
                             'placeholder' => '属性默认值'
                         ],
                         'value' => ''
-                    ],
+                    ]
                 ]
             ],
-            'attrForm' => [
+            'attr_form' => [
                 'attrs' => [
                     'caption' => '新建组件属性',
                     'formColor' => 'box-warning'
@@ -217,7 +248,7 @@ class ApiController extends Controller
                             [
                                 'value' => 'boolean',
                                 'text' => 'boolean'
-                            ],
+                            ]
                         ]
                     ]
                 ]
@@ -261,7 +292,7 @@ class ApiController extends Controller
                                 'href' => route('components_create'),
                                 'icon' => 'fa-circle-o',
                                 'title' => 'COMPONENTS CREATE'
-                            ],
+                            ]
                         ]
                     ]
                 ]
@@ -269,14 +300,14 @@ class ApiController extends Controller
         ];
         
         $pathname = \Input::get('pathname');
-        foreach ($data as $k =>  $v){
-            // Group 
-            foreach ($v['menus'] as $k1 =>  $v1){
+        foreach ($data as $k => $v) {
+            // Group
+            foreach ($v['menus'] as $k1 => $v1) {
                 // menu
-                foreach ($v1['submenus'] as $k2 => $v2){
+                foreach ($v1['submenus'] as $k2 => $v2) {
                     // submenus
                     $parse_url = parse_url($v2['href']);
-                    if($parse_url['path'] == $pathname){
+                    if ($parse_url['path'] == $pathname) {
                         $data[$k]['menus'][$k1]['submenus'][$k2]['active'] = true;
                         $data[$k]['menus'][$k1]['active'] = true;
                         break 3;
@@ -284,7 +315,6 @@ class ApiController extends Controller
                 }
             }
         }
-        
         
         return $this->__json($data);
     }
