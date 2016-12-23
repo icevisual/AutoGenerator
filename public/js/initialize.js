@@ -7,8 +7,10 @@ require.config({
         'app' : '../dist/js/app.min',
         'demo' : '../dist/js/demo',
         'Vue' : '../dist/js/vue.v2.1.6.min',
+        'Components' : 'Components/HorizontalForm',
         'Components' : 'Components',
         'Utils' : 'Utils',
+//        'domReady' : '../dist/js/domReady',
     },
     shim : {
         'jQuery' : {

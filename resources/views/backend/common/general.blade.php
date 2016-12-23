@@ -17,7 +17,7 @@
           <div class="row">
             <!-- left column -->
             <div class="col-md-6" id="formDemo">
-              <common-form :formConfig="formConfig" caption="设备绑定" @btnclick="btnclickHd" ></common-form>
+              <common-form :dataSelector="componentForm" caption="设备绑定" @btnclick="btnclickHd" ></common-form>
             </div><!--/.col (left) -->
             
           </div>   <!-- /.row -->

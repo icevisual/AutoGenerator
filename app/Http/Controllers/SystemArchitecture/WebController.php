@@ -23,7 +23,7 @@ class WebController extends Controller
     }
     
     public function components_create(){
-        return view('backend.common.general');
+        return view('backend.common.components_form');
     }
     
 }
