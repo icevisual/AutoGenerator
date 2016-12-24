@@ -6,4 +6,8 @@ require.config({
 });
 require(['initialize','app'], function() {
     
+    
+    
+    
+    
 })

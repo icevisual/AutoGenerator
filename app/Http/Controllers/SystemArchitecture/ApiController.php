@@ -111,7 +111,7 @@ class ApiController extends Controller
                     'attr_id' => '1',
                     'attr_name_cn' => 'attr_name_cn',
                     'attr_name_en' => 'attr_name_en',
-                    'attr_type' => 'attr_type'
+                    'attr_type' => 'string'
                 ]
             ],
             'component_attrs_table' => [
@@ -123,16 +123,16 @@ class ApiController extends Controller
                             'width' => '10px'
                         ],
                         [
-                            'name' => '属性名中',
+                            'name' => '属性名中'
                         ],
                         [
-                            'name' => '属性名英',
+                            'name' => '属性名英'
                         ],
                         [
-                            'name' => '数据类型',
+                            'name' => '数据类型'
                         ],
                         [
-                            'name' => '默认值',
+                            'name' => '默认值'
                         ]
                     ]
                 ],
@@ -149,8 +149,10 @@ class ApiController extends Controller
                 'attrs' => [
                     'caption' => '组件',
                     'buttons' => [
-                        'submit',
-                        'cancel',
+                        'preinstall' => [
+                            'submit' => true,
+                            'cancel' => true
+                        ]
                     ]
                 ],
                 'fields' => [
@@ -177,19 +179,32 @@ class ApiController extends Controller
             ],
             'attr_bind_form' => [
                 'attrs' => [
-                    'caption' => '添加属性'
+                    'caption' => '添加属性',
+                    'buttons' => [
+                        'preinstall' => [
+                            'submit' => true,
+                            'cancel' => true
+                        ],
+                        'others' => [
+                            [
+                                'name' => 'New Attr',
+                                'event' => 'newattr',
+                                'class' => 'btn-primary'
+                            ],
+                        ]
+                    ]
                 ],
                 'fields' => [
                     'attr_id' => [
                         'name' => '属性',
                         'type' => 'select',
-                        'value' => 'string',
-                        'default' => 'string',
+                        'value' => '1',
+                        'default' => '1',
                         'data' => [
                             [
                                 'value' => 'string',
                                 'text' => 'string'
-                            ],
+                            ]
                         ]
                     ],
                     'default_value' => [

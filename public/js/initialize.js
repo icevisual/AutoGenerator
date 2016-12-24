@@ -46,4 +46,23 @@ define(['Vue','jQuery','Components','ALTApp'],function(Vue,$) {
             'sidebar' : {}
         }
     });
+    
+    
+    var MyVue = Vue.extend({
+        'methods' : {
+            'formFieldReset' : function(formTag,field,defaultValue){
+                var defaultVal = this.pageConfig[formTag].fields[field].default;
+                defaultVal = undefined === defaultValue ? defaultVal : defaultValue;
+                if(undefined === defaultVal){
+                    this.pageConfig[formTag].fields[field].value = '';
+                }else{
+                    this.pageConfig[formTag].fields[field].value = defaultVal;
+                }
+            },
+            'appendFormSelect' : function(formTag,field,data){
+                this.pageConfig[formTag].fields[field].data.push(data);
+            }
+        }
+    });
+    return MyVue;
 });

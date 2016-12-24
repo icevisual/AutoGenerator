@@ -27,28 +27,26 @@ define(['Vue','jQuery'],function(Vue,$) {
       </template>\
     </div><!-- /.box-body -->\
     <div class="box-footer">\
-      <template v-for="(item,key) in formConfig.attrs.buttons">\
-        <template v-if="key > 0">\
-            <button v-if="\'submit\' == item" type="submit" class="btn btn-info pull-right" :data-event="item" v-on:click.prevent="btnclick">Submit</button>\
-            <button v-else type="submit" style="margin-right:5px;" class="btn btn-default pull-right" :data-event="item" v-on:click.prevent="btnclick">{{item}}</button>\
-        </template>\
-        <template v-else>\
-            <button v-if="\'submit\' == item" type="submit" class="btn btn-info pull-right" :data-event="item" v-on:click.prevent="btnclick">Submit</button>\
-            <button v-else type="submit" class="btn btn-default pull-right" :data-event="item" v-on:click.prevent="btnclick">{{item}}</button>\
-        </template>\
+      <template v-for="(item,key,index) in formConfig.attrs.buttons.preinstall">\
+         <button v-if="\'submit\' == key" type="submit" class="btn btn-info pull-right" :class="index > 0 ? \'margin-r-5\':\'\'" :data-event="key" v-on:click.prevent="btnclick">Submit</button>\
+         <button v-if="\'cancel\' == key" class="btn btn-default pull-right" :class="index > 0 ? \'margin-r-5\':\'\'" :data-event="key" v-on:click.prevent="btnclick">Cancel</button>\
+      </template>\
+      <template v-for="(item,key) in formConfig.attrs.buttons.others">\
+         <button class="btn pull-right margin-r-5" :class="item.class" :data-event="item.event" v-on:click.prevent="btnclick">{{item.name}}</button>\
       </template>\
     </div><!-- /.box-footer -->\
   </form>\
 </div><!-- /.box -->\
 ',
-        'props' : ['caption','dataSelector'],
+        'props' : ['dataSelector'],
         'data' : function () {
-            
             var btnDefault = {
-                'cancel' : true,
-                'submit' : true,
+                'preinstall' : {
+                    'submit' : true,
+                    'cancel' : true,
+                },
+                'others' : []
             };
-            var btnDefault = ['submit','cancel'];
             if(!this.dataSelector.attrs['buttons']){
                 this.dataSelector.attrs['buttons'] = btnDefault;
             }
@@ -76,10 +74,10 @@ define(['Vue','jQuery'],function(Vue,$) {
                 if('submit' == emitEventType){
                     this.$emit('formsubmit',this.doFormValidate(this.$el,this.$data));
                 }else{
-                    this.$emit('form' + emitEventType,[]);
+                    this.$emit('form' + emitEventType,e);
                 }
             },
-            'defaultValue':function(v,d){
+            'defaultValue' : function(v,d){
                 return v?v:d;
             }
         },

@@ -17,14 +17,15 @@
           <div class="row">
             <!-- left column -->
             <div class="col-md-6">
-              <horizontal-form :data-selector="component_form" @formsubmit="submitComponent" ></horizontal-form>
-              <horizontal-form :data-selector="attr_form"      @formsubmit="addNewAttr" ></horizontal-form>
+              <horizontal-form :data-selector="pageConfig.component_form" @formsubmit="submitComponent" ></horizontal-form>
               
-              <horizontal-form :data-selector="attr_bind_form" @formsubmit="bindNewAttr" ></horizontal-form>
+              <horizontal-form v-show="runtime.showAttrForm" :data-selector="pageConfig.attr_form"   @formcancel="cancelAddNewAttr"   @formsubmit="addNewAttr" ></horizontal-form>
+              
+              <horizontal-form :data-selector="pageConfig.attr_bind_form"  @formnewattr="NewAttrBtn" @formsubmit="bindNewAttr" ></horizontal-form>
             </div><!--/.col (left) -->
               
             <div class="col-md-6">
-              <common-table :data-selector="component_attrs_table"  ></common-table>
+              <common-table :data-selector="pageConfig.component_attrs_table"  ></common-table>
             </div><!--/.col (right) -->
             
           </div>   <!-- /.row -->
