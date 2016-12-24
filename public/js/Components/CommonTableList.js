@@ -1,7 +1,7 @@
 define(['Vue'],function(Vue,$) {
     Vue.component('common-table',{
         template : '\
-<div class="box">\
+<div class="box box-info">\
   <div class="box-header with-border">\
     <h3 class="box-title">{{tableConfig.attrs.caption}}</h3>\
   </div><!-- /.box-header -->\
