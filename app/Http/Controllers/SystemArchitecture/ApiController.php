@@ -3,6 +3,7 @@ namespace App\Http\Controllers\SystemArchitecture;
 
 use App\Http\Controllers\Controller;
 use App\Exceptions\ServiceException;
+use function GuzzleHttp\json_decode;
 
 class ApiController extends Controller
 {
@@ -101,6 +102,14 @@ class ApiController extends Controller
         
         $pathname = \Input::get('pathname');
         
+        $file = 'json/'.str_replace('/', '-', trim($pathname,'/')).'.js';
+
+        if(file_exists(public_path($file))){
+            echo file_get_contents($file);
+            exit;
+        }
+        
+        
         if ('/components/create' != $pathname) {
             return $this->__json($data);
         }
@@ -190,7 +199,7 @@ class ApiController extends Controller
                                 'name' => 'New Attr',
                                 'event' => 'newattr',
                                 'class' => 'btn-primary'
-                            ],
+                            ]
                         ]
                     ]
                 ],
@@ -299,6 +308,16 @@ class ApiController extends Controller
                         'title' => 'Layout Options',
                         'submenus' => [
                             [
+                                'href' => route('attrs_list'),
+                                'icon' => 'fa-circle-o',
+                                'title' => 'ATTRS LIST'
+                            ],
+                            [
+                                'href' => route('attrs_create'),
+                                'icon' => 'fa-circle-o',
+                                'title' => 'ATTRS CREATE'
+                            ],
+                            [
                                 'href' => route('components_list'),
                                 'icon' => 'fa-circle-o',
                                 'title' => 'COMPONENTS LIST'
@@ -333,6 +352,25 @@ class ApiController extends Controller
         
         return $this->__json($data);
     }
+    
+    
+    public function attrs_create(){
+        
+        
+        
+        
+        return $this->__json();
+    }
+    public function attrs_list(){
+        return $this->__json();
+    }
+    public function attrs_update(){
+        return $this->__json();
+    }
+    public function attrs_delete(){
+        return $this->__json();
+    }
+    
 }
 
 

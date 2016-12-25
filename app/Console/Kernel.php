@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
         Commands\Apidoc::class,
         Commands\TestRoute::class,
         Commands\Upgrade::class,
+        Commands\DumpStructs::class,
     ];
 
     /**

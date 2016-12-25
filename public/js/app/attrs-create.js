@@ -6,27 +6,14 @@ require(['initialize'], function(MyVue) {
     
     $.ajax({
         'url' : '/api/formConfig',
-//        'url' : '/json/components-create.js',
         'dataType' : 'json',
         'data' : {
             pathname : window.location.pathname
         },
         'success' : function(d){
             
-            d.data.attr_bind_form.fields.attr_id.data = [];
-            for(var i in d.data.attrs_list){
-                d.data.attr_bind_form.fields.attr_id.data.push({
-                    'value' : d.data.attrs_list[i]['attr_id'],
-                    'text' : d.data.attrs_list[i]['attr_name_cn'] + '(' + d.data.attrs_list[i]['attr_type'] + ')',
-                });
-            }
-            console.log(d.data.attr_bind_form.fields.attr_id.data);
-            
             var ddd = {
                 'pageConfig' : d.data ,
-                'runtime' : {
-                    'showAttrForm' : false,
-                }
             };
             
             vmForm = new Vue({

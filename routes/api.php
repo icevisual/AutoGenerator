@@ -26,3 +26,23 @@ Route::get('/formConfig', [
     'as' => 'api_formConfig',
     'uses' => 'SystemArchitecture\ApiController@formConfig'
 ]);
+
+
+
+
+Route::post('/attrs', [
+    'as' => 'api_attrs_create',
+    'uses' => 'SystemArchitecture\ApiController@attrs_create'
+]);
+Route::get('/attrs', [
+    'as' => 'api_attrs_list',
+    'uses' => 'SystemArchitecture\ApiController@attrs_list'
+]);
+Route::put('/attrs/{id}', [
+    'as' => 'api_attrs_update',
+    'uses' => 'SystemArchitecture\ApiController@attrs_update'
+]);
+Route::delete('/attrs/{id}', [
+    'as' => 'api_attrs_delete',
+    'uses' => 'SystemArchitecture\ApiController@attrs_delete'
+]);

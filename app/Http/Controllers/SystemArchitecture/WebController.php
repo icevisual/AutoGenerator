@@ -18,6 +18,14 @@ class WebController extends Controller
     }
     
     
+    public function attrs_list(){
+        return view('backend.common.attrs_list');
+    }
+    
+    public function attrs_create(){
+        return view('backend.common.attrs_form');
+    }
+    
     public function components_list(){
         return view('backend.common.simple');
     }
