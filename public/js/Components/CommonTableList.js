@@ -55,35 +55,63 @@ define(['Vue','Utils'],function(Vue,Utils) {
 ',
         'props' : ['dataSelector'],
         'data' : function () {
-            console.log(this.dataSelector);
             return {
                 tableConfig: this.dataSelector, 
             };
         },
         'methods' : {
+            'parseAjaxParam' : function(cfg,params){
+                var url = cfg.url;
+                for(var i in cfg.param){
+                    url = url.replace('{' + cfg.param[i] + '}',params[cfg.param[i]]);
+                }
+                return {
+                    'url' : url,
+                    'method' : cfg.method
+                };
+            },
             'defaultValue':function(v,d){
                 return v?v:d;
             },
             'updateRecord' : function(e){
                 var row = e.target.getAttribute('data-row');
-                var val = $(this.$el).find('[name=row-'+row+']').val();
-//                var val = document.getElementsByName('row-' + row)[0].getAttribute('value');
-                // this.tableConfig.attrs.uri
-                var redirect = '/attrs/create/' + val ;
+                var val = $(this.$el).find('[name=row-' + row + ']').val();
+                var reqPa = this.parseAjaxParam(this.tableConfig.attrs.uris.update,{'id':val});
+                var redirect = reqPa.url;
                 window.location.href = redirect;
             },
             'deleteRecord' : function(e){
-                console.log(arguments);
+                // TODO confirm
+                if(confirm('是否确定删除？')){
+                    var row = e.target.getAttribute('data-row');
+                    var val = $(this.$el).find('[name=row-'+row+']').val();
+                    var reqPa = this.parseAjaxParam(this.tableConfig.attrs.uris.delete,{'id':val});
+                    Utils.ajax({
+                        'url' : reqPa.url ,
+                        'method' : reqPa.method,
+                        'success' : function(d){
+                            if(Utils.apiReqSuccess(d)){
+                                window.location.reload();
+                            }else{
+                                alert(Utils.apiReqMsg(d));
+                            }
+                        },
+                        'error' : function(d){
+                            console.log(arguments);
+                        }
+                    });
+                }
             }
         },
         'mounted' : function(){
             var this$1 = this;
+            var reqPa = this.parseAjaxParam(this.tableConfig.attrs.uris.query);
+            var redirect = reqPa.url;
             Utils.ajax({
-                'url' : this.tableConfig.attrs.uri,
-                'method' : "GET",
+                'url' : reqPa.url,
+                'method' : reqPa.method,
 //                'async' : false,
                 'success' : function(d){
-                    console.log(d);
                     if(Utils.apiReqSuccess(d)){
                         this$1.tableConfig.data = Utils.apiReqData(d);
                     }else{

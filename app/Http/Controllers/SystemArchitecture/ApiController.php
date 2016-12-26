@@ -495,8 +495,11 @@ class ApiController extends Controller
         return $this->__json($data);
     }
 
-    public function attrs_delete()
+    public function attrs_delete($id)
     {
+        if($id){
+            Attrs::where('id',$id)->delete();
+        }
         return $this->__json();
     }
 }

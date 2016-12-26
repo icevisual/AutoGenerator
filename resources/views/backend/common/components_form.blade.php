@@ -37,8 +37,6 @@
                         <common-table :data-selector="pageConfig.component_attrs_table"  ></common-table>
                     </div>
                 </div>
-            
-                    
             </div><!--/.col (right) -->
             
           </div>   <!-- /.row -->

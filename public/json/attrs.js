@@ -6,7 +6,23 @@
             "attrs": {
                 "caption": "属性表",
                 "RESTful" : true,
-                "uri" : "/api/attrs",
+                "uris" : {
+                    "query" : {
+                        "url" : "/api/attrs",
+                        "param" : [],
+                        "method" : "GET"
+                    },
+                    "update" : {
+                        "url" : "/attrs/create/{id}",
+                        "param" : ["id"],
+                        "method" : "GET"
+                    },
+                    "delete" : {
+                        "url" : "/api/attrs/{id}",
+                        "param" : ["id"],
+                        "method" : "DELETE"
+                    }
+                },
                 "rownum" : true,
                 "hidden" : {
                     "id" : true

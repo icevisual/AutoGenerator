@@ -13,11 +13,34 @@
         "component_attrs_table": {
             "attrs": {
                 "caption": "组件属性表",
-                "header": [
-                    {
-                        "name": "#",
-                        "width": "10px"
+                "RESTful" : true,
+                "uris" : {
+                    "query" : {
+                        "url" : "/api/attrs",
+                        "param" : [],
+                        "method" : "GET"
                     },
+                    "update" : {
+                        "url" : "/attrs/create/{id}",
+                        "param" : ["id"],
+                        "method" : "GET"
+                    },
+                    "delete" : {
+                        "url" : "/api/attrs/{id}",
+                        "param" : ["id"],
+                        "method" : "DELETE"
+                    }
+                },
+                "rownum" : true,
+                "hidden" : {
+                    "id" : true
+                },
+                "operation" : true,
+                "operations" : {
+                    "update" : true,
+                    "delete" : true
+                },
+                "header": [
                     {
                         "name": "属性名中"
                     },
@@ -26,20 +49,17 @@
                     },
                     {
                         "name": "数据类型"
-                    },
-                    {
-                        "name": "默认值"
                     }
                 ]
             },
-            "list": [
-                {
+            "data": {
+                "list" : {
                     "attr_name_cn": "Update software",
                     "attr_name_en": "Update software",
                     "attr_type": "attr_type",
                     "default_value": "default_value"
                 }
-            ]
+            }
         },
         "component_form": {
             "attrs": {
@@ -48,6 +68,13 @@
                     "preinstall": {
                         "submit": true,
                         "cancel": true
+                    }
+                },
+                "action" : {
+                    "uri" : "/api/attrs",
+                    "method" : "POST",
+                    "success" : {
+                        "redirect" : "/attrs"
                     }
                 }
             },
@@ -76,6 +103,13 @@
         "attr_bind_form": {
             "attrs": {
                 "caption": "添加属性",
+                "action" : {
+                    "uri" : "/api/attrs",
+                    "method" : "POST",
+                    "success" : {
+                        "redirect" : "/attrs"
+                    }
+                },
                 "buttons": {
                     "preinstall": {
                         "submit": true,
@@ -117,7 +151,14 @@
         "attr_form": {
             "attrs": {
                 "caption": "新建组件属性",
-                "formColor": "box-warning"
+                "formColor": "box-warning",
+                "action" : {
+                    "uri" : "/api/attrs",
+                    "method" : "POST",
+                    "success" : {
+                        "redirect" : "/attrs"
+                    }
+                }
             },
             "fields": {
                 "attr_name_cn": {
