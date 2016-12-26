@@ -3,7 +3,6 @@ namespace App\Http\Controllers\SystemArchitecture;
 
 use App\Http\Controllers\Controller;
 use App\Exceptions\ServiceException;
-use function GuzzleHttp\json_decode;
 use App\Models\Form\Attrs;
 
 class ApiController extends Controller
@@ -374,9 +373,7 @@ class ApiController extends Controller
                 'attr_type' => '属性数据类型',
             ], // 属性名映射
         ]);
-        
         $obj = Attrs::createNewAttr($data);
-       
         return $this->__json( $obj->toArray());
     }
 

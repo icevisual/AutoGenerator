@@ -4,12 +4,10 @@
     "data": {
         "attrs_table": {
             "attrs": {
-                "caption": "组件属性表",
+                "caption": "属性表",
+                "uri" : "/api/attrs",
+                "rownum" : true,
                 "header": [
-                    {
-                        "name": "#",
-                        "width": "10px"
-                    },
                     {
                         "name": "属性名中"
                     },
@@ -20,18 +18,18 @@
                         "name": "数据类型"
                     },
                     {
-                        "name": "默认值"
+                        "name": "操作",
+                        "type" : "buttons"
                     }
                 ]
             },
-            "list": [
-                {
-                    "attr_name_cn": "Update software",
-                    "attr_name_en": "Update software",
-                    "attr_type": "attr_type",
-                    "default_value": "default_value"
-                }
-            ]
+            "data": {
+                "total": 2,
+                "current_page": 1,
+                "last_page": 1,
+                "per_page": 10,
+                "list" : []
+            }
         }
     }
 }

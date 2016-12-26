@@ -1,4 +1,4 @@
-define(['Vue'],function(Vue,$) {
+define(['Vue','Utils'],function(Vue,Utils) {
     Vue.component('common-table',{
         template : '\
 <div class="box box-info">\
@@ -9,18 +9,19 @@ define(['Vue'],function(Vue,$) {
     <table class="table table-bordered">\
       <tbody>\
       <tr>\
+        <th v-if="tableConfig.attrs.rownum" style="width:10px;">#</th>\
         <template v-for="(item,key) in tableConfig.attrs.header">\
           <th :style="\'width:\' + item.width + \';\'">{{item.name}}</th>\
         </tmplate>\
       </tr>\
-      <template v-for="(item,key) in tableConfig.list">\
+      <template v-for="(item,key) in tableConfig.data.list">\
         <tr>\
-          <td>{{key + 1}}</td>\
+          <td v-if="tableConfig.attrs.rownum">{{key + 1}}</td>\
           <template v-for="(item1,key1) in item">\
             <td>{{item1}}</td>\
-          </tmplate>\
+          </template>\
         </tr>\
-      </tmplate>\
+      </template>\
       </tbody>\
     </table>\
   </div><!-- /.box-body -->\
@@ -45,8 +46,26 @@ define(['Vue'],function(Vue,$) {
         'methods' : {
             'defaultValue':function(v,d){
                 return v?v:d;
-            }
+            },
         },
+        'mounted' : function(){
+            var this$1 = this;
+            Utils.ajax({
+                'url' : this.tableConfig.attrs.uri,
+                'method' : "GET",
+                'success' : function(d){
+                    console.log(d);
+                    if(Utils.apiReqSuccess(d)){
+                        this$1.tableConfig.data = Utils.apiReqData(d);
+                    }else{
+                        alert(Utils.apiReqMsg(d));
+                    }
+                },
+                'error' : function(d){
+                    console.log(arguments);
+                }
+            });
+        }
     });
     return Vue;
 });
