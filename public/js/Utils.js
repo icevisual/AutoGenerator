@@ -1,4 +1,4 @@
-define(function() {
+define(['jQuery'],function($) {
 
     // ---------------------------------------------------
     // 日期格式化
@@ -44,46 +44,19 @@ define(function() {
         return str;
     }
     return {
-        enumMap : {},
-        EnumMapRegister : function(collection, prefix) {
-            this.enumMap[prefix] = {
-                'collection' : collection,// keyName => IntValue
-                'reverse' : [],// IntValue => keyName
-            };
-            for ( var key in collection) {
-                this.enumMap[prefix]['reverse'][collection[key]] = key;
-            }
+        ajax : $.ajax,
+        apiReqSuccess : function(ret){
+            return ret.code === 1;
         },
-        EnumGetKey : function(prefix, ID) {
-            var ret = this.enumMap[prefix]['reverse'][ID];
-            if (undefined === ret) {
-                return ret;
-            }
-            return ret.replace(prefix, '');
+        apiReqMsg : function(ret){
+            return ret.msg;
         },
-        EnumGetValue : function(prefix, key) {
-            return this.enumMap[prefix]['collection'][(prefix + key)
-                    .toUpperCase()];
+        apiReqData : function(ret){
+            return ret.data;
         },
         now : function() {
             // return (new Date()).Format('yyyy-MM-dd HH:mm:ss');
             return (new Date()).Format('HH:mm:ss.u');
-        },
-        containGetKey : function(collection, value) {
-            for ( var key in collection) {
-                if (collection[key] == value) {
-                    return key;
-                }
-            }
-            return false;
-        },
-        extend : function(Child, Parent) {
-            var F = function() {
-            };
-            F.prototype = Parent.prototype;
-            Child.prototype = new F();
-            Child.prototype.constructor = Child;
-            Child.uber = Parent.prototype;
         },
         extendOptions : function(defaultOptions, options) {
             for ( var i in options) {
@@ -128,64 +101,11 @@ define(function() {
         timestamp : function() {
             return parseInt((new Date()).valueOf() / 1000);
         },
-        ten2sixteen : function(d) {
-            return [ d >> 8, d & 0xff ];
-        },
-        hex2IntArray : function(hexStr) {
-            if (hexStr.length % 2) {
-                hexStr = hexStr + '0';
-            }
-            var intArray = [];
-            for (var i = 0; i < hexStr.length; i += 2) {
-                var s = hexStr.substr(i, 2);
-                intArray[i / 2] = parseInt(s, 16);
-            }
-            return intArray;
-        },
-        intArray2HexStr : function(intArray) {
-            var sss = '';
-            for (var i = 0; i < intArray.length; i++) {
-                var s = parseInt(intArray[i]).toString(16);
-                if (s.length == 1) {
-                    s = '0' + s;
-                }
-                sss += s;
-            }
-            return sss;
-        },
-        base64decode2ArrayBuffer : function(encodeData) {
-            var base64Words = CryptoJS.enc.Base64.parse(encodeData);
-            // Convert 2 hex String
-            var hexEncryptedStr = CryptoJS.enc.Hex.stringify(base64Words);
-            // Convert 2 int Array
-            var intArray = this.hex2IntArray(hexEncryptedStr);
-            // Convert 2 ArrayBuffer
-            var u8ArrayBuffer = new Uint8Array(intArray);// .buffer;
-            return u8ArrayBuffer;
-        },
         getOptionOrDefault : function(options, key, defaultValue) {
             if (!options) {
                 return defaultValue;
             }
             return options[key] === undefined ? defaultValue : options[key];
-        },
-        base32_encode : function(str) {
-            var base32Map = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567', len = str.length, b32 = '', rest = 0, restLen = 0;
-            for (var i = 0; i < len; i++) {
-                var chrCode = str.charCodeAt(i), thisByte = rest << 8 | chrCode, thisByteLen = restLen + 8;
-                while (thisByteLen >= 5) {
-                    b32 += base32Map.charAt(thisByte >> (thisByteLen - 5));
-                    thisByteLen -= 5;
-                    thisByte = thisByte & (Math.pow(2, thisByteLen) - 1);
-                }
-                rest = thisByte;
-                restLen = thisByteLen;
-            }
-            if (restLen > 0) {
-                rest = rest << (5 - restLen);
-                b32 += base32Map.charAt(rest);
-            }
-            return b32;
         },
         array_reverse : function(data) {
             var map = [];
@@ -194,7 +114,7 @@ define(function() {
             }
             return map
         },
-        ajax : function(options) {
+        _ajax : function(options) {
             options = options || {};
             options.type = (options.type || "GET").toUpperCase();
             options.dataType = options.dataType || "json";
@@ -290,29 +210,6 @@ define(function() {
                 }
             }
             return config;
-        },
-        array_swap : function(array,index1,index2){
-            var temp = array[index2];
-            for(var i = index1 + 1 ; i < array.length ; i ++){
-                array[i] = array[i - 1]; 
-            }
-            array[index1] = temp;
-            
-            Array.prototype.swap = function(index1,index2){
-                var sm = index1 > index2 ? index2 : index1,
-                    bg = index1 > index2 ? index1 : index2;
-                var ret = [];
-                var temp = this[bg];
-                
-                for(var i = sm + 1 ; i < sm - 1 ; i ++){
-                    ret[i] = this[i - 1]; 
-                }
-                for(var i = sm + 1 ; i < this.length ; i ++){
-                    this[i] = this[i - 1]; 
-                }
-                this[sm] = temp;
-            }
-            
         }
     };
 });

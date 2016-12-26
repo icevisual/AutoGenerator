@@ -32,6 +32,8 @@ Route::get('/components/create', [
 ]);
 
 
+
+
 Route::get('/attrs', [
     'as' => 'attrs_list',
     'uses' => 'SystemArchitecture\WebController@attrs_list'
@@ -41,5 +43,13 @@ Route::get('/attrs/create', [
     'as' => 'attrs_create',
     'uses' => 'SystemArchitecture\WebController@attrs_create'
 ]);
+
+Route::get('/attrs/{id}', [
+    'as' => 'attrs_update',
+    'uses' => 'SystemArchitecture\WebController@attrs_create'
+]);
+
+
+
 
 

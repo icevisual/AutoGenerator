@@ -8,7 +8,7 @@ define(['Vue','jQuery'],function(Vue,$) {
     <h3 class="box-title">{{formConfig.attrs.caption}}</h3>\
   </div><!-- /.box-header -->\
   <!-- form start -->\
-  <form class="form-horizontal">\
+  <form class="form-horizontal" :action="formConfig.attrs.action.uri" :method="formConfig.attrs.action.method">\
     <div class="box-body">\
        <template v-for="(item,index) in formConfig.fields" >\
         <div class="form-group">\
@@ -72,7 +72,8 @@ define(['Vue','jQuery'],function(Vue,$) {
             'btnclick' : function(e){
                 var emitEventType = e.target.getAttribute("data-event");
                 if('submit' == emitEventType){
-                    this.$emit('formsubmit',this.doFormValidate(this.$el,this.$data));
+//                    this.$emit('formsubmit',this.doFormValidate(this.$el,this.$data));
+                    this.$emit('formsubmit',this.doFormValidate(this.$el,this.$data),this.$data);
                 }else{
                     this.$emit('form' + emitEventType,e);
                 }

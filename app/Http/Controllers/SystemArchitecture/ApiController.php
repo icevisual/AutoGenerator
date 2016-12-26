@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SystemArchitecture;
 use App\Http\Controllers\Controller;
 use App\Exceptions\ServiceException;
 use function GuzzleHttp\json_decode;
+use App\Models\Form\Attrs;
 
 class ApiController extends Controller
 {
@@ -102,13 +103,12 @@ class ApiController extends Controller
         
         $pathname = \Input::get('pathname');
         
-        $file = 'json/'.str_replace('/', '-', trim($pathname,'/')).'.js';
-
-        if(file_exists(public_path($file))){
-            echo file_get_contents($file);
-            exit;
-        }
+        $file = 'json/' . str_replace('/', '-', trim($pathname, '/')) . '.js';
         
+        if (file_exists(public_path($file))) {
+            echo file_get_contents($file);
+            exit();
+        }
         
         if ('/components/create' != $pathname) {
             return $this->__json($data);
@@ -352,21 +352,49 @@ class ApiController extends Controller
         
         return $this->__json($data);
     }
-    
-    
-    public function attrs_create(){
+
+    public function attrs_create()
+    {
+        $data = [
+            'attr_name_cn' => \Input::get('attr_name_cn'),// String 属性名称-中文
+            'attr_name_en' => \Input::get('attr_name_en'),// String 属性名称-英文
+            'attr_type' => \Input::get('attr_type')// String 属性数据类型
+        ];
         
+        runCustomValidator([
+            'data' => $data, // 数据
+            'rules' => [
+                'attr_name_cn' => 'required|unique:attrs,attr_name_cn',
+                'attr_name_en' => 'required|unique:attrs,attr_name_en',
+                'attr_type' => 'required',
+            ], // 条件
+            'attributes' => [
+                'attr_name_cn' => '属性名称-中文',
+                'attr_name_en' => '属性名称-英文',
+                'attr_type' => '属性数据类型',
+            ], // 属性名映射
+        ]);
         
+        $obj = Attrs::createNewAttr($data);
+       
+        return $this->__json( $obj->toArray());
+    }
+
+    public function attrs_list()
+    {
+        $page = \Input::get('p',1);// 页数
+        $pageSize = \Input::get('n',10); // 每页条数
         
+        $data = Attrs::queryAttrs([],$page,$pageSize);
         
+        return $this->__json($data);
+    }
+
+    public function attrs_update()
+    {
         return $this->__json();
     }
-    public function attrs_list(){
-        return $this->__json();
-    }
-    public function attrs_update(){
-        return $this->__json();
-    }
+
     public function attrs_delete(){
         return $this->__json();
     }

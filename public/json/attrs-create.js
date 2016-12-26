@@ -6,9 +6,25 @@
             "attrs": {
                 "caption" : "新建组件属性",
                 "formColor" : "box-warning",
-                "action" : "",
+                "action" : {
+                    "uri" : "/api/attrs",
+                    "method" : "POST",
+                    "success" : {
+                        "redirect" : "/attrs"
+                    }
+                }
             },
             "fields": {
+                "attr_name_cn": {
+                    "name": "属性名字中",
+                    "type": "input",
+                    "attrs": {
+                        "type": "text",
+                        "default": "asdda",
+                        "placeholder": "属性名字中"
+                    },
+                    "value": ""
+                },
                 "attr_name_cn": {
                     "name": "属性名字中",
                     "type": "input",

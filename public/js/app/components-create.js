@@ -1,17 +1,18 @@
-
-var vmForm ;
-require(['initialize'], function(MyVue) {
+require(['initialize'], function(EVue) {
     var $ = require('jQuery'),
-        Vue = require('Vue');
-    
+        Vue = require('Vue'),
+        Utils = require('Utils');
     $.ajax({
         'url' : '/api/formConfig',
-//        'url' : '/json/components-create.js',
         'dataType' : 'json',
         'data' : {
             pathname : window.location.pathname
         },
         'success' : function(d){
+            
+            if(!Utils.apiReqSuccess(d)){
+                return alert(Utils.apiReqMsg(d));
+            }
             
             d.data.attr_bind_form.fields.attr_id.data = [];
             for(var i in d.data.attrs_list){
@@ -23,13 +24,13 @@ require(['initialize'], function(MyVue) {
             console.log(d.data.attr_bind_form.fields.attr_id.data);
             
             var ddd = {
-                'pageConfig' : d.data ,
+                'pageConfig' : Utils.apiReqData(d) ,
                 'runtime' : {
                     'showAttrForm' : false,
                 }
             };
             
-            vmForm = new Vue({
+            var vmForm = new EVue({
                 'el' : '#formDemo',
                 'data' : ddd,
                 'methods' : {

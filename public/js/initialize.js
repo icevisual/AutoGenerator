@@ -9,7 +9,7 @@ require.config({
         'demo' : '../dist/js/demo',
         'Vue' : '../dist/js/vue.v2.1.6.min',
         'Components' : './Components',
-//        'Utils' : 'Utils',
+        'Utils' : 'Utils',
     },
     shim : {
         'jQuery' : {
@@ -24,7 +24,7 @@ require.config({
         'ALTApp' : ['jQuery','jQuery.slimscroll','bootstrap','fastclick'],
     }
 });
-define(['Vue','jQuery','Components','ALTApp'],function(Vue,$) {
+define(['Vue','jQuery','Components','ALTApp','Utils'],function(Vue,$) {
     var vm = new Vue({
         'el' : '#sidebar-menu-vue',
         'mounted' : function() {
@@ -48,7 +48,7 @@ define(['Vue','jQuery','Components','ALTApp'],function(Vue,$) {
     });
     
     
-    var MyVue = Vue.extend({
+    var EVue = Vue.extend({
         'methods' : {
             'formFieldReset' : function(formTag,field,defaultValue){
                 var defaultVal = this.pageConfig[formTag].fields[field].default;
@@ -59,10 +59,39 @@ define(['Vue','jQuery','Components','ALTApp'],function(Vue,$) {
                     this.pageConfig[formTag].fields[field].value = defaultVal;
                 }
             },
+            'formSelectInit' : function(formTag,field,data){
+                this.pageConfig[formTag].fields[field].data = data;
+            },
             'appendFormSelect' : function(formTag,field,data){
-                this.pageConfig[formTag].fields[field].data.push(data);
+                if(data instanceof Array ){
+                    for(var i in data){
+                        this.pageConfig[formTag].fields[field].data.push(data[i]); 
+                    }
+                }else{
+                    this.pageConfig[formTag].fields[field].data.push(data);
+                }
+            },
+            'getFormAction' : function(){
+                return {
+                    'create' : {
+                        'action' : '/api/attrs',
+                        'method' : 'POST',
+                    },
+                    'delete' : {
+                        'action' : '/api/attrs/{id}',
+                        'method' : 'delete',
+                    },
+                    'select' : {
+                        'action' : '/api/attrs',
+                        'method' : 'GET',
+                    },
+                    'update' : {
+                        'action' : '/api/attrs/{id}',
+                        'method' : 'PUT',
+                    },
+                };
             }
         }
     });
-    return MyVue;
+    return EVue;
 });
