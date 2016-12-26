@@ -12,7 +12,8 @@ define(['Vue','Utils'],function(Vue,Utils) {
       <tr>\
         <th v-if="tableConfig.attrs.rownum" style="width:10px;">#</th>\
         <template v-for="(item,key) in tableConfig.attrs.header">\
-          <th :style="\'width:\' + item.width + \';\'">{{item.name}}</th>\
+          <th v-if="\'string\' == typeof item">{{item}}</th>\
+          <th v-else :style="\'width:\' + item.width + \';\'">{{item.name}}</th>\
         </template>\
         <template v-if="tableConfig.attrs.operation">\
           <th>操作</th>\

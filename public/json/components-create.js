@@ -2,14 +2,6 @@
     "code": 1,
     "msg": "OK",
     "data": {
-        "attrs_list": {
-            "1": {
-                "attr_id": "1",
-                "attr_name_cn": "attr_name_cn",
-                "attr_name_en": "attr_name_en",
-                "attr_type": "string"
-            }
-        },
         "component_attrs_table": {
             "attrs": {
                 "caption": "组件属性表",
@@ -32,15 +24,9 @@
                     }
                 },
                 "header": [
-                    {
-                        "name": "属性名中"
-                    },
-                    {
-                        "name": "属性名英"
-                    },
-                    {
-                        "name": "数据类型"
-                    }
+                    "属性名中",
+                    "属性名英",
+                    "数据类型"
                 ]
             },
             "data": {
