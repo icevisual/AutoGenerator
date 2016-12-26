@@ -28,6 +28,16 @@ CREATE TABLE `op_attrs` (
         return self::create($data);
     }
     
+    public static function updateAttr($id,$data){
+        return self::where('id',$id)->update($data);
+    }
+    
+    public static function attrDetail($id){
+        return self::find($id);
+    }
+    
+    
+    
     public static function queryAttrs($search = [],$page = 1,$pageSize = 10,$order = []){
         $handler = self::select([
             'attrs.id',

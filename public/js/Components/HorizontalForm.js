@@ -11,7 +11,10 @@ define(['Vue','jQuery'],function(Vue,$) {
   <form class="form-horizontal" :action="formConfig.attrs.action.uri" :method="formConfig.attrs.action.method">\
     <div class="box-body">\
        <template v-for="(item,index) in formConfig.fields" >\
-        <div class="form-group">\
+        <template v-if="item.hidden">\
+          <input v-model="item.value" :type="item.attrs.type" :name="index" >\
+        </template>\
+        <div v-else class="form-group">\
           <label class="col-sm-2 control-label">{{item.name}}</label>\
           <div class="col-sm-10">\
               <template v-if="\'input\' == item.type">\
