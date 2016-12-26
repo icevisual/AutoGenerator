@@ -30,7 +30,7 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-6">
-                        <common-table :data-selector="pageConfig.component_attrs_table"  ></common-table>
+                        <common-table :data-selector="pageConfig.component_attrs_table" @tableremove="tableremove" ></common-table>
                     </div>
                     
                     <div class="col-md-6">

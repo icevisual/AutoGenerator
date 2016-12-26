@@ -76,6 +76,9 @@ require(['initialize'], function(EVue) {
                         
                         vmForm.runtime.showAttrForm = false;
                     },
+                    'tableremove' : function(){
+                        console.log(arguments);
+                    },
                     
                     'formFieldReset' : function(formTag,field,defaultValue){
                         var defaultVal = this.pageConfig[formTag].fields[field].default;
@@ -98,7 +101,6 @@ require(['initialize'], function(EVue) {
                             this.pageConfig[formTag].fields[field].data.push(data);
                         }
                     }
-                    
                 }
             });
         }

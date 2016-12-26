@@ -13,22 +13,11 @@
         "component_attrs_table": {
             "attrs": {
                 "caption": "组件属性表",
-                "RESTful" : true,
                 "uris" : {
                     "query" : {
                         "url" : "/api/attrs",
                         "param" : [],
                         "method" : "GET"
-                    },
-                    "update" : {
-                        "url" : "/attrs/create/{id}",
-                        "param" : ["id"],
-                        "method" : "GET"
-                    },
-                    "delete" : {
-                        "url" : "/api/attrs/{id}",
-                        "param" : ["id"],
-                        "method" : "DELETE"
                     }
                 },
                 "rownum" : true,
@@ -37,8 +26,10 @@
                 },
                 "operation" : true,
                 "operations" : {
-                    "update" : true,
-                    "delete" : true
+                    "remove" : {
+                        "color" : "btn-info",
+                        "text" : ">"
+                    }
                 },
                 "header": [
                     {
@@ -53,12 +44,11 @@
                 ]
             },
             "data": {
-                "list" : {
-                    "attr_name_cn": "Update software",
-                    "attr_name_en": "Update software",
-                    "attr_type": "attr_type",
-                    "default_value": "default_value"
-                }
+                "total": 2,
+                "current_page": 1,
+                "last_page": 1,
+                "per_page": 10,
+                "list" : []
             }
         },
         "component_form": {

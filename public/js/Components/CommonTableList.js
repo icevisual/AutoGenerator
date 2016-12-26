@@ -32,7 +32,8 @@ define(['Vue','Utils'],function(Vue,Utils) {
               <div class="tools">\
                 <template v-for="(item,key2) in tableConfig.attrs.operations">\
                   <a v-if="key2 == \'update\'" :data-row="key" @click.prevent="updateRecord" class="btn btn-primary btn-xs">U</a>\
-                  <a v-if="key2 == \'delete\'" :data-row="key" @click.prevent="deleteRecord" class="btn btn-danger btn-xs">D</a>\
+                  <a v-else-if="key2 == \'delete\'" :data-row="key" @click.prevent="deleteRecord" class="btn btn-danger btn-xs">D</a>\
+                  <a v-else :data-row="key" :data-event="key2" @click.prevent="btnclick" :class="item.color" class="btn btn-xs">{{item.text}}</a>\
                 </template>\
               </div>\
             </td>\
@@ -101,6 +102,10 @@ define(['Vue','Utils'],function(Vue,Utils) {
                         }
                     });
                 }
+            },
+            'btnclick' : function(e){
+                var emitEventType = e.target.getAttribute("data-event");
+                this.$emit('table' + emitEventType,e);
             }
         },
         'mounted' : function(){
