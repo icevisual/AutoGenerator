@@ -1,5 +1,5 @@
 -- ----------------------------
--- Date: 2016-12-25 03:43:10
+-- Date: 2016-12-27 08:39:14
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -14,7 +14,7 @@ CREATE TABLE `op_attrs` (
   `attr_name_en` varchar(80) NOT NULL COMMENT '属性名字',
   `attr_type` varchar(80) NOT NULL COMMENT '属性类别',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组件属性表';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='组件属性表';
 
 -- ----------------------------
 -- Table structure for op_component
@@ -23,6 +23,7 @@ DROP TABLE IF EXISTS `op_component`;
 CREATE TABLE `op_component` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `component_name` varchar(80) NOT NULL COMMENT '组件名称',
+  `component_desc` varchar(255) NOT NULL COMMENT '组件描述',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组件表';
 
@@ -66,7 +67,7 @@ CREATE TABLE `op_request_log` (
   `memory_usage` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '内存使用量MB',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=789 DEFAULT CHARSET=utf8 COMMENT='请求日志';
+) ENGINE=InnoDB AUTO_INCREMENT=1651 DEFAULT CHARSET=utf8 COMMENT='请求日志';
 
 -- ----------------------------
 -- Table structure for op_request_params

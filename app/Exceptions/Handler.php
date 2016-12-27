@@ -83,7 +83,7 @@ class Handler extends ExceptionHandler
         if (! \Config::get('app.debug')) {
             return \JsonReturn::json($e->getCode(),$e->getMessage(), [],$httpStatus);
         }
-        return parent::render($request, $exception);
+        return parent::render($request, $e);
     }
 
     /**

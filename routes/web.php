@@ -21,14 +21,17 @@ Route::get('/demo/create', [
     'uses' => 'SystemArchitecture\WebController@demo_create'
 ]);
 
+
+
+
 Route::get('/components', [
-    'as' => 'components_list',
-    'uses' => 'SystemArchitecture\WebController@components_list'
+    'as' => 'components_query',
+    'uses' => 'Component\WebController@query'
 ]);
 
-Route::get('/component/create', [
+Route::get('/component/{id?}', [
     'as' => 'component_create',
-    'uses' => 'SystemArchitecture\WebController@components_create'
+    'uses' => 'Component\WebController@create'
 ]);
 
 

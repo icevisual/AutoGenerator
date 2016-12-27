@@ -3,11 +3,13 @@ require(['initialize'], function(EVue) {
     var $ = require('jQuery'),
         Vue = require('Vue'),
         Utils = require('Utils');
+    
+    var mtc = window.location.pathname.match(/\/(\d+)/);
+    
     $.ajax({
-        'url' : '/api/formConfig',
+        'url' : '/api/component/' + mtc[1],
         'dataType' : 'json',
         'data' : {
-            pathname : window.location.pathname
         },
         'success' : function(d){
             
@@ -37,7 +39,7 @@ require(['initialize'], function(EVue) {
                             // check default Value
                             var tableData = this.getTableData('attrs_bind_table');
                             
-                            var attrBindData = {};
+                            var attrBindData = [];
                             
                             for(var i in tableData){
                                 if('' == tableData[i]['default_value']){
@@ -45,25 +47,25 @@ require(['initialize'], function(EVue) {
                                     .find('input')
                                     .focus();
                                 }else{
-                                    attrBindData[tableData[i].id] = tableData[i].default_value;
+                                    attrBindData.push({
+                                        'id' : tableData[i].id,
+                                        'default_value' : tableData[i].default_value
+                                    });
+//                                    attrBindData[tableData[i].id] = tableData[i].default_value;
                                 }
                             }
                             
                             if(Utils.isEmptyObj(attrBindData)){
                                 return alert('请选择控件属性');
                             }
+                            formValidateRet['attrs'] = attrBindData;
                             
-                            var postData = {
-                                'component' : formValidateRet,
-                                'attrs' : attrBindData
-                            };
-                            
-                            console.log(postData);
-                            console.log(JSON.stringify(postData));
+                            console.log(formValidateRet);
+                            console.log(JSON.stringify(formValidateRet));
                             Utils.ajax({
                                 'url' : vmForm.pageConfig.component_form.attrs.action.uri,
                                 'method' : vmForm.pageConfig.component_form.attrs.action.method,
-                                'data' : postData,
+                                'data' : formValidateRet,
                                 'success' : function(d){
                                     if(Utils.apiReqSuccess(d)){
                                         window.location.href = vmForm.pageConfig.component_form.attrs.action.success.redirect

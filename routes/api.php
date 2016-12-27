@@ -56,26 +56,24 @@ Route::delete('/attr/{id}', [
 
 
 Route::post('/component', [
-    'as' => 'api_attrs_create',
-    'uses' => 'SystemArchitecture\ApiController@attrs_create'
+    'as' => 'api_component_create',
+    'uses' => 'Component\ApiController@create'
 ]);
 Route::get('/components', [
-    'as' => 'api_attrs_list',
-    'uses' => 'SystemArchitecture\ApiController@attrs_list'
+    'as' => 'api_components_query',
+    'uses' => 'Component\ApiController@query'
 ]);
-
 Route::get('/component/{id}', [
-    'as' => 'api_attrs_detail',
-    'uses' => 'SystemArchitecture\ApiController@attrs_detail'
+    'as' => 'api_component_detail',
+    'uses' => 'Component\ApiController@detail'
 ]);
-
-Route::put('/component/{id}', [
-    'as' => 'api_attrs_update',
-    'uses' => 'SystemArchitecture\ApiController@attrs_update'
+Route::put('/component', [
+    'as' => 'api_component_update',
+    'uses' => 'Component\ApiController@update'
 ]);
 Route::delete('/component/{id}', [
-    'as' => 'api_attrs_delete',
-    'uses' => 'SystemArchitecture\ApiController@attrs_delete'
+    'as' => 'api_component_delete',
+    'uses' => 'Component\ApiController@delete'
 ]);
 
 
