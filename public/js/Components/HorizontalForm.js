@@ -60,14 +60,6 @@ define(['Vue','jQuery'],function(Vue,$) {
                     {
                         "value": "integer",
                         "text": "integer"
-                    },
-                    {
-                        "value": "float",
-                        "text": "float"
-                    },
-                    {
-                        "value": "boolean",
-                        "text": "boolean"
                     }
                 ]
             }
