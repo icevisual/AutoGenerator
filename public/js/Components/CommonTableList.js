@@ -1,5 +1,61 @@
 define(['Vue','Utils'],function(Vue,Utils) {
     var $ = require("jQuery");
+    
+    
+    /**
+    {
+        "attrs": {
+            "caption": "属性表",
+            "RESTful" : true,
+            "ajax" : true,// 用 Ajax 获取数据
+            "uris" : {
+                "query" : { // 列表接口
+                    "url" : "/api/attrs",
+                    "param" : [],
+                    "method" : "GET"
+                },
+                "update" : {
+                    "url" : "/attr/{id}",
+                    "param" : ["id"],
+                    "method" : "GET"
+                },
+                "delete" : {
+                    "url" : "/api/{id}",
+                    "param" : ["id"],
+                    "method" : "DELETE"
+                }
+            },
+            "rownum" : true, // 显示行号
+            "hidden" : { // 隐藏的属性
+                "id" : true
+            },
+            "operation" : true, // 是否有操作按钮
+            "operations" : {
+                "update" : true, // 预设 更新 和 删除 按钮
+                "delete" : true,
+                "addbind" : { // 其他按钮  table + {key} 的事件
+                    "color" : "btn-success",
+                    "text" : "+"
+                }
+            },
+            "header": [// 表头
+                {
+                    "name": "属性名中",
+                    "width":"200px" // 列宽
+                },
+                "属性名英",
+                "数据类型"
+            ]
+        },
+        "data": {
+            "total": 2, // 分页信息
+            "current_page": 1,
+            "last_page": 1,
+            "per_page": 10,
+            "list" : []
+        }
+    }
+    **/
     Vue.component('common-table',{
         template : '\
 <div class="box box-info">\

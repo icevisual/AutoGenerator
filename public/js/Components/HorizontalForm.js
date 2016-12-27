@@ -1,5 +1,79 @@
 define(['Vue','jQuery'],function(Vue,$) {
-    
+    /**
+    {
+        "attrs": {
+            "caption" : "新建组件属性",
+            "formColor" : "box-warning",
+            "buttons": {
+                "preinstall": {
+                    "submit": true,
+                    "cancel": true
+                }
+            },
+            "action" : { // form 属性
+                "uri" : "/api/attr",
+                "method" : "POST",
+                "success" : {// form 提交成功 
+                    "redirect" : "/attrs" // 成功跳转
+                }
+            }
+        },
+        "fields": {
+            "attr_name_cn": {
+                "name": "属性名字中", // 字段文本
+                "type": "input",  // 类型 input select
+                "attrs": { // 属性
+                    "type": "text",
+                    "default": "asdda",
+                    "placeholder": "属性名字中"
+                },
+                "value": ""
+            },
+            "attr_name_cn": {
+                "name": "属性名字中",
+                "type": "input",
+                "attrs": {
+                    "type": "text",
+                    "default": "asdda",
+                    "placeholder": "属性名字中"
+                },
+                "value": ""
+            },
+            "attr_name_en": {
+                "name": "属性名字英",
+                "type": "input",
+                "attrs": {
+                    "type": "text",
+                    "placeholder": "属性名字英"
+                },
+                "value": ""
+            },
+            "attr_type": {
+                "name": "属性类别",
+                "type": "select",
+                "value": "string",
+                "data": [
+                    {
+                        "value": "string",
+                        "text": "string"
+                    },
+                    {
+                        "value": "integer",
+                        "text": "integer"
+                    },
+                    {
+                        "value": "float",
+                        "text": "float"
+                    },
+                    {
+                        "value": "boolean",
+                        "text": "boolean"
+                    }
+                ]
+            }
+        }
+    }
+    **/
     Vue.component('horizontal-form',{
         template : '\
 <!-- Horizontal Form -->\
