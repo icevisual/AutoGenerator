@@ -14,12 +14,12 @@
                         "method" : "GET"
                     },
                     "update" : {
-                        "url" : "/attr/create/{id}",
+                        "url" : "/attr/{id}",
                         "param" : ["id"],
                         "method" : "GET"
                     },
                     "delete" : {
-                        "url" : "/api/attr/{id}",
+                        "url" : "/api/{id}",
                         "param" : ["id"],
                         "method" : "DELETE"
                     }

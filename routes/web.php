@@ -42,12 +42,12 @@ Route::get('/attrs', [
     'uses' => 'SystemArchitecture\WebController@attrs_list'
 ]);
 
-Route::get('/attr/create', [
+Route::get('/attr', [
     'as' => 'attrs_create',
     'uses' => 'SystemArchitecture\WebController@attrs_create'
 ]);
 
-Route::get('/attr/create/{id}', [
+Route::get('/attr/{id}', [
     'as' => 'attrs_update',
     'uses' => 'SystemArchitecture\WebController@attrs_create'
 ]);

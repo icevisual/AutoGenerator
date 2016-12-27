@@ -88,10 +88,10 @@ class ApiController extends Controller
                             'method' => 'GET'
                         ]
                     ],
-                    'ajax' => '1',
-                    'rownum' => '',
+                    'ajax' => true,
+                    'rownum' => false,
                     'hidden' => [],
-                    'operation' => '1',
+                    'operation' => true,
                     'operations' => [
                         'addbind' => [
                             "color" => "btn-success",
@@ -119,7 +119,7 @@ class ApiController extends Controller
             'attrs_bind_table' => [
                 'attrs' => [
                     'caption' => '组件属性表',
-                    'ajax' => '',
+                    'ajax' => false,
                     'uris' => [
                         'query' => [
                             'url' => '/api/attrs',
@@ -127,14 +127,14 @@ class ApiController extends Controller
                             'method' => 'GET'
                         ]
                     ],
-                    'rownum' => '1',
+                    'rownum' => true,
                     'hidden' => [],
                     'advancedColumn' => [
                         'default_value' => [
                             'type' => 'input'
                         ]
                     ],
-                    'operation' => '1',
+                    'operation' => true,
                     'operations' => [
                         'attrunbind' => [
                             'color' => 'btn-warning',
