@@ -1,6 +1,6 @@
 define(['Vue','Utils'],function(Vue,Utils) {
     var $ = require("jQuery");
-    Vue.component('common-table',{
+    Vue.component('advance-table',{
         template : '\
 <div class="box box-info">\
   <div class="box-header with-border">\
@@ -25,6 +25,13 @@ define(['Vue','Utils'],function(Vue,Utils) {
           <template v-for="(item1,key1) in item">\
             <td v-if="tableConfig.attrs.hidden[key1]" class="hide">\
               <input type="hidden" :name="\'row-\' + key" :value="item1">\
+            </td>\
+            <td v-else-if="tableConfig.attrs.advancedColumn[key1]">\
+              <template v-if="tableConfig.attrs.advancedColumn[key1].type == \'input\'">\
+              <div class="input-group-sm">\
+                <input type="text" class="form-control" :name="\'row-\' + key" :value="item1">\
+              </div>\
+              </template>\
             </td>\
             <td v-else>{{item1}}</td>\
           </template>\

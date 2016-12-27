@@ -6,6 +6,7 @@
             "attrs": {
                 "caption": "属性表",
                 "RESTful" : true,
+                "ajax" : true,
                 "uris" : {
                     "query" : {
                         "url" : "/api/attrs",

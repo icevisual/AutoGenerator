@@ -39,14 +39,7 @@ require(['initialize'], function(EVue) {
                                 }
                             });
                         }
-                    },
-                    'cancelAddNewAttr' : function(){
-                        
-                        this.formFieldReset('attr_form','attr_name_cn');
-                        this.formFieldReset('attr_form','attr_name_en');
-                        
-                        vmForm.runtime.showAttrForm = false;
-                    },
+                    }
                 }
             });
         }

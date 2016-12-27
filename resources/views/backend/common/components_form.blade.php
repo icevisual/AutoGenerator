@@ -18,97 +18,13 @@
             <!-- left column -->
             <div class="col-md-6">
               <horizontal-form :data-selector="pageConfig.component_form" @formsubmit="submitComponent" ></horizontal-form>
-              
-<!--               <horizontal-form :data-selector="pageConfig.attr_bind_form"  @formnewattr="NewAttrBtn" @formsubmit="bindNewAttr" ></horizontal-form> -->
+              <common-table :data-selector="pageConfig.component_attrs_table" @tableaddbind="tableaddbind" ></common-table>
             </div><!--/.col (left) -->
               
             <div class="col-md-6">
-              <horizontal-form :data-selector="pageConfig.attr_form"   @formcancel="cancelAddNewAttr"   @formsubmit="addNewAttr" ></horizontal-form>
-            
-            </div><!--/.col (right) -->
-            
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6">
-                        <common-table :data-selector="pageConfig.component_attrs_table" @tableremove="tableremove" ></common-table>
-                    
-                    
-                        <div class="box">
-                            <div class="box-header with-border">
-                              <h3 class="box-title">Bordered Table</h3>
-                            </div><!-- /.box-header -->
-                            <div class="box-body">
-                              <table class="table table-bordered">
-                                <tr>
-                                  <th style="width: 10px">#</th>
-                                  <th>Task</th>
-                                  <th>Progress</th>
-                                  <th style="width: 40px">Label</th>
-                                </tr>
-                                <tr>
-                                  <td>1.</td>
-                                  <td>Update software</td>
-                                  <td>
-                                    <div class="progress progress-xs">
-                                      <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                    </div>
-                                  </td>
-                                  <td><span class="badge bg-red">55%</span></td>
-                                </tr>
-                                <tr>
-                                  <td>2.</td>
-                                  <td>Clean database</td>
-                                  <td>
-                                    <div class="progress progress-xs">
-                                      <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                                    </div>
-                                  </td>
-                                  <td><span class="badge bg-yellow">70%</span></td>
-                                </tr>
-                                <tr>
-                                  <td>3.</td>
-                                  <td>Cron job running</td>
-                                  <td>
-                                    <div class="progress progress-xs progress-striped active">
-                                      <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                                    </div>
-                                  </td>
-                                  <td><span class="badge bg-light-blue">30%</span></td>
-                                </tr>
-                                <tr>
-                                  <td>4.</td>
-                                  <td>Fix and squish bugs</td>
-                                  <td>
-                                  
-                                  <div class="input-group input-group-sm">
-                    <input type="text" class="form-control">
-                    <span class="input-group-btn">
-                      <button class="btn btn-info btn-flat" type="button">Go!</button>
-                    </span>
-                  </div>
-                                  
-                                  </td>
-                                  <td><span class="badge bg-green">90%</span></td>
-                                </tr>
-                              </table>
-                            </div><!-- /.box-body -->
-                            <div class="box-footer clearfix">
-                              <ul class="pagination pagination-sm no-margin pull-right">
-                                <li><a href="#">&laquo;</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">&raquo;</a></li>
-                              </ul>
-                            </div>
-                          </div><!-- /.box -->
-                    
-                    </div>
-                    
-                    <div class="col-md-6">
-                        <common-table :data-selector="pageConfig.component_attrs_table"  ></common-table>
-                    </div>
-                </div>
+<!--               <horizontal-form :data-selector="pageConfig.attr_form"   @formcancel="cancelAddNewAttr"   @formsubmit="addNewAttr" ></horizontal-form> -->
+              <advance-table :data-selector="pageConfig.attrs_bind_table" @tableattrunbind="attrUnbind" ></advance-table>
+                   
             </div><!--/.col (right) -->
             
           </div>   <!-- /.row -->

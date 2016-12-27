@@ -24,7 +24,7 @@ require.config({
         'ALTApp' : ['jQuery','jQuery.slimscroll','bootstrap','fastclick'],
     }
 });
-define(['Vue','jQuery','Components','ALTApp','Utils'],function(Vue,$) {
+define(['Vue','jQuery','Components','ALTApp','demo','Utils'],function(Vue,$) {
     var vm = new Vue({
         'el' : '#sidebar-menu-vue',
         'mounted' : function() {
@@ -71,26 +71,9 @@ define(['Vue','jQuery','Components','ALTApp','Utils'],function(Vue,$) {
                     this.pageConfig[formTag].fields[field].data.push(data);
                 }
             },
-            'getFormAction' : function(){
-                return {
-                    'create' : {
-                        'action' : '/api/attrs',
-                        'method' : 'POST',
-                    },
-                    'delete' : {
-                        'action' : '/api/attrs/{id}',
-                        'method' : 'delete',
-                    },
-                    'select' : {
-                        'action' : '/api/attrs',
-                        'method' : 'GET',
-                    },
-                    'update' : {
-                        'action' : '/api/attrs/{id}',
-                        'method' : 'PUT',
-                    },
-                };
-            }
+            'appendTableData' : function(tableTag,data){
+                this.pageConfig[tableTag].data.list.push(data);
+            },
         }
     });
     return EVue;

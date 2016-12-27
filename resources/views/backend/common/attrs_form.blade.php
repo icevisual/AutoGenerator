@@ -16,7 +16,7 @@
         <section class="content" id="formDemo">
           <div class="row">
             <div class="col-md-6">
-              <horizontal-form :data-selector="pageConfig.attr_form"   @formcancel="cancelAddNewAttr"   @formsubmit="addNewAttr" ></horizontal-form>
+              <horizontal-form :data-selector="pageConfig.attr_form"    @formsubmit="addNewAttr" ></horizontal-form>
             </div><!--/.col (right) -->
           </div>   <!-- /.row -->
         </section><!-- /.content -->

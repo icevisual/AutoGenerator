@@ -75,7 +75,6 @@ define(['Vue','jQuery'],function(Vue,$) {
             'btnclick' : function(e){
                 var emitEventType = e.target.getAttribute("data-event");
                 if('submit' == emitEventType){
-//                    this.$emit('formsubmit',this.doFormValidate(this.$el,this.$data));
                     this.$emit('formsubmit',this.doFormValidate(this.$el,this.$data),this.$data);
                 }else{
                     this.$emit('form' + emitEventType,e);

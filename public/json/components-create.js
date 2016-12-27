@@ -12,18 +12,19 @@
                         "method" : "GET"
                     }
                 },
-                "rownum" : true,
+                "ajax" : true,
+                "rownum" : false,
                 "hidden" : {
-                    "id" : true
                 },
                 "operation" : true,
                 "operations" : {
-                    "remove" : {
+                    "addbind" : {
                         "color" : "btn-info",
                         "text" : ">"
                     }
                 },
                 "header": [
+                    {"name":"ID","width":"20px"},
                     "属性名中",
                     "属性名英",
                     "数据类型"
@@ -35,6 +36,47 @@
                 "last_page": 1,
                 "per_page": 10,
                 "list" : []
+            }
+        },
+        "attrs_bind_table": {
+            "attrs": {
+                "caption": "组件属性表",
+                "ajax" : false,
+                "uris" : {
+                    "query" : {
+                        "url" : "/api/attrs",
+                        "param" : [],
+                        "method" : "GET"
+                    }
+                },
+                "rownum" : true,
+                "hidden" : {
+                },
+                "advancedColumn" : {
+                    "default_value" : {
+                        "type" : "input"
+                    }
+                },
+                "operation" : true,
+                "operations" : {
+                    "attrunbind" : {
+                        "color" : "btn-warning",
+                        "text" : "R"
+                    }
+                },
+                "header": [
+                    {"name":"ID","width":"20px"},
+                    "属性名中",
+                    "数据类型",
+                    "默认值"
+                ]
+            },
+            "data": {
+                "total": 3,
+                "current_page": 1,
+                "last_page": 1,
+                "per_page": 10,
+                "list": []
             }
         },
         "component_form": {
