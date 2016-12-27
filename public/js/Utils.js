@@ -44,6 +44,12 @@ define(['jQuery'],function($) {
         return str;
     }
     return {
+        isEmptyObj : function(obj){
+            for(var i in obj){
+                return false;
+            }
+            return true;
+        },
         ajax : $.ajax,
         apiReqSuccess : function(ret){
             return ret.code === 1;

@@ -26,8 +26,8 @@ Route::get('/components', [
     'uses' => 'SystemArchitecture\WebController@components_list'
 ]);
 
-Route::get('/components/create', [
-    'as' => 'components_create',
+Route::get('/component/create', [
+    'as' => 'component_create',
     'uses' => 'SystemArchitecture\WebController@components_create'
 ]);
 
@@ -39,12 +39,12 @@ Route::get('/attrs', [
     'uses' => 'SystemArchitecture\WebController@attrs_list'
 ]);
 
-Route::get('/attrs/create', [
+Route::get('/attr/create', [
     'as' => 'attrs_create',
     'uses' => 'SystemArchitecture\WebController@attrs_create'
 ]);
 
-Route::get('/attrs/create/{id}', [
+Route::get('/attr/create/{id}', [
     'as' => 'attrs_update',
     'uses' => 'SystemArchitecture\WebController@attrs_create'
 ]);

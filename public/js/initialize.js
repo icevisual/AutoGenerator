@@ -74,6 +74,9 @@ define(['Vue','jQuery','Components','ALTApp','demo','Utils'],function(Vue,$) {
             'appendTableData' : function(tableTag,data){
                 this.pageConfig[tableTag].data.list.push(data);
             },
+            'getTableData' : function(tableTag){
+                return this.pageConfig[tableTag].data.list;
+            }
         }
     });
     return EVue;

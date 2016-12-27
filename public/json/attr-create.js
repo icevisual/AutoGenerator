@@ -7,7 +7,7 @@
                 "caption" : "新建组件属性",
                 "formColor" : "box-warning",
                 "action" : {
-                    "uri" : "/api/attrs",
+                    "uri" : "/api/attr",
                     "method" : "POST",
                     "success" : {
                         "redirect" : "/attrs"

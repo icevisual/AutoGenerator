@@ -20,7 +20,7 @@ define(['Vue','Utils'],function(Vue,Utils) {
         </template>\
       </tr>\
       <template v-for="(item,key) in tableConfig.data.list">\
-        <tr>\
+        <tr :data-id="item.id">\
           <td v-if="tableConfig.attrs.rownum">{{key + 1}}</td>\
           <template v-for="(item1,key1) in item">\
             <td v-if="tableConfig.attrs.hidden[key1]" class="hide">\

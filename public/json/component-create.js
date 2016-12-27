@@ -89,10 +89,10 @@
                     }
                 },
                 "action" : {
-                    "uri" : "/api/attrs",
+                    "uri" : "/api/component",
                     "method" : "POST",
                     "success" : {
-                        "redirect" : "/attrs"
+                        "redirect" : "/components"
                     }
                 }
             },

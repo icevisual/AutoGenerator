@@ -322,7 +322,7 @@ class ApiController extends Controller
                                 'title' => 'COMPONENTS LIST'
                             ],
                             [
-                                'href' => route('components_create'),
+                                'href' => route('component_create'),
                                 'icon' => 'fa-circle-o',
                                 'title' => 'COMPONENTS CREATE'
                             ]

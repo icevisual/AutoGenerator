@@ -20,7 +20,7 @@ define(['Vue','Utils'],function(Vue,Utils) {
         </template>\
       </tr>\
       <template v-for="(item,key) in tableConfig.data.list">\
-        <tr>\
+        <tr :data-id="item.id">\
           <td v-if="tableConfig.attrs.rownum">{{key + 1}}</td>\
           <template v-for="(item1,key1) in item">\
             <td v-if="tableConfig.attrs.hidden[key1]" class="hide">\
@@ -29,7 +29,7 @@ define(['Vue','Utils'],function(Vue,Utils) {
             <td v-else-if="tableConfig.attrs.advancedColumn[key1]">\
               <template v-if="tableConfig.attrs.advancedColumn[key1].type == \'input\'">\
               <div class="input-group-sm">\
-                <input type="text" class="form-control" :name="\'row-\' + key" :value="item1">\
+                <input type="text" v-model="item[key1]" class="form-control" :name="\'row-\' + key" :value="item1">\
               </div>\
               </template>\
             </td>\

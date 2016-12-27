@@ -27,7 +27,10 @@ Route::get('/formConfig', [
     'uses' => 'SystemArchitecture\ApiController@formConfig'
 ]);
 
-Route::post('/attrs', [
+
+
+
+Route::post('/attr', [
     'as' => 'api_attrs_create',
     'uses' => 'SystemArchitecture\ApiController@attrs_create'
 ]);
@@ -36,16 +39,43 @@ Route::get('/attrs', [
     'uses' => 'SystemArchitecture\ApiController@attrs_list'
 ]);
 
-Route::get('/attrs/{id}', [
+Route::get('/attr/{id}', [
     'as' => 'api_attrs_detail',
     'uses' => 'SystemArchitecture\ApiController@attrs_detail'
 ]);
 
-Route::put('/attrs/{id}', [
+Route::put('/attr/{id}', [
     'as' => 'api_attrs_update',
     'uses' => 'SystemArchitecture\ApiController@attrs_update'
 ]);
-Route::delete('/attrs/{id}', [
+Route::delete('/attr/{id}', [
     'as' => 'api_attrs_delete',
     'uses' => 'SystemArchitecture\ApiController@attrs_delete'
 ]);
+
+
+
+Route::post('/component', [
+    'as' => 'api_attrs_create',
+    'uses' => 'SystemArchitecture\ApiController@attrs_create'
+]);
+Route::get('/components', [
+    'as' => 'api_attrs_list',
+    'uses' => 'SystemArchitecture\ApiController@attrs_list'
+]);
+
+Route::get('/component/{id}', [
+    'as' => 'api_attrs_detail',
+    'uses' => 'SystemArchitecture\ApiController@attrs_detail'
+]);
+
+Route::put('/component/{id}', [
+    'as' => 'api_attrs_update',
+    'uses' => 'SystemArchitecture\ApiController@attrs_update'
+]);
+Route::delete('/component/{id}', [
+    'as' => 'api_attrs_delete',
+    'uses' => 'SystemArchitecture\ApiController@attrs_delete'
+]);
+
+

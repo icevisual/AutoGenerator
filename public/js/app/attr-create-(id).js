@@ -7,7 +7,7 @@ require(['initialize'], function(EVue) {
     var mtc = window.location.pathname.match(/\/(\d+)/);
     
     $.ajax({
-        'url' : '/api/attrs/' + mtc[1],
+        'url' : '/api/attr/' + mtc[1],
         'dataType' : 'json',
         'success' : function(d){
             if(!Utils.apiReqSuccess(d)){
