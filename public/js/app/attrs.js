@@ -1,4 +1,3 @@
-var vmForm ;
 require(['initialize'], function(EVue) {
     var $ = require('jQuery'),
         Vue = require('Vue'),
@@ -14,14 +13,11 @@ require(['initialize'], function(EVue) {
             if(!Utils.apiReqSuccess(d)){
                 return alert(Utils.apiReqMsg(d));
             }
-            
-            var ddd = {
-                'pageConfig' : Utils.apiReqData(d) ,
-            };
-            
-            vmForm = new EVue({
+            var vmForm = new EVue({
                 'el' : '#formDemo',
-                'data' : ddd,
+                'data' : {
+                    'pageConfig' : Utils.apiReqData(d) ,
+                },
                 'methods' : {
                     
                 }

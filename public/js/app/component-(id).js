@@ -1,4 +1,3 @@
-var vmForm
 require(['initialize'], function(EVue) {
     var $ = require('jQuery'),
         Vue = require('Vue'),
@@ -29,7 +28,7 @@ require(['initialize'], function(EVue) {
                 ddd.runtime.bindedAttr[binded[i]['id']] = true;
             }
             
-             vmForm = new EVue({
+            var vmForm = new EVue({
                 'el' : '#formDemo',
                 'data' : ddd,
                 'methods' : {
