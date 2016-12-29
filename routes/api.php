@@ -17,6 +17,15 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 
+
+Route::get('/components/list', [
+    'as' => 'outer_api_components_list',
+    'uses' => 'Component\ApiController@outer_api_components_list'
+]);
+
+
+
+
 Route::get('/sidebar', [
     'as' => 'api_sidebar',
     'uses' => 'SystemArchitecture\ApiController@sidebarMenu'

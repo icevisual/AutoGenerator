@@ -50,7 +50,7 @@ class ApidocAnnParser implements AnnParserConstInter
     {
         $apiSuccess = '';
         $temp_3 = '     * @apiSuccess ';
-        foreach ($data as $v) {
+        foreach (array_reverse($data) as $v) {
             $str = $temp_3 . implode(' ', $v);
             $apiSuccess .= $str . PHP_EOL;
         }

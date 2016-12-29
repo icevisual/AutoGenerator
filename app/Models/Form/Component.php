@@ -88,4 +88,70 @@ CREATE TABLE `op_component` (
         return $data;
     }
     
+    public static function queryComponentsWithDetail($search = [],$page = 1,$pageSize = 10,$order = []){
+        
+        $separator = '#E#';
+        
+        $prefix = \DB::getTablePrefix();
+        
+        $handler = self::select([
+            'component.id',
+            'component.component_name',
+            'component.component_desc',
+            \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.id,'{$separator}') AS attr_id"),
+            \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.attr_name_cn,'{$separator}') AS attr_name_cn"),
+            \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.attr_name_en,'{$separator}') AS attr_name_en"),
+            \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.attr_type,'{$separator}') AS attr_type"),
+            \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}component_attrs.default_value,'{$separator}') AS default_value"),
+//             'attrs.attr_name_cn',
+//             'attrs.attr_name_en',
+//             'attrs.attr_type',
+        ])->join('component_attrs','component_attrs.component_id','=','component.id')
+        ->join('attrs','component_attrs.attr_id','=','attrs.id')
+        ->groupBy('component.id');
+        $paginate = $handler->paginate($pageSize, [
+            '*'
+        ], 'p', $page);
+        $list = $paginate->toArray();
+        
+        foreach ($list['data'] as $k => $v){
+            
+            $attrs = [
+                'attr_id' => groupConcatToArray($v['attr_id'],$separator),
+                'attr_name_cn' => groupConcatToArray($v['attr_name_cn'],$separator),
+                'attr_name_en' => groupConcatToArray($v['attr_name_en'],$separator),
+                'attr_type' => groupConcatToArray($v['attr_type'],$separator),
+                'default_value' => groupConcatToArray($v['default_value'],$separator),
+            ];
+            $at = [];
+            foreach ($attrs['attr_id'] as $k1 => $v1){
+                $at[] = [
+                    'attr_id' => $attrs['attr_id'][$k1],
+                    'attr_name_cn' => $attrs['attr_name_cn'][$k1],
+                    'attr_name_en' => $attrs['attr_name_en'][$k1],
+                    'attr_type' => $attrs['attr_type'][$k1],
+                    'default_value' => $attrs['default_value'][$k1],
+                ];
+            }
+            $list['data'][$k]['attrs'] = $at;
+            unset($list['data'][$k]['attr_id']);
+            unset($list['data'][$k]['attr_name_cn']);
+            unset($list['data'][$k]['attr_name_en']);
+            unset($list['data'][$k]['attr_type']);
+            unset($list['data'][$k]['default_value']);
+        }
+        
+        $data = [
+            'total' => $list['total'],
+            'current_page' => $list['current_page'],
+            'last_page' => $list['last_page'],
+            'per_page' => $list['per_page'],
+            'list' => $list['data']
+        ];
+        return $data;
+    }
+    
+    
+    
+    
 }

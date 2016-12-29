@@ -49,7 +49,7 @@ class ApidocAnnGener
         
         $baseUrls = [
             'local' => \Config::get('app.url'),
-            'test' => 'http://test.open.qiweiwangguo.com'
+            'test' => 'http://automation.local.com/'
         ];
         $routesSelect = [];
         
@@ -136,6 +136,7 @@ class ApidocAnnGener
             ->groupBy('sha1')
             ->get()
             ->toArray();
+        
         $ret = [];
         $maxDiffRate = 90;
         if ($list) {
@@ -156,6 +157,7 @@ class ApidocAnnGener
                 }
             }
         }
+        
         $return = [];
         foreach ($ret as $v) {
             $jsonArray = json_decode($v, 1);
@@ -173,6 +175,7 @@ class ApidocAnnGener
                 $return['error'][] = $jsonArray;
             }
         }
+        
         return $return;
     }
 
