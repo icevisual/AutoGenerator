@@ -37,6 +37,10 @@ class Kernel extends HttpKernel
             'bindings',
             'log'
         ],
+        
+        'externalApi' => [
+            'external'
+        ],
     ];
 
     /**
@@ -54,5 +58,7 @@ class Kernel extends HttpKernel
         'log' => \App\Http\Middleware\LogMiddleware::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        
+        'external' => \App\Http\Middleware\ExternalMiddleware::class,
     ];
 }

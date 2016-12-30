@@ -3,32 +3,8 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {GET} api/components/list outer_api_components_list
-     * @apiName api_components_list
-     * @apiGroup Open_Web
-     *
-     *
-     * @apiSuccess {String} component_name 控件名称
-     * @apiSuccess {String} component_desc 控件描述
-     * @apiSuccess {Integer} attr_id 属性ID
-     * @apiSuccess {String} attr_name_cn 属性中文名称
-     * @apiSuccess {String} attr_name_en 属性英文名称
-     * @apiSuccess {String} attr_type 属性数据类型
-     * @apiSuccess {String} default_value 属性默认值
-     *
-     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
-     *{"code":1,"msg":"OK","data":{"total":2,"current_page":1,"last_page":1,"per_page":10,"list":[{"id":3,"component_name":"\u5448\u73b0\u51favxvcxcvx","component_desc":"\u5927\u65b9\u7684\u8bf4\u6cd5\u7684\u51af\u7ecd\u5cf0","attrs":[{"attr_id":"6","attr_name_cn":"dfsasdf","attr_name_en":"123123","attr_type":"string","default_value":"3123"},{"attr_id":"3","attr_name_cn":"\u7b54\u590d1232","attr_name_en":"aaaaa123","attr_type":"float","default_value":"23"},{"attr_id":"9","attr_name_cn":"sadfadfs","attr_name_en":"dsafdsagsafasdf","attr_type":"string","default_value":"\u6253\u53d1\u6253\u53d1\u6492"},{"attr_id":"8","attr_name_cn":"adfsdfs","attr_name_en":"123123er","attr_type":"integer","default_value":"123"}]},{"id":4,"component_name":"13123","component_desc":"123123123","attrs":[{"attr_id":"3","attr_name_cn":"\u7b54\u590d1232","attr_name_en":"aaaaa123","attr_type":"float","default_value":"12"},{"attr_id":"8","attr_name_cn":"adfsdfs","attr_name_en":"123123er","attr_type":"integer","default_value":"123"},{"attr_id":"6","attr_name_cn":"dfsasdf","attr_name_en":"123123","attr_type":"string","default_value":"123"}]}]}}
-     *
-     *
-     *
-     * @apiSampleRequest http://automation.local.com//api/components/list
-     */
-
-    /**
-     * @apiVersion 1.0.0
-     *
-     * @api {GET} api/sidebar sidebarMenu
-     * @apiName api_sidebar
+     * @api {GET} api/sidebar 获取左侧菜单
+     * @apiName GET-api_sidebar
      * @apiGroup Open_Web
      *
      * @apiParam {String} pathname unknown
@@ -43,8 +19,8 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {GET} api/formConfig formConfig
-     * @apiName api_formConfig
+     * @api {GET} api/formConfig GET-api/formConfig
+     * @apiName GET-api_formConfig
      * @apiGroup Open_Web
      *
      * @apiParam {String} pathname unknown
@@ -61,8 +37,8 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {POST} api/attr attrs_create
-     * @apiName api_attr
+     * @api {POST} api/attr POST-api/attr
+     * @apiName POST-api_attr
      * @apiGroup Open_Web
      *
      * @apiParam {String} [id=0] 属性名称-中文
@@ -80,8 +56,8 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {GET} api/attrs attrs_list
-     * @apiName api_attrs
+     * @api {GET} api/attrs GET-api/attrs
+     * @apiName GET-api_attrs
      * @apiGroup Open_Web
      *
      * @apiParam {String} [p=1] 页数
@@ -133,8 +109,24 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {GET} api/attr/{id} attrs_detail
-     * @apiName api_attr_{id}
+     * @api {GET} api/attr/{id} GET-api/attr/{id}
+     * @apiName GET-api_attr_{id}
+     * @apiGroup Open_Web
+     *
+     * @apiParam {String} id id
+     *
+     *
+     *
+     *
+     *
+     * @apiSampleRequest http://automation.local.com//api/attr/{id}
+     */
+
+    /**
+     * @apiVersion 1.0.0
+     *
+     * @api {PUT} api/attr/{id} PUT-api/attr/{id}
+     * @apiName PUT-api_attr_{id}
      * @apiGroup Open_Web
      *
      *
@@ -148,10 +140,11 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {PUT} api/attr/{id} attrs_update
-     * @apiName api_attr_{id}
+     * @api {DELETE} api/attr/{id} DELETE-api/attr/{id}
+     * @apiName DELETE-api_attr_{id}
      * @apiGroup Open_Web
      *
+     * @apiParam {String} id id
      *
      *
      *
@@ -163,23 +156,8 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {DELETE} api/attr/{id} attrs_delete
-     * @apiName api_attr_{id}
-     * @apiGroup Open_Web
-     *
-     *
-     *
-     *
-     *
-     *
-     * @apiSampleRequest http://automation.local.com//api/attr/{id}
-     */
-
-    /**
-     * @apiVersion 1.0.0
-     *
-     * @api {POST} api/component create
-     * @apiName api_component
+     * @api {POST} api/component POST-api/component
+     * @apiName POST-api_component
      * @apiGroup Open_Web
      *
      * @apiParam {String} component_name 控件名称
@@ -208,8 +186,8 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {GET} api/components query
-     * @apiName api_components
+     * @api {GET} api/components GET-api/components
+     * @apiName GET-api_components
      * @apiGroup Open_Web
      *
      * @apiParam {String} [p=1] 页数
@@ -233,10 +211,11 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {GET} api/component/{id} detail
-     * @apiName api_component_{id}
+     * @api {GET} api/component/{id} GET-api/component/{id}
+     * @apiName GET-api_component_{id}
      * @apiGroup Open_Web
      *
+     * @apiParam {String} id id
      *
      *
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
@@ -250,8 +229,8 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {PUT} api/component update
-     * @apiName api_component
+     * @api {PUT} api/component PUT-api/component
+     * @apiName PUT-api_component
      * @apiGroup Open_Web
      *
      * @apiParam {String} id 组件名称
@@ -281,10 +260,11 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {DELETE} api/component/{id} delete
-     * @apiName api_component_{id}
+     * @api {DELETE} api/component/{id} DELETE-api/component/{id}
+     * @apiName DELETE-api_component_{id}
      * @apiGroup Open_Web
      *
+     * @apiParam {String} id id
      *
      *
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
@@ -293,4 +273,28 @@
      *
      *
      * @apiSampleRequest http://automation.local.com//api/component/{id}
+     */
+
+    /**
+     * @apiVersion 1.0.0
+     *
+     * @api {GET} api/external/components/list 获取控件列表以及控件属性
+     * @apiName GET-api_external_components_list
+     * @apiGroup Open_Web
+     *
+     *
+     * @apiSuccess {String} component_name 控件名称
+     * @apiSuccess {String} component_desc 控件描述
+     * @apiSuccess {Integer} attr_id 属性ID
+     * @apiSuccess {String} attr_name_cn 属性中文名称
+     * @apiSuccess {String} attr_name_en 属性英文名称
+     * @apiSuccess {String} attr_type 属性数据类型
+     * @apiSuccess {String} default_value 属性默认值
+     *
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"total":2,"current_page":1,"last_page":1,"per_page":10,"list":[{"id":3,"component_name":"\u5448\u73b0\u51favxvcxcvx","component_desc":"\u5927\u65b9\u7684\u8bf4\u6cd5\u7684\u51af\u7ecd\u5cf0","attrs":[{"attr_id":"3","attr_name_cn":"\u7b54\u590d1232","attr_name_en":"aaaaa123","attr_type":"float","default_value":"23"},{"attr_id":"9","attr_name_cn":"sadfadfs","attr_name_en":"dsafdsagsafasdf","attr_type":"string","default_value":"\u6253\u53d1\u6253\u53d1\u6492"},{"attr_id":"8","attr_name_cn":"adfsdfs","attr_name_en":"123123er","attr_type":"integer","default_value":"123"},{"attr_id":"6","attr_name_cn":"dfsasdf","attr_name_en":"123123","attr_type":"string","default_value":"3123"}]},{"id":4,"component_name":"13123","component_desc":"123123123","attrs":[{"attr_id":"8","attr_name_cn":"adfsdfs","attr_name_en":"123123er","attr_type":"integer","default_value":"123"},{"attr_id":"6","attr_name_cn":"dfsasdf","attr_name_en":"123123","attr_type":"string","default_value":"123"},{"attr_id":"3","attr_name_cn":"\u7b54\u590d1232","attr_name_en":"aaaaa123","attr_type":"float","default_value":"12"}]}]}}
+     *
+     *
+     *
+     * @apiSampleRequest http://automation.local.com//api/external/components/list
      */

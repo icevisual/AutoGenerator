@@ -280,6 +280,10 @@ class ApiController extends Controller
         return $this->__json($data);
     }
 
+    /**
+     *
+     * 获取左侧菜单
+     */
     public function sidebarMenu()
     {
         $data = [
@@ -421,7 +425,9 @@ class ApiController extends Controller
     public function attrs_detail($id)
     {
         $detail = Attrs::attrDetail($id);
-        
+        if(!$detail){
+            return $this->__json(\ErrorCode::VITAL_NOT_FOUND);
+        }
         $data = [
             'attr_form' => [
                 'attrs' => [

@@ -18,14 +18,6 @@ Route::get('/user', function (Request $request) {
 
 
 
-Route::get('/components/list', [
-    'as' => 'outer_api_components_list',
-    'uses' => 'Component\ApiController@outer_api_components_list'
-]);
-
-
-
-
 Route::get('/sidebar', [
     'as' => 'api_sidebar',
     'uses' => 'SystemArchitecture\ApiController@sidebarMenu'

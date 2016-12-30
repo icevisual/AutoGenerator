@@ -39,8 +39,30 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
+        $this->mapExternalApiRoutes();
         //
     }
+    
+    
+    /**
+     * Define the "api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapExternalApiRoutes()
+    {
+        Route::group([
+            'middleware' => 'externalApi',
+            'namespace' => $this->namespace,
+            'prefix' => 'api/external',
+        ], function ($router) {
+            require base_path('routes/externalApi.php');
+        });
+    }
+    
+    
 
     /**
      * Define the "web" routes for the application.

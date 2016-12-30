@@ -12,6 +12,7 @@ class ApiController extends Controller
 
 
     /**
+     * 获取控件列表以及控件属性
      * 
      * @apiSuccess {String} component_name 控件名称
      * @apiSuccess {String} component_desc 控件描述

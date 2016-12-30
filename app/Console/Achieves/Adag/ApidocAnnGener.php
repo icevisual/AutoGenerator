@@ -92,7 +92,7 @@ class ApidocAnnGener
             
             $funcAnn = getAnnotation($action);
             
-            $data['uriName'] = array_get($funcAnn, 'function.note', $action[1]);
+            $data['uriName'] = array_get($funcAnn, 'function.note',$method[0].'-'. $uri);
             
             if (isset($funcAnn['@apiSuccess'])) {
                 $data['apiSuccess'] = $funcAnn['@apiSuccess'];
@@ -109,7 +109,7 @@ class ApidocAnnGener
             if (isset($funcAnn['@apiName'])) {
                 $data['apiName'] = $funcAnn['@apiName'][0]['type'];
             }
-            
+            // TODO Example limit
             $data['example'] = $this->getInvokeExample($data['uri']);
             
             $routesSelect[] = $data;
@@ -208,6 +208,59 @@ class ApidocAnnGener
         $params = array();
         if (! is_array($codes))
             return false;
+        
+        $funcPa = '';
+        $findTag = false;
+        foreach ($codes as $line){
+            if(!$findTag){
+                if(($p1 = strpos($line, '(')) !== false){
+                    $findTag = true;
+                    if( ($p2 = strpos($line, ')')) !== false){
+                        $funcPa = trim(substr($line, $p1 + 1,$p2 - $p1 - 1));
+                        break;
+                    }else{
+                        $funcPa = trim(substr($line, $p1 + 1));
+                    }
+                }
+            }else{
+                if( ($p2 = strpos($line, ')')) !== false){
+                    $funcPa .= trim(substr($line, 0,$p2));
+                    break;
+                }else{
+                    $funcPa .= trim($line);
+                }
+                
+            }
+        }
+        
+        if($funcPa){
+            foreach (explode(',', $funcPa) as $v){
+                $v = substr(trim($v), 1);
+            
+                if(strpos($v, '=') !== false){
+                    // has default value
+                    $segs =  explode('=', $v,2);
+            
+                    $params[trim($segs[0])] = [
+                        'type' => 'String',
+                        'name' => $segs[0],
+                        'default' => trim($segs[1],' \''),
+                    ];
+                }else{
+                    $params[$v] =[
+                        'type' => 'String',
+                        'name' => $v,
+                    ];
+                }
+            
+            }
+        }
+        
+//         dump($params);
+//         edump($funcPa);
+        
+
+        
         array_walk($codes, function ($v, $k) use(&$params, $codes) {
             $regs = [
                 '/(?:Input::get|\$request->input)\s*\(\s*[\'\"]([\w\d_]*)[\'\"]\s*(?:\s*,\s*[\'\"]?([\s\w_\-]*)[\'\"]?\s*)?\)/',
@@ -317,7 +370,7 @@ class ApidocAnnGener
         $parser             = new ApidocAnnParser();
         $apiVersion         = $parser->parse(ApidocAnnParser::API_VERSION , array_get($data, 'apiVersion'),'1.0.0');
         $apiGroup           = $parser->parse(ApidocAnnParser::API_GROUP , array_get($data, 'apiGroup'),'Open_Web');
-        $apiName            = $parser->parse(ApidocAnnParser::API_NAME , array_get($data, 'apiName',array_get($data, 'uri')));
+        $apiName            = $parser->parse(ApidocAnnParser::API_NAME , array_get($data, 'apiName',$data['doMethod'].'-'.array_get($data, 'uri')));
         $apiParam           = $parser->parse(ApidocAnnParser::API_PARAM , array_get($data, 'params'));
         $apiSuccessExample  = $parser->parse(ApidocAnnParser::API_SUCCESS_EXAMPLE , array_get($data, 'example.success'));
         $apiErrorExample    = $parser->parse(ApidocAnnParser::API_ERROR_EXAMPLE , array_get($data, 'example.error'));
