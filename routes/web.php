@@ -11,6 +11,12 @@
 |
 */
 
+
+Route::get('/',function(){
+    return redirect(route('components_query'));
+});
+
+
 Route::get('/demo', [
     'as' => 'demo_list',
     'uses' => 'SystemArchitecture\WebController@demo_list'
