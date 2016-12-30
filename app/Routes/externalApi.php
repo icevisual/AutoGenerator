@@ -16,6 +16,6 @@ use Illuminate\Http\Request;
 
 Route::get('/components/list', [
     'as' => 'outer_api_components_list',
-    'uses' => 'Component\ApiController@outer_api_components_list'
+    'uses' => 'ExternalApi\ComponentController@outer_api_components_list'
 ]);
 

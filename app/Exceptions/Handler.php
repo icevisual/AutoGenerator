@@ -66,7 +66,7 @@ class Handler extends ExceptionHandler
         
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
             if ($request->ajax() || $request->wantsJson()) {
-                return \JsonReturn::json($e->getCode(),$e->getMessage(), [],$httpStatus);
+                return \JsonReturn::json($e->getCode(),'NotFoundHttpException', [],$httpStatus);
             }else{
                 return redirect('/404');
             }

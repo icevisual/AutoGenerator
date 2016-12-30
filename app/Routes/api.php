@@ -17,15 +17,14 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 
-
 Route::get('/sidebar', [
     'as' => 'api_sidebar',
-    'uses' => 'Api\SystemArchitectureController@sidebarMenu'
+    'uses' => 'Api\SystemController@sidebarMenu'
 ]);
 
 Route::get('/formConfig', [
     'as' => 'api_formConfig',
-    'uses' => 'Api\SystemArchitectureController@formConfig'
+    'uses' => 'Api\SystemController@formConfig'
 ]);
 
 

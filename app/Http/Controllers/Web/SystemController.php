@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Exceptions\ServiceException;
 
-class SystemArchitectureController extends Controller
+class SystemController extends Controller
 {
 
-    
+    public function error_404(){
+        return view('errors.404');
+    }
 
     public function demo_list(){
         return view('backend.common.simple');

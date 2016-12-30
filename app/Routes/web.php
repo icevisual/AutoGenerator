@@ -16,15 +16,17 @@ Route::get('/',function(){
     return redirect(route('components_query'));
 });
 
-
+Route::get('/404','Web\SystemController@error_404');
+    
+    
 Route::get('/demo', [
     'as' => 'demo_list',
-    'uses' => 'Web\SystemArchitectureController@demo_list'
+    'uses' => 'Web\SystemController@demo_list'
 ]);
 
 Route::get('/demo/create', [
     'as' => 'demo_create',
-    'uses' => 'Web\SystemArchitectureController@demo_create'
+    'uses' => 'Web\SystemController@demo_create'
 ]);
 
 

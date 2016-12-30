@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Exceptions\ServiceException;
 use App\Models\Form\Attrs;
 
-class SystemArchitectureController extends Controller
+class SystemController extends Controller
 {
 
     public function formConfig()
