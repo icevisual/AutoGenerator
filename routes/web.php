@@ -19,12 +19,12 @@ Route::get('/',function(){
 
 Route::get('/demo', [
     'as' => 'demo_list',
-    'uses' => 'SystemArchitecture\WebController@demo_list'
+    'uses' => 'Web\SystemArchitectureController@demo_list'
 ]);
 
 Route::get('/demo/create', [
     'as' => 'demo_create',
-    'uses' => 'SystemArchitecture\WebController@demo_create'
+    'uses' => 'Web\SystemArchitectureController@demo_create'
 ]);
 
 
@@ -32,12 +32,12 @@ Route::get('/demo/create', [
 
 Route::get('/components', [
     'as' => 'components_query',
-    'uses' => 'Component\WebController@query'
+    'uses' => 'Web\ComponentController@query'
 ]);
 
 Route::get('/component/{id?}', [
     'as' => 'component_create',
-    'uses' => 'Component\WebController@create'
+    'uses' => 'Web\ComponentController@create'
 ]);
 
 
@@ -45,17 +45,17 @@ Route::get('/component/{id?}', [
 
 Route::get('/attrs', [
     'as' => 'attrs_list',
-    'uses' => 'SystemArchitecture\WebController@attrs_list'
+    'uses' => 'Web\ComponentAttrsController@query'
 ]);
 
 Route::get('/attr', [
     'as' => 'attrs_create',
-    'uses' => 'SystemArchitecture\WebController@attrs_create'
+    'uses' => 'Web\ComponentAttrsController@create'
 ]);
 
 Route::get('/attr/{id}', [
     'as' => 'attrs_update',
-    'uses' => 'SystemArchitecture\WebController@attrs_create'
+    'uses' => 'Web\ComponentAttrsController@create'
 ]);
 
 
