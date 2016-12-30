@@ -104,11 +104,12 @@ class ServiceLog
         }, $params);
         
         
-        $sha1 = \App\Models\Common\RequestLog::calculateSha1($data['uri'],$params,$data['return']);
+        $sha1 = \App\Models\Common\RequestLog::calculateSha1($data['uri'],$data['method'],$params,$data['return']);
         
         $requestLogData = [
             'ip' => $data['ips'][0],
             'uri' => $data['uri'],
+            'method' => $data['method'],
             'params' => json_encode($params),
             'http_status' => $httpStatus,
             'return' => json_encode($data['return']),

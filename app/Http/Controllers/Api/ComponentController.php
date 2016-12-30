@@ -10,28 +10,6 @@ use App\Models\Form\ComponentAttrs;
 class ComponentController extends Controller
 {
 
-
-    /**
-     * 获取控件列表以及控件属性
-     * 
-     * @apiSuccess {String} component_name 控件名称
-     * @apiSuccess {String} component_desc 控件描述
-     * @apiSuccess {Integer} attr_id 属性ID
-     * @apiSuccess {String} attr_name_cn 属性中文名称
-     * @apiSuccess {String} attr_name_en 属性英文名称
-     * @apiSuccess {String} attr_type 属性数据类型
-     * @apiSuccess {String} default_value 属性默认值
-     */
-    public function outer_api_components_list(){
-        
-        $data = Component::queryComponentsWithDetail();
-        
-        return $this->__json($data);
-        
-    }
-    
-    
-    
     public function create()
     {
         $data = [
@@ -67,10 +45,10 @@ class ComponentController extends Controller
         return $this->__json($data);
     }
 
-    public function update()
+    public function update($id)
     {
         $data = [
-            'id' => \Input::get('id'), // String 组件名称
+            'id' => $id, // String 组件名称
             'component_name' => \Input::get('component_name'), // String 组件名称
             'component_desc' => \Input::get('component_desc'), // String 组件描述
             'attrs' => \Input::get('attrs')// String 属性数据类型
@@ -78,7 +56,7 @@ class ComponentController extends Controller
         runCustomValidator([
             'data' => $data, // 数据
             'rules' => [
-                'id' => 'required|exists:component',
+                'id' => 'required|numeric|exists:component',
                 'component_name' => 'required|unique:component,component_name,'.$data['id'],',id',
                 'component_desc' => 'required',
                 'attrs.*.default_value' => 'required',
@@ -191,7 +169,7 @@ class ComponentController extends Controller
                         ]
                     ],
                     'action' => [
-                        'uri' => '/api/component',
+                        'uri' => '/api/component/'.$id,
                         'method' => 'PUT',
                         'success' => [
                             'redirect' => '/components'
@@ -203,9 +181,6 @@ class ComponentController extends Controller
                         'name' => ' ID',
                         'type' => 'input',
                         'hidden' => true,
-                        'attrs' => [
-                            'type' => 'hidden',
-                        ],
                         'value' => $detail['component']['id']
                     ],
                     'component_name' => [

@@ -44,6 +44,26 @@ define(['jQuery'],function($) {
         return str;
     }
     return {
+        /**
+         * @param cfg Object
+         *  {
+         *      "url" : "/attr/{id}",
+         *      "method" : "PUT",
+         *      "params" : [
+         *          "id"
+         *      ]
+         *  }
+         */
+        parseUriPattern : function(cfg,params){
+            var url = cfg.url;
+            for(var i in cfg.param){
+                url = url.replace('{' + cfg.param[i] + '}',params[cfg.param[i]]);
+            }
+            return {
+                'url' : url,
+                'method' : cfg.method
+            };
+        },
         isEmptyObj : function(obj){
             for(var i in obj){
                 return false;

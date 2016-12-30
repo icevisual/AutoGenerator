@@ -9,7 +9,7 @@ define(['Vue','Utils'],function(Vue,Utils) {
             "RESTful" : true,
             "ajax" : true,// 用 Ajax 获取数据
             "uris" : {
-                "query" : { // 列表接口
+                "query" : { // 预设列表接口
                     "url" : "/api/attrs",
                     "param" : [],
                     "method" : "GET"

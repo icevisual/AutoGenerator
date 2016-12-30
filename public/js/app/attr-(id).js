@@ -22,7 +22,7 @@ require(['initialize'], function(EVue) {
                         console.log('addNewAttr',formValidateRet,formData);
                         if(false != formValidateRet){
                             Utils.ajax({
-                                'url' : formData.formConfig.attrs.action.uri,
+                                'url' : formData.formConfig.attrs.action.uri + '/' + formValidateRet.id,
                                 'method' : formData.formConfig.attrs.action.method,
                                 'data' : formValidateRet,
                                 'success' : function(d){

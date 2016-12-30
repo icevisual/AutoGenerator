@@ -84,9 +84,16 @@
                 "caption": "组件",
                 "buttons": {
                     "preinstall": {
-                        "submit": true,
+                        "submit": false,
                         "cancel": true
-                    }
+                    },
+                    "others" : [
+                        {
+                            "name":"submit",
+                            "class" : "btn-info",
+                            "event" : "submit"
+                        }
+                    ]
                 },
                 "action" : {
                     "uri" : "/api/component",

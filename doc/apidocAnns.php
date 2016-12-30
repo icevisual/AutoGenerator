@@ -13,9 +13,9 @@
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
      *{"code":1,"msg":"OK","data":[{"group":"MAIN NAVIGATION","menus":[{"icon":"fa-dashboard","title":"Demo","submenus":[{"href":"http:\/\/192.168.5.11:17778\/demo","icon":"fa-circle-o","title":"List Demo"},{"href":"http:\/\/192.168.5.11:17778\/demo\/create","icon":"fa-circle-o","title":"Form Demo"}]},{"icon":"fa-files-o","title":"Layout Options","submenus":[{"href":"http:\/\/192.168.5.11:17778\/attrs","icon":"fa-circle-o","title":"ATTRS LIST","active":true},{"href":"http:\/\/192.168.5.11:17778\/attr","icon":"fa-circle-o","title":"ATTRS CREATE"},{"href":"http:\/\/192.168.5.11:17778\/components","icon":"fa-circle-o","title":"COMPONENTS LIST"},{"href":"http:\/\/192.168.5.11:17778\/component","icon":"fa-circle-o","title":"COMPONENTS CREATE"}],"active":true}]}]}
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
-     *{"code":1,"msg":"OK","data":[{"group":"MAIN NAVIGATION","menus":[{"icon":"fa-dashboard","title":"Demo","submenus":[{"href":"http:\/\/localhost:17778\/demo","icon":"fa-circle-o","title":"List Demo"},{"href":"http:\/\/localhost:17778\/demo\/create","icon":"fa-circle-o","title":"Form Demo"}]},{"icon":"fa-files-o","title":"Layout Options","submenus":[{"href":"http:\/\/localhost:17778\/attrs","icon":"fa-circle-o","title":"ATTRS LIST"},{"href":"http:\/\/localhost:17778\/attr","icon":"fa-circle-o","title":"ATTRS CREATE","active":true},{"href":"http:\/\/localhost:17778\/components","icon":"fa-circle-o","title":"COMPONENTS LIST"},{"href":"http:\/\/localhost:17778\/component","icon":"fa-circle-o","title":"COMPONENTS CREATE"}],"active":true}]}]}
+     *{"code":1,"msg":"OK","data":[{"group":"MAIN NAVIGATION","menus":[{"icon":"fa-dashboard","title":"Demo","submenus":[{"href":"http:\/\/automation.local.com\/demo","icon":"fa-circle-o","title":"List Demo"},{"href":"http:\/\/automation.local.com\/demo\/create","icon":"fa-circle-o","title":"Form Demo","active":true}],"active":true},{"icon":"fa-files-o","title":"Layout Options","submenus":[{"href":"http:\/\/automation.local.com\/attrs","icon":"fa-circle-o","title":"ATTRS LIST"},{"href":"http:\/\/automation.local.com\/attr","icon":"fa-circle-o","title":"ATTRS CREATE"},{"href":"http:\/\/automation.local.com\/components","icon":"fa-circle-o","title":"COMPONENTS LIST"},{"href":"http:\/\/automation.local.com\/component","icon":"fa-circle-o","title":"COMPONENTS CREATE"}]}]}]}
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
-     *{"code":1,"msg":"OK","data":[{"group":"MAIN NAVIGATION","menus":[{"icon":"fa-dashboard","title":"Demo","submenus":[{"href":"http:\/\/automation.local.com\/demo","icon":"fa-circle-o","title":"List Demo"},{"href":"http:\/\/automation.local.com\/demo\/create","icon":"fa-circle-o","title":"Form Demo"}]},{"icon":"fa-files-o","title":"Layout Options","submenus":[{"href":"http:\/\/automation.local.com\/attrs","icon":"fa-circle-o","title":"ATTRS LIST"},{"href":"http:\/\/automation.local.com\/attr","icon":"fa-circle-o","title":"ATTRS CREATE"},{"href":"http:\/\/automation.local.com\/components","icon":"fa-circle-o","title":"COMPONENTS LIST"},{"href":"http:\/\/automation.local.com\/component","icon":"fa-circle-o","title":"COMPONENTS CREATE"}]}]}]}
+     *{"code":1,"msg":"OK","data":[{"group":"MAIN NAVIGATION","menus":[{"icon":"fa-dashboard","title":"Demo","submenus":[{"href":"http:\/\/localhost:17778\/demo","icon":"fa-circle-o","title":"List Demo"},{"href":"http:\/\/localhost:17778\/demo\/create","icon":"fa-circle-o","title":"Form Demo"}]},{"icon":"fa-files-o","title":"Layout Options","submenus":[{"href":"http:\/\/localhost:17778\/attrs","icon":"fa-circle-o","title":"ATTRS LIST"},{"href":"http:\/\/localhost:17778\/attr","icon":"fa-circle-o","title":"ATTRS CREATE","active":true},{"href":"http:\/\/localhost:17778\/components","icon":"fa-circle-o","title":"COMPONENTS LIST"},{"href":"http:\/\/localhost:17778\/component","icon":"fa-circle-o","title":"COMPONENTS CREATE"}],"active":true}]}]}
      *
      *
      *
@@ -25,7 +25,7 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {GET} api/formConfig GET-api/formConfig
+     * @api {GET} api/formConfig api/formConfig-GET
      * @apiName GET-api_formConfig
      * @apiGroup Open_Web
      *
@@ -43,7 +43,7 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {POST} api/attr POST-api/attr
+     * @api {POST} api/attr api/attr-POST
      * @apiName POST-api_attr
      * @apiGroup Open_Web
      *
@@ -68,7 +68,7 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {GET} api/attrs GET-api/attrs
+     * @api {GET} api/attrs api/attrs-GET
      * @apiName GET-api_attrs
      * @apiGroup Open_Web
      *
@@ -127,7 +127,7 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {GET} api/attr/{id} GET-api/attr/{id}
+     * @api {GET} api/attr/{id} api/attr/{id}-GET
      * @apiName GET-api_attr_{id}
      * @apiGroup Open_Web
      *
@@ -147,7 +147,7 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {PUT} api/attr/{id} PUT-api/attr/{id}
+     * @api {PUT} api/attr/{id} api/attr/{id}-PUT
      * @apiName PUT-api_attr_{id}
      * @apiGroup Open_Web
      *
@@ -166,7 +166,7 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {DELETE} api/attr/{id} DELETE-api/attr/{id}
+     * @api {DELETE} api/attr/{id} api/attr/{id}-DELETE
      * @apiName DELETE-api_attr_{id}
      * @apiGroup Open_Web
      *
@@ -186,7 +186,7 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {POST} api/component POST-api/component
+     * @api {POST} api/component api/component-POST
      * @apiName POST-api_component
      * @apiGroup Open_Web
      *
@@ -220,7 +220,7 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {GET} api/components GET-api/components
+     * @api {GET} api/components api/components-GET
      * @apiName GET-api_components
      * @apiGroup Open_Web
      *
@@ -253,7 +253,7 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {GET} api/component/{id} GET-api/component/{id}
+     * @api {GET} api/component/{id} api/component/{id}-GET
      * @apiName GET-api_component_{id}
      * @apiGroup Open_Web
      *
@@ -273,7 +273,7 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {PUT} api/component PUT-api/component
+     * @api {PUT} api/component api/component-PUT
      * @apiName PUT-api_component
      * @apiGroup Open_Web
      *
@@ -308,7 +308,7 @@
     /**
      * @apiVersion 1.0.0
      *
-     * @api {DELETE} api/component/{id} DELETE-api/component/{id}
+     * @api {DELETE} api/component/{id} api/component/{id}-DELETE
      * @apiName DELETE-api_component_{id}
      * @apiGroup Open_Web
      *
@@ -332,6 +332,8 @@
      * @apiName GET-api_external_components_list
      * @apiGroup Open_Web
      *
+     * @apiParam {String} [p=1] 页数
+     * @apiParam {String} [n=10] 每页条数
      *
      * @apiSuccess {String} component_name 控件名称
      * @apiSuccess {String} component_desc 控件描述

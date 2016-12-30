@@ -66,7 +66,7 @@ class Handler extends ExceptionHandler
         
         if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
             if ($request->ajax() || $request->wantsJson()) {
-                return \JsonReturn::json($e->getCode(),'NotFoundHttpException', [],$httpStatus);
+                return \JsonReturn::json(\ErrorCode::SYSTEM_ERROR,'NotFoundHttp', [],$httpStatus);
             }else{
                 return redirect('/404');
             }
@@ -74,9 +74,9 @@ class Handler extends ExceptionHandler
         
         if ($e instanceof TokenMismatchException) {
             if ($request->ajax() || $request->wantsJson()) {
-                return \JsonReturn::json(\ErrorCode::UNAUTHORIZED,'error', [],$httpStatus);
+                return \JsonReturn::json(\ErrorCode::UNAUTHORIZED,'TokenMismatch', [],$httpStatus);
             }else{
-                return redirect(route('developer'));
+//                 return redirect(route('developer'));
             }
         }
         

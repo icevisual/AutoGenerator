@@ -13,49 +13,26 @@ class ComponentAttrsController extends Controller
     public function create()
     {
         $data = [
-            'id' => \Input::get('id',0), // String 属性名称-中文
             'attr_name_cn' => \Input::get('attr_name_cn'), // String 属性名称-中文
             'attr_name_en' => \Input::get('attr_name_en'), // String 属性名称-英文
             'attr_type' => \Input::get('attr_type')// String 属性数据类型
         ];
-        if(!$data['id']){
-            unset($data['id']);
-            runCustomValidator([
-                'data' => $data, // 数据
-                'rules' => [
-                    'id' => 'sometimes|exists:attrs',
-                    'attr_name_cn' => 'required|unique:attrs,attr_name_cn',
-                    'attr_name_en' => 'required|unique:attrs,attr_name_en',
-                    'attr_type' => 'required'
-                ], // 条件
-                'attributes' => [
-                    'id' => '属性',
-                    'attr_name_cn' => '属性名称-中文',
-                    'attr_name_en' => '属性名称-英文',
-                    'attr_type' => '属性数据类型'
-                ]// 属性名映射
-            ]);
-            $obj = Attrs::createNewAttr($data);
-            return $this->__json($obj->toArray());
-        }else{
-            runCustomValidator([
-                'data' => $data, // 数据
-                'rules' => [
-                    'id' => 'sometimes|exists:attrs',
-                    'attr_name_cn' => 'required|unique:attrs,attr_name_cn,'.$data['id'].',id',
-                    'attr_name_en' => 'required|unique:attrs,attr_name_en,'.$data['id'].',id',
-                    'attr_type' => 'required'
-                ], // 条件
-                'attributes' => [
-                    'id' => '属性',
-                    'attr_name_cn' => '属性名称-中文',
-                    'attr_name_en' => '属性名称-英文',
-                    'attr_type' => '属性数据类型'
-                ]// 属性名映射
-            ]);
-            $obj = Attrs::updateAttr($data['id'],array_except($data, ['id']));
-            return $this->__json();
-        }
+        runCustomValidator([
+            'data' => $data, // 数据
+            'rules' => [
+                'attr_name_cn' => 'required|unique:attrs,attr_name_cn',
+                'attr_name_en' => 'required|unique:attrs,attr_name_en',
+                'attr_type' => 'required'
+            ], // 条件
+            'attributes' => [
+                'id' => '属性',
+                'attr_name_cn' => '属性名称-中文',
+                'attr_name_en' => '属性名称-英文',
+                'attr_type' => '属性数据类型'
+            ]// 属性名映射
+        ]);
+        $obj = Attrs::createNewAttr($data);
+        return $this->__json($obj->toArray());
     }
     
     public function query()
@@ -70,6 +47,28 @@ class ComponentAttrsController extends Controller
     
     public function update()
     {
+        $data = [
+            'id' => \Input::get('id'), // String 属性名称-中文
+            'attr_name_cn' => \Input::get('attr_name_cn'), // String 属性名称-中文
+            'attr_name_en' => \Input::get('attr_name_en'), // String 属性名称-英文
+            'attr_type' => \Input::get('attr_type')// String 属性数据类型
+        ];
+        runCustomValidator([
+            'data' => $data, // 数据
+            'rules' => [
+                'id' => 'required|exists:attrs',
+                'attr_name_cn' => 'required|unique:attrs,attr_name_cn,'.$data['id'].',id',
+                'attr_name_en' => 'required|unique:attrs,attr_name_en,'.$data['id'].',id',
+                'attr_type' => 'required'
+            ], // 条件
+            'attributes' => [
+                'id' => '属性',
+                'attr_name_cn' => '属性名称-中文',
+                'attr_name_en' => '属性名称-英文',
+                'attr_type' => '属性数据类型'
+            ]// 属性名映射
+        ]);
+        $obj = Attrs::updateAttr($data['id'],array_except($data, ['id']));
         return $this->__json();
     }
     
@@ -86,7 +85,7 @@ class ComponentAttrsController extends Controller
                     'formColor' => 'box-warning',
                     'action' => [
                         'uri' => '/api/attr',
-                        'method' => 'POST',
+                        'method' => 'PUT',
                         'success' => [
                             'redirect' => '/attrs'
                         ]

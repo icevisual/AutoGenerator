@@ -6,6 +6,17 @@
             "attrs": {
                 "caption" : "新建组件属性",
                 "formColor" : "box-warning",
+                "buttons": {
+                    "preinstall": {
+                        "submit": true,
+                        "cancel": true
+                    },
+                    "others" : [{
+                        "class" : "btn-warning",
+                        "event" : "other",
+                        "name"  : "other"
+                    }]
+                },
                 "action" : {
                     "uri" : "/api/attr",
                     "method" : "POST",

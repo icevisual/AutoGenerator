@@ -67,7 +67,7 @@ Route::get('/component/{id}', [
     'as' => 'api_component_detail',
     'uses' => 'Api\ComponentController@detail'
 ]);
-Route::put('/component', [
+Route::put('/component/{id}', [
     'as' => 'api_component_update',
     'uses' => 'Api\ComponentController@update'
 ]);

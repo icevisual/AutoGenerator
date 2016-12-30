@@ -1,5 +1,5 @@
 -- ----------------------------
--- Date: 2016-12-27 08:39:14
+-- Date: 2016-12-30 09:12:33
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -14,7 +14,7 @@ CREATE TABLE `op_attrs` (
   `attr_name_en` varchar(80) NOT NULL COMMENT '属性名字',
   `attr_type` varchar(80) NOT NULL COMMENT '属性类别',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='组件属性表';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='组件属性表';
 
 -- ----------------------------
 -- Table structure for op_component
@@ -25,7 +25,7 @@ CREATE TABLE `op_component` (
   `component_name` varchar(80) NOT NULL COMMENT '组件名称',
   `component_desc` varchar(255) NOT NULL COMMENT '组件描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组件表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='组件表';
 
 -- ----------------------------
 -- Table structure for op_component_attrs
@@ -37,7 +37,7 @@ CREATE TABLE `op_component_attrs` (
   `attr_id` int(11) NOT NULL COMMENT '属性ID',
   `default_value` varchar(80) DEFAULT NULL COMMENT '属性默认值',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组件属性表';
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COMMENT='组件属性表';
 
 -- ----------------------------
 -- Table structure for op_component_instance
@@ -59,15 +59,16 @@ CREATE TABLE `op_request_log` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `ip` varchar(100) NOT NULL COMMENT 'IP',
   `uri` varchar(100) DEFAULT NULL COMMENT '路由',
+  `method` varchar(30) NOT NULL COMMENT 'method',
   `params` varchar(255) DEFAULT NULL COMMENT '参数',
   `http_status` smallint(5) DEFAULT NULL COMMENT 'HTTP 状态码',
-  `return` varchar(500) DEFAULT NULL COMMENT '返回',
+  `return` text COMMENT '返回',
   `sha1` varchar(100) DEFAULT NULL COMMENT 'SHA1 of uri & params & return ',
   `time_usage` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '时间使用量S',
   `memory_usage` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '内存使用量MB',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1651 DEFAULT CHARSET=utf8 COMMENT='请求日志';
+) ENGINE=InnoDB AUTO_INCREMENT=2292 DEFAULT CHARSET=utf8 COMMENT='请求日志';
 
 -- ----------------------------
 -- Table structure for op_request_params
@@ -82,5 +83,5 @@ CREATE TABLE `op_request_params` (
   `sha1` varchar(255) DEFAULT NULL COMMENT 'SHA1',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='请求参数日志';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='请求参数日志';
 

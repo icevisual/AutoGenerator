@@ -1,4 +1,4 @@
-define(['Vue','jQuery'],function(Vue,$) {
+define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
     /**
     {
         "attrs": {
@@ -8,7 +8,12 @@ define(['Vue','jQuery'],function(Vue,$) {
                 "preinstall": {
                     "submit": true,
                     "cancel": true
-                }
+                },
+                "others" : [{
+                    "class" : "btn-info",
+                    "event" : "other",
+                    "name"  : "other"
+                }]
             },
             "action" : { // form 属性
                 "uri" : "/api/attr",
@@ -32,20 +37,7 @@ define(['Vue','jQuery'],function(Vue,$) {
             "attr_name_cn": {
                 "name": "属性名字中",
                 "type": "input",
-                "attrs": {
-                    "type": "text",
-                    "default": "asdda",
-                    "placeholder": "属性名字中"
-                },
-                "value": ""
-            },
-            "attr_name_en": {
-                "name": "属性名字英",
-                "type": "input",
-                "attrs": {
-                    "type": "text",
-                    "placeholder": "属性名字英"
-                },
+                "hidden" : true,
                 "value": ""
             },
             "attr_type": {
@@ -85,7 +77,7 @@ define(['Vue','jQuery'],function(Vue,$) {
           <div class="col-sm-10">\
               <template v-if="\'input\' == item.type">\
                 <input v-if="\'password\' == item.attrs.type" type="password" v-model="item.value" :placeholder="item.attrs.placeholder" :name="index" class="form-control" >\
-                <input v-if="\'hidden\' == item.attrs.type" type="hidden" v-model="item.value" :placeholder="item.attrs.placeholder" :name="index" class="form-control" >\
+                <input v-else-if="\'hidden\' == item.attrs.type" type="hidden" v-model="item.value" :placeholder="item.attrs.placeholder" :name="index" class="form-control" >\
                 <input v-else type="text" v-model="item.value" :placeholder="item.attrs.placeholder" :name="index" class="form-control" >\
               </template>\
               <template v-if="\'select\' == item.type">\
@@ -99,8 +91,8 @@ define(['Vue','jQuery'],function(Vue,$) {
     </div><!-- /.box-body -->\
     <div class="box-footer">\
       <template v-for="(item,key,index) in formConfig.attrs.buttons.preinstall">\
-         <button v-if="\'submit\' == key" type="submit" class="btn btn-info pull-right" :class="index > 0 ? \'margin-r-5\':\'\'" :data-event="key" v-on:click.prevent="btnclick">Submit</button>\
-         <button v-if="\'cancel\' == key" class="btn btn-default pull-right" :class="index > 0 ? \'margin-r-5\':\'\'" :data-event="key" v-on:click.prevent="btnclick">Cancel</button>\
+         <button v-if="item.submit" type="submit" class="btn btn-info pull-right" :class="index > 0 ? \'margin-r-5\':\'\'" :data-event="key" v-on:click.prevent="doFormSubmit">Submit</button>\
+         <button v-if="item.cancel" class="btn btn-default pull-right" :class="index > 0 ? \'margin-r-5\':\'\'" :data-event="key" v-on:click.prevent="btnclick">Cancel</button>\
       </template>\
       <template v-for="(item,key) in formConfig.attrs.buttons.others">\
          <button class="btn pull-right margin-r-5" :class="item.class" :data-event="item.event" v-on:click.prevent="btnclick">{{item.name}}</button>\
@@ -140,12 +132,35 @@ define(['Vue','jQuery'],function(Vue,$) {
                 }
                 return ret;
             },
+            'doFormSubmit' : function(){
+                var formValidateRet = this.doFormValidate(this.$el,this.$data);
+                if(formValidateRet !== false){
+                    var this$1 = this;
+                    $.ajax({
+                        'url' : this.formConfig.attrs.action.uri,
+                        'method' : this.formConfig.attrs.action.method,
+                        'data' : formValidateRet,
+                        'dataType' : 'json',
+                        'success' : function(d){
+                            if(Utils.apiReqSuccess(d)){
+                                window.location.href = this$1.formConfig.attrs.action.success.redirect
+                            }else{
+                                alert(Utils.apiReqMsg(d));
+                            }
+                        },
+                        'error' : function(d){
+                            console.log(d);
+                        }
+                    });
+                }
+            },
             'btnclick' : function(e){
+                var eventPrefix = 'form';
                 var emitEventType = e.target.getAttribute("data-event");
                 if('submit' == emitEventType){
-                    this.$emit('formsubmit',this.doFormValidate(this.$el,this.$data),this.$data);
+                    this.$emit(eventPrefix + 'submit',this.doFormValidate(this.$el,this.$data),this.$data);
                 }else{
-                    this.$emit('form' + emitEventType,e);
+                    this.$emit(eventPrefix + emitEventType,e);
                 }
             },
             'defaultValue' : function(v,d){

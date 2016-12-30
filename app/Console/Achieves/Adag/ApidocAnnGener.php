@@ -92,7 +92,7 @@ class ApidocAnnGener
             
             $funcAnn = getAnnotation($action);
             
-            $data['uriName'] = array_get($funcAnn, 'function.note',$method[0].'-'. $uri);
+            $data['uriName'] = array_get($funcAnn, 'function.note',$uri.'-'.$method[0]);
             
             if (isset($funcAnn['@apiSuccess'])) {
                 $data['apiSuccess'] = $funcAnn['@apiSuccess'];

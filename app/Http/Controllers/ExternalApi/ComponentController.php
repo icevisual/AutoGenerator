@@ -23,8 +23,10 @@ class ComponentController extends Controller
      * @apiSuccess {String} default_value 属性默认值
      */
     public function outer_api_components_list(){
+        $page = \Input::get('p', 1); // 页数
+        $pageSize = \Input::get('n', 10); // 每页条数
         
-        $data = Component::queryComponentsWithDetail();
+        $data = Component::queryComponentsWithDetail([],$page,$pageSize);
         
         return $this->__json($data);
         
