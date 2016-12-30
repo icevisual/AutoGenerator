@@ -19,7 +19,7 @@
                         "method" : "GET"
                     },
                     "delete" : {
-                        "url" : "/api/{id}",
+                        "url" : "/api/attr/{id}",
                         "param" : ["id"],
                         "method" : "DELETE"
                     }

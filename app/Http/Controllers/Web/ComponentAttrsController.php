@@ -7,11 +7,11 @@ use App\Exceptions\ServiceException;
 class ComponentAttrsController extends Controller
 {
     public function query(){
-        return view('backend.common.components');
+        return view('backend.common.attrs');
     }
     
     public function create(){
-        return view('backend.common.component');
+        return view('backend.common.attr');
     }
     
 }

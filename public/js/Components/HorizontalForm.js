@@ -78,18 +78,20 @@ define(['Vue','jQuery'],function(Vue,$) {
     <div class="box-body">\
        <template v-for="(item,index) in formConfig.fields" >\
         <template v-if="item.hidden">\
-          <input v-model="item.value" :type="item.attrs.type" :name="index" >\
+          <input v-model="item.value" type="hidden" :name="index" >\
         </template>\
         <div v-else class="form-group">\
           <label class="col-sm-2 control-label">{{item.name}}</label>\
           <div class="col-sm-10">\
               <template v-if="\'input\' == item.type">\
-                  <input v-model="item.value" :type="item.attrs.type" :placeholder="item.attrs.placeholder" :name="index" class="form-control" >\
+                <input v-if="\'password\' == item.attrs.type" type="password" v-model="item.value" :placeholder="item.attrs.placeholder" :name="index" class="form-control" >\
+                <input v-if="\'hidden\' == item.attrs.type" type="hidden" v-model="item.value" :placeholder="item.attrs.placeholder" :name="index" class="form-control" >\
+                <input v-else type="text" v-model="item.value" :placeholder="item.attrs.placeholder" :name="index" class="form-control" >\
               </template>\
               <template v-if="\'select\' == item.type">\
-                  <select v-model="item.value" :name="index" class="form-control">\
-                      <option v-for="option in item.data" :value="option.value" >{{ option.text }}</option>\
-                  </select>\
+                <select v-model="item.value" :name="index" class="form-control">\
+                  <option v-for="option in item.data" :value="option.value" >{{ option.text }}</option>\
+                </select>\
               </template>\
           </div>\
         </div>\

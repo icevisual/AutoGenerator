@@ -13,7 +13,6 @@ require(['initialize'], function(EVue) {
             if(!Utils.apiReqSuccess(d)){
                 return alert(Utils.apiReqMsg(d));
             }
-            console.log(Utils.apiReqData(d));
             var vmForm = new EVue({
                 'el' : '#formDemo',
                 'data' : {

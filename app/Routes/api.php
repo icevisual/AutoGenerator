@@ -20,12 +20,12 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/sidebar', [
     'as' => 'api_sidebar',
-    'uses' => 'SystemArchitecture\ApiController@sidebarMenu'
+    'uses' => 'Api\SystemArchitectureController@sidebarMenu'
 ]);
 
 Route::get('/formConfig', [
     'as' => 'api_formConfig',
-    'uses' => 'SystemArchitecture\ApiController@formConfig'
+    'uses' => 'Api\SystemArchitectureController@formConfig'
 ]);
 
 
@@ -33,48 +33,48 @@ Route::get('/formConfig', [
 
 Route::post('/attr', [
     'as' => 'api_attrs_create',
-    'uses' => 'SystemArchitecture\ApiController@attrs_create'
+    'uses' => 'Api\ComponentAttrsController@create'
 ]);
 Route::get('/attrs', [
     'as' => 'api_attrs_list',
-    'uses' => 'SystemArchitecture\ApiController@attrs_list'
+    'uses' => 'Api\ComponentAttrsController@query'
 ]);
 
 Route::get('/attr/{id}', [
     'as' => 'api_attrs_detail',
-    'uses' => 'SystemArchitecture\ApiController@attrs_detail'
+    'uses' => 'Api\ComponentAttrsController@detail'
 ]);
 
 Route::put('/attr/{id}', [
     'as' => 'api_attrs_update',
-    'uses' => 'SystemArchitecture\ApiController@attrs_update'
+    'uses' => 'Api\ComponentAttrsController@update'
 ]);
 Route::delete('/attr/{id}', [
     'as' => 'api_attrs_delete',
-    'uses' => 'SystemArchitecture\ApiController@attrs_delete'
+    'uses' => 'Api\ComponentAttrsController@delete'
 ]);
 
 
 
 Route::post('/component', [
     'as' => 'api_component_create',
-    'uses' => 'Component\ApiController@create'
+    'uses' => 'Api\ComponentController@create'
 ]);
 Route::get('/components', [
     'as' => 'api_components_query',
-    'uses' => 'Component\ApiController@query'
+    'uses' => 'Api\ComponentController@query'
 ]);
 Route::get('/component/{id}', [
     'as' => 'api_component_detail',
-    'uses' => 'Component\ApiController@detail'
+    'uses' => 'Api\ComponentController@detail'
 ]);
 Route::put('/component', [
     'as' => 'api_component_update',
-    'uses' => 'Component\ApiController@update'
+    'uses' => 'Api\ComponentController@update'
 ]);
 Route::delete('/component/{id}', [
     'as' => 'api_component_delete',
-    'uses' => 'Component\ApiController@delete'
+    'uses' => 'Api\ComponentController@delete'
 ]);
 
 
