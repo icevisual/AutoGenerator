@@ -45,10 +45,10 @@ class ComponentAttrsController extends Controller
         return $this->__json($data);
     }
     
-    public function update()
+    public function update($id)
     {
         $data = [
-            'id' => \Input::get('id'), // String 属性名称-中文
+            'id' => $id, 
             'attr_name_cn' => \Input::get('attr_name_cn'), // String 属性名称-中文
             'attr_name_en' => \Input::get('attr_name_en'), // String 属性名称-英文
             'attr_type' => \Input::get('attr_type')// String 属性数据类型
@@ -56,13 +56,13 @@ class ComponentAttrsController extends Controller
         runCustomValidator([
             'data' => $data, // 数据
             'rules' => [
-                'id' => 'required|exists:attrs',
+                'id' => 'required|numeric|exists:attrs',
                 'attr_name_cn' => 'required|unique:attrs,attr_name_cn,'.$data['id'].',id',
                 'attr_name_en' => 'required|unique:attrs,attr_name_en,'.$data['id'].',id',
                 'attr_type' => 'required'
             ], // 条件
             'attributes' => [
-                'id' => '属性',
+                'id' => '属性ID',
                 'attr_name_cn' => '属性名称-中文',
                 'attr_name_en' => '属性名称-英文',
                 'attr_type' => '属性数据类型'
@@ -84,7 +84,8 @@ class ComponentAttrsController extends Controller
                     'caption' => '新建组件属性',
                     'formColor' => 'box-warning',
                     'action' => [
-                        'uri' => '/api/attr',
+                        'uri' => '/api/attr/'.$id,
+                        'params' => ['id'],
                         'method' => 'PUT',
                         'success' => [
                             'redirect' => '/attrs'
