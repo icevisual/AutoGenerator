@@ -5,7 +5,7 @@
         "attr_form": {
             "attrs": {
                 "caption" : "新建组件属性",
-                "formColor" : "box-warning",
+                "formColor" : "box-info",
                 "buttons": {
                     "preinstall": {
                         "submit": true,

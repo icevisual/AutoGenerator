@@ -22,12 +22,14 @@ class ComponentController extends Controller
             'rules' => [
                 'component_name' => 'required|unique:component,component_name',
                 'component_desc' => 'required',
+                'attrs' => 'required|array',
                 'attrs.*.default_value' => 'required',
                 'attrs.*.id' => 'required'
             ], // 条件
             'attributes' => [
                 'component_name' => '组件名称',
                 'component_desc' => '组件描述',
+                'attrs' => '组件属性',
                 'attrs.*.default_value' => '默认值'
             ]
         ]); // 属性名映射
@@ -59,16 +61,17 @@ class ComponentController extends Controller
                 'id' => 'required|numeric|exists:component',
                 'component_name' => 'required|unique:component,component_name,'.$data['id'],',id',
                 'component_desc' => 'required',
+                'attrs' => 'required|array',
                 'attrs.*.default_value' => 'required',
                 'attrs.*.id' => 'required'
             ], // 条件
             'attributes' => [
                 'component_name' => '组件名称',
                 'component_desc' => '组件描述',
+                'attrs' => '组件属性',
                 'attrs.*.default_value' => '默认值'
             ]
-        ] // 属性名映射
-        );
+        ]);
         $component = Component::updateComponent($data);
         return $this->__json();
     }
@@ -164,8 +167,15 @@ class ComponentController extends Controller
                     'caption' => '组件',
                     'buttons' => [
                         'preinstall' => [
-                            'submit' => '1',
+                            'submit' => false,
                             'cancel' => '1'
+                        ],
+                        'others' => [
+                            [
+                                'name' => 'submit',
+                                'class' => 'btn-info',
+                                'event' => 'submit',
+                            ]
                         ]
                     ],
                     'action' => [

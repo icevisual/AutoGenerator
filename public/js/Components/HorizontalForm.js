@@ -91,8 +91,8 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
     </div><!-- /.box-body -->\
     <div class="box-footer">\
       <template v-for="(item,key,index) in formConfig.attrs.buttons.preinstall">\
-         <button v-if="item.submit" type="submit" class="btn btn-info pull-right" :class="index > 0 ? \'margin-r-5\':\'\'" :data-event="key" v-on:click.prevent="doFormSubmit">Submit</button>\
-         <button v-if="item.cancel" class="btn btn-default pull-right" :class="index > 0 ? \'margin-r-5\':\'\'" :data-event="key" v-on:click.prevent="btnclick">Cancel</button>\
+         <button v-if="\'submit\' == key && item" type="submit" class="btn btn-info pull-right" :class="index > 0 ? \'margin-r-5\':\'\'" :data-event="key" v-on:click.prevent="doFormSubmit">Submit</button>\
+         <button v-if="\'cancel\' == key && item" class="btn btn-default pull-right" :class="index > 0 ? \'margin-r-5\':\'\'" :data-event="key" v-on:click.prevent="btnclick">Cancel</button>\
       </template>\
       <template v-for="(item,key) in formConfig.attrs.buttons.others">\
          <button class="btn pull-right margin-r-5" :class="item.class" :data-event="item.event" v-on:click.prevent="btnclick">{{item.name}}</button>\
