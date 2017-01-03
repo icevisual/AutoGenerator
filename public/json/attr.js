@@ -10,12 +10,7 @@
                     "preinstall": {
                         "submit": true,
                         "cancel": true
-                    },
-                    "others" : [{
-                        "class" : "btn-warning",
-                        "event" : "other",
-                        "name"  : "other"
-                    }]
+                    }
                 },
                 "action" : {
                     "uri" : "/api/attr",
@@ -26,32 +21,21 @@
                 }
             },
             "fields": {
-                "attr_name_cn": {
-                    "name": "属性名字中",
+                "attr_name": {
+                    "name": "属性名字",
                     "type": "input",
                     "attrs": {
                         "type": "text",
-                        "default": "asdda",
                         "placeholder": "属性名字中"
                     },
                     "value": ""
                 },
-                "attr_name_cn": {
-                    "name": "属性名字中",
+                "attr_value": {
+                    "name": "属性值",
                     "type": "input",
                     "attrs": {
                         "type": "text",
-                        "default": "asdda",
-                        "placeholder": "属性名字中"
-                    },
-                    "value": ""
-                },
-                "attr_name_en": {
-                    "name": "属性名字英",
-                    "type": "input",
-                    "attrs": {
-                        "type": "text",
-                        "placeholder": "属性名字英"
+                        "placeholder": "属性值"
                     },
                     "value": ""
                 },
@@ -75,6 +59,37 @@
                         {
                             "value": "boolean",
                             "text": "boolean"
+                        },
+                        {
+                            "value": "array",
+                            "text": "array"
+                        },
+                        {
+                            "value": "json",
+                            "text": "json"
+                        }
+                    ]
+                },
+                "form_type":{
+                    "name": "表单类别",
+                    "type": "select",
+                    "value": "input",
+                    "data": [
+                        {
+                            "value": "input",
+                            "text": "input"
+                        },
+                        {
+                            "value": "select",
+                            "text": "select"
+                        },
+                        {
+                            "value": "checkbox",
+                            "text": "checkbox"
+                        },
+                        {
+                            "value": "radio",
+                            "text": "radio"
                         }
                     ]
                 }

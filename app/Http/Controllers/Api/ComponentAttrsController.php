@@ -13,79 +13,96 @@ class ComponentAttrsController extends Controller
     public function create()
     {
         $data = [
-            'attr_name_cn' => \Input::get('attr_name_cn'), // String 属性名称-中文
-            'attr_name_en' => \Input::get('attr_name_en'), // String 属性名称-英文
-            'attr_type' => \Input::get('attr_type')// String 属性数据类型
-        ];
+            'attr_name' => \Input::get('attr_name'), // String 属性名称
+            'attr_value' => \Input::get('attr_value'), // String 属性值
+            'attr_type' => \Input::get('attr_type'), // String 属性数据类型
+            'form_type' => \Input::get('form_type')
+        ]; // String 表单控件类别
+
         runCustomValidator([
             'data' => $data, // 数据
             'rules' => [
-                'attr_name_cn' => 'required|unique:attrs,attr_name_cn',
-                'attr_name_en' => 'required|unique:attrs,attr_name_en',
-                'attr_type' => 'required'
+                'attr_name' => 'required|unique:attrs,attr_name',
+                'attr_value' => 'required',
+                'attr_type' => 'required',
+                'form_type' => 'required'
             ], // 条件
             'attributes' => [
-                'id' => '属性',
-                'attr_name_cn' => '属性名称-中文',
-                'attr_name_en' => '属性名称-英文',
+                'form_type' => '表单控件类别',
+                'attr_name' => '属性名称',
+                'attr_value' => '属性值',
                 'attr_type' => '属性数据类型'
-            ]// 属性名映射
-        ]);
+            ]
+        ]) // 属性名映射
+;
         $obj = Attrs::createNewAttr($data);
         return $this->__json($obj->toArray());
     }
-    
+
     public function query()
     {
         $page = \Input::get('p', 1); // 页数
         $pageSize = \Input::get('n', 10); // 每页条数
-    
+        
         $data = Attrs::queryAttrs([], $page, $pageSize);
-    
+        
         return $this->__json($data);
     }
-    
+
     public function update($id)
     {
         $data = [
-            'id' => $id, 
-            'attr_name_cn' => \Input::get('attr_name_cn'), // String 属性名称-中文
-            'attr_name_en' => \Input::get('attr_name_en'), // String 属性名称-英文
-            'attr_type' => \Input::get('attr_type')// String 属性数据类型
-        ];
+            'id' => $id,
+            'attr_name' => \Input::get('attr_name'), // String 属性名称
+            'attr_value' => \Input::get('attr_value'), // String 属性值
+            'attr_type' => \Input::get('attr_type'), // String 属性数据类型
+            'form_type' => \Input::get('form_type')
+        ]; // String 表单控件类别
+
         runCustomValidator([
             'data' => $data, // 数据
             'rules' => [
                 'id' => 'required|numeric|exists:attrs',
-                'attr_name_cn' => 'required|unique:attrs,attr_name_cn,'.$data['id'].',id',
-                'attr_name_en' => 'required|unique:attrs,attr_name_en,'.$data['id'].',id',
-                'attr_type' => 'required'
+                'attr_name' => 'required|unique:attrs,attr_name,'.$data['id'],',id',
+                'attr_value' => 'required',
+                'attr_type' => 'required',
+                'form_type' => 'required'
             ], // 条件
             'attributes' => [
                 'id' => '属性ID',
-                'attr_name_cn' => '属性名称-中文',
-                'attr_name_en' => '属性名称-英文',
+                'form_type' => '表单控件类别',
+                'attr_name' => '属性名称',
+                'attr_value' => '属性值',
                 'attr_type' => '属性数据类型'
-            ]// 属性名映射
-        ]);
-        $obj = Attrs::updateAttr($data['id'],array_except($data, ['id']));
+            ]
+        ]) // 属性名映射
+;
+        $obj = Attrs::updateAttr($data['id'], array_except($data, [
+            'id'
+        ]));
         return $this->__json();
     }
-    
+
     public function detail($id)
     {
         $detail = Attrs::attrDetail($id);
-        if(!$detail){
+        if (! $detail) {
             return $this->__json(\ErrorCode::VITAL_NOT_FOUND);
         }
+        
         $data = [
             'attr_form' => [
                 'attrs' => [
                     'caption' => '新建组件属性',
-                    'formColor' => 'box-warning',
+                    'formColor' => 'box-info',
+                    'buttons' => [
+                        'preinstall' => [
+                            'submit' => '1',
+                            'cancel' => '1'
+                        ]
+                    ],
                     'action' => [
-                        'uri' => '/api/attr/'.$id,
-                        'params' => ['id'],
+                        'uri' => '/api/attr/' . $id,
                         'method' => 'PUT',
                         'success' => [
                             'redirect' => '/attrs'
@@ -98,28 +115,27 @@ class ComponentAttrsController extends Controller
                         'type' => 'input',
                         'hidden' => true,
                         'attrs' => [
-                            'type' => 'hidden',
+                            'type' => 'hidden'
                         ],
-                        'value' => $detail->id,
+                        'value' => $detail->id
                     ],
-                    'attr_name_cn' => [
-                        'name' => '属性名字中',
+                    'attr_name' => [
+                        'name' => '属性名字',
                         'type' => 'input',
                         'attrs' => [
                             'type' => 'text',
-                            'default' => 'asdda',
                             'placeholder' => '属性名字中'
                         ],
-                        'value' => $detail->attr_name_cn,
+                        'value' => $detail->attr_name
                     ],
-                    'attr_name_en' => [
-                        'name' => '属性名字英',
+                    'attr_value' => [
+                        'name' => '属性值',
                         'type' => 'input',
                         'attrs' => [
                             'type' => 'text',
-                            'placeholder' => '属性名字英'
+                            'placeholder' => '属性值'
                         ],
-                        'value' => $detail->attr_name_en,
+                        'value' => $detail->attr_value
                     ],
                     'attr_type' => [
                         'name' => '属性类别',
@@ -141,21 +157,51 @@ class ComponentAttrsController extends Controller
                             '3' => [
                                 'value' => 'boolean',
                                 'text' => 'boolean'
+                            ],
+                            '4' => [
+                                'value' => 'array',
+                                'text' => 'array'
+                            ],
+                            '5' => [
+                                'value' => 'json',
+                                'text' => 'json'
+                            ]
+                        ]
+                    ],
+                    'form_type' => [
+                        'name' => '表单类别',
+                        'type' => 'select',
+                        'value' => $detail->form_type,
+                        'data' => [
+                            '0' => [
+                                'value' => 'input',
+                                'text' => 'input'
+                            ],
+                            '1' => [
+                                'value' => 'select',
+                                'text' => 'select'
+                            ],
+                            '2' => [
+                                'value' => 'checkbox',
+                                'text' => 'checkbox'
+                            ],
+                            '3' => [
+                                'value' => 'radio',
+                                'text' => 'radio'
                             ]
                         ]
                     ]
                 ]
             ]
         ];
-    
-    
+        
         return $this->__json($data);
     }
-    
+
     public function delete($id)
     {
-        if($id){
-            Attrs::where('id',$id)->delete();
+        if ($id) {
+            Attrs::where('id', $id)->delete();
         }
         return $this->__json();
     }
