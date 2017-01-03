@@ -39,7 +39,8 @@ class Kernel extends HttpKernel
         ],
         
         'externalApi' => [
-            'external'
+            'external',
+            'log'
         ],
     ];
 

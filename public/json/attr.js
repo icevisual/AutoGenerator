@@ -71,7 +71,7 @@
                     ]
                 },
                 "form_type":{
-                    "name": "表单类别",
+                    "name": "渲染类别",
                     "type": "select",
                     "value": "input",
                     "data": [

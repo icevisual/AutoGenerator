@@ -99,10 +99,11 @@ CREATE TABLE `op_component` (
             'component.component_name',
             'component.component_desc',
             \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.id,'{$separator}') AS attr_id"),
-            \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.attr_name_cn,'{$separator}') AS attr_name_cn"),
-            \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.attr_name_en,'{$separator}') AS attr_name_en"),
+            \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.attr_name,'{$separator}') AS attr_name"),
+            \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.attr_value,'{$separator}') AS attr_value"),
             \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.attr_type,'{$separator}') AS attr_type"),
-            \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}component_attrs.default_value,'{$separator}') AS default_value"),
+            \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.form_type,'{$separator}') AS form_type"),
+//             \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}component_attrs.default_value,'{$separator}') AS default_value"),
 //             'attrs.attr_name_cn',
 //             'attrs.attr_name_en',
 //             'attrs.attr_type',
@@ -118,27 +119,27 @@ CREATE TABLE `op_component` (
             
             $attrs = [
                 'attr_id' => groupConcatToArray($v['attr_id'],$separator),
-                'attr_name_cn' => groupConcatToArray($v['attr_name_cn'],$separator),
-                'attr_name_en' => groupConcatToArray($v['attr_name_en'],$separator),
+                'attr_name' => groupConcatToArray($v['attr_name'],$separator),
+                'attr_value' => groupConcatToArray($v['attr_value'],$separator),
                 'attr_type' => groupConcatToArray($v['attr_type'],$separator),
-                'default_value' => groupConcatToArray($v['default_value'],$separator),
+                'form_type' => groupConcatToArray($v['form_type'],$separator),
             ];
             $at = [];
             foreach ($attrs['attr_id'] as $k1 => $v1){
                 $at[] = [
                     'attr_id' => $attrs['attr_id'][$k1],
-                    'attr_name_cn' => $attrs['attr_name_cn'][$k1],
-                    'attr_name_en' => $attrs['attr_name_en'][$k1],
+                    'attr_name' => $attrs['attr_name'][$k1],
+                    'attr_value' => $attrs['attr_value'][$k1],
                     'attr_type' => $attrs['attr_type'][$k1],
-                    'default_value' => $attrs['default_value'][$k1],
+                    'form_type' => $attrs['form_type'][$k1],
                 ];
             }
             $list['data'][$k]['attrs'] = $at;
             unset($list['data'][$k]['attr_id']);
-            unset($list['data'][$k]['attr_name_cn']);
-            unset($list['data'][$k]['attr_name_en']);
+            unset($list['data'][$k]['attr_name']);
+            unset($list['data'][$k]['attr_value']);
             unset($list['data'][$k]['attr_type']);
-            unset($list['data'][$k]['default_value']);
+            unset($list['data'][$k]['form_type']);
         }
         
         $data = [
