@@ -95,125 +95,30 @@ class ComponentAttrsController extends Controller
         if (! $detail) {
             return $this->__json(\ErrorCode::VITAL_NOT_FOUND);
         }
-        
-        $data = [
-            'attr_form' => [
+        $file = 'jsonf/attr.js';
+        if (file_exists(public_path($file))) {
+            
+            $json = file_get_contents(public_path($file));
+            $json = json_decode($json,1);
+            array_set($json, 'attr_form.attrs.action.uri', '/api/attr/' . $id);
+            array_set($json, 'attr_form.attrs.action.method', 'PUT');
+            array_set($json, 'attr_form.fields.id', [
+                'name' => '属性 ID',
+                'type' => 'input',
+                'hidden' => true,
                 'attrs' => [
-                    'caption' => '新建组件属性',
-                    'formColor' => 'box-info',
-                    'buttons' => [
-                        'preinstall' => [
-                            'submit' => '1',
-                            'cancel' => '1'
-                        ]
-                    ],
-                    'action' => [
-                        'uri' => '/api/attr/' . $id,
-                        'method' => 'PUT',
-                        'success' => [
-                            'redirect' => '/attrs'
-                        ]
-                    ]
+                    'type' => 'hidden'
                 ],
-                'fields' => [
-                    'id' => [
-                        'name' => '属性 ID',
-                        'type' => 'input',
-                        'hidden' => true,
-                        'attrs' => [
-                            'type' => 'hidden'
-                        ],
-                        'value' => $detail->id
-                    ],
-                    'attr_name' => [
-                        'name' => '属性名',
-                        'type' => 'input',
-                        'attrs' => [
-                            'type' => 'text',
-                            'placeholder' => '属性名'
-                        ],
-                        'value' => $detail->attr_name
-                    ],
-                    'attr_name_cn' => [
-                        'name' => '显示中文名',
-                        'type' => 'input',
-                        'attrs' => [
-                            'type' => 'text',
-                            'placeholder' => '显示中文名'
-                        ],
-                        'value' => $detail->attr_name_cn
-                    ],
-                    'attr_value' => [
-                        'name' => '属性值',
-                        'type' => 'input',
-                        "validate" => [
-                        "rules" => "sometimes"
-                        ],
-                        'attrs' => [
-                            'type' => 'text',
-                            'placeholder' => '属性值'
-                        ],
-                        'value' => $detail->attr_value
-                    ],
-                    'attr_type' => [
-                        'name' => '属性类别',
-                        'type' => 'select',
-                        'value' => $detail->attr_type,
-                        'data' => [
-                            '0' => [
-                                'value' => 'string',
-                                'text' => 'string'
-                            ],
-                            '1' => [
-                                'value' => 'integer',
-                                'text' => 'integer'
-                            ],
-                            '2' => [
-                                'value' => 'float',
-                                'text' => 'float'
-                            ],
-                            '3' => [
-                                'value' => 'boolean',
-                                'text' => 'boolean'
-                            ],
-                            '4' => [
-                                'value' => 'array',
-                                'text' => 'array'
-                            ],
-                            '5' => [
-                                'value' => 'json',
-                                'text' => 'json'
-                            ]
-                        ]
-                    ],
-                    'form_type' => [
-                        'name' => '渲染类别',
-                        'type' => 'select',
-                        'value' => $detail->form_type,
-                        'data' => [
-                            '0' => [
-                                'value' => 'input',
-                                'text' => 'input'
-                            ],
-                            '1' => [
-                                'value' => 'select',
-                                'text' => 'select'
-                            ],
-                            '2' => [
-                                'value' => 'checkbox',
-                                'text' => 'checkbox'
-                            ],
-                            '3' => [
-                                'value' => 'radio',
-                                'text' => 'radio'
-                            ]
-                        ]
-                    ]
-                ]
-            ]
-        ];
-        
-        return $this->__json($data);
+                'value' => $detail->id
+            ]);
+            array_set($json, 'attr_form.fields.attr_name.value',$detail->attr_name );
+            array_set($json, 'attr_form.fields.attr_name_cn.value',$detail->attr_name_cn );
+            array_set($json, 'attr_form.fields.attr_value.value',$detail->attr_value );
+            array_set($json, 'attr_form.fields.attr_type.value',$detail->attr_type );
+            array_set($json, 'attr_form.fields.form_type.value',$detail->form_type );
+            return $this->__json($json);
+        }
+        return $this->__json(\ErrorCode::SYSTEM_ERROR);
     }
 
     public function delete($id)

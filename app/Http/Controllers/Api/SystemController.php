@@ -11,12 +11,13 @@ class SystemController extends Controller
     public function formConfig()
     {
         $pathname = \Input::get('pathname');
-        $file = 'json/' . str_replace('/', '-', trim($pathname, '/')) . '.js';
+        $file = 'jsonf/' . str_replace('/', '-', trim($pathname, '/')) . '.js';
         if (file_exists(public_path($file))) {
-            echo file_get_contents($file);
-            exit();
+            $json = file_get_contents($file);
+            $json = json_decode($json,1);
+            return $this->__json($json);
         }
-        return $this->__json($data);
+        return $this->__json(\ErrorCode::SYSTEM_ERROR);
     }
 
     /**

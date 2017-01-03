@@ -80,145 +80,25 @@ class ComponentController extends Controller
     {
         $detail = Component::componentDetail($id);
         
-        $data = [
-            'component_attrs_table' => [
-                'attrs' => [
-                    'caption' => '组件属性表',
-                    'uris' => [
-                        'query' => [
-                            'url' => '/api/attrs',
-                            'param' => [],
-                            'method' => 'GET'
-                        ]
-                    ],
-                    'ajax' => true,
-                    'rownum' => false,
-                    'hidden' => [],
-                    'operation' => true,
-                    'operations' => [
-                        'addbind' => [
-                            "color" => "btn-success",
-                            "text" => "+"
-                        ]
-                    ],
-                    'header' => [
-                        '0' => [
-                            'name' => 'ID',
-                            'width' => '20px'
-                        ],
-                        '属性名',
-                        '显示名称',
-                        '属性值',
-                        '数据类型',
-                        '渲染类型',
-                    ]
-                ],
-                'data' => [
-                    'total' => '2',
-                    'current_page' => '1',
-                    'last_page' => '1',
-                    'per_page' => '10',
-                    'list' => []
-                ]
-            ],
-            'attrs_bind_table' => [
-                'attrs' => [
-                    'caption' => '组件属性表',
-                    'ajax' => false,
-                    'uris' => [
-                        'query' => [
-                            'url' => '/api/attrs',
-                            'param' => [],
-                            'method' => 'GET'
-                        ]
-                    ],
-                    'rownum' => true,
-                    'hidden' => [],
-                    'advancedColumn' => [
-                        'default_value' => [
-                            'type' => 'input'
-                        ]
-                    ],
-                    'operation' => true,
-                    'operations' => [
-                        'attrunbind' => [
-                            'color' => 'btn-warning',
-                            'text' => 'R'
-                        ]
-                    ],
-                    'header' => [
-                        '0' => [
-                            'name' => 'ID',
-                            'width' => '20px'
-                        ],
-                        '属性名',
-                        '属性值',
-                        '数据类型',
-                        '渲染类型',
-                    ]
-                ],
-                'data' => [
-                    'total' => '3',
-                    'current_page' => '1',
-                    'last_page' => '1',
-                    'per_page' => '10',
-                    'list' => $detail['attrs']
-                ]
-            ],
-            'component_form' => [
-                'attrs' => [
-                    'caption' => '组件',
-                    'buttons' => [
-                        'preinstall' => [
-                            'submit' => false,
-                            'cancel' => '1'
-                        ],
-                        'others' => [
-                            [
-                                'name' => 'submit',
-                                'class' => 'btn-info',
-                                'event' => 'submit',
-                            ]
-                        ]
-                    ],
-                    'action' => [
-                        'uri' => '/api/component/'.$id,
-                        'method' => 'PUT',
-                        'success' => [
-                            'redirect' => '/components'
-                        ]
-                    ]
-                ],
-                'fields' => [
-                    'id' => [
-                        'name' => ' ID',
-                        'type' => 'input',
-                        'hidden' => true,
-                        'value' => $detail['component']['id']
-                    ],
-                    'component_name' => [
-                        'name' => '组件名称',
-                        'type' => 'input',
-                        'attrs' => [
-                            'type' => 'text',
-                            'default' => 'asdda',
-                            'placeholder' => '组件名称'
-                        ],
-                        'value' => $detail['component']['component_name']
-                    ],
-                    'component_desc' => [
-                        'name' => '组件描述',
-                        'type' => 'input',
-                        'attrs' => [
-                            'type' => 'text',
-                            'placeholder' => '组件描述'
-                        ],
-                        'value' => $detail['component']['component_desc']
-                    ]
-                ]
-            ]
-        ];
-        return $this->__json($data);
+        $file = 'jsonf/component.js';
+        if (file_exists(public_path($file))) {
+        
+            $json = file_get_contents(public_path($file));
+            $json = json_decode($json,1);
+            array_set($json, 'component_form.attrs.action.uri', '/api/component/'.$id);
+            array_set($json, 'component_form.attrs.action.method', 'PUT');
+            array_set($json, 'component_form.fields.id', [
+                'name' => ' ID',
+                'type' => 'input',
+                'hidden' => true,
+                'value' => $detail['component']['id']
+            ]);
+            array_set($json, 'component_form.fields.component_name.value',$detail['component']['component_name'] );
+            array_set($json, 'component_form.fields.component_desc.value',$detail['component']['component_desc'] );
+            array_set($json, 'attrs_bind_table.data.list',$detail['attrs'] );
+            return $this->__json($json);
+        }
+        return $this->__json(\ErrorCode::SYSTEM_ERROR);
     }
 
     public function delete($id)
