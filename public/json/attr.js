@@ -33,6 +33,9 @@
                 "attr_value": {
                     "name": "属性值",
                     "type": "input",
+                    "validate" : {
+                        "rules" : "sometimes"  
+                    },
                     "attrs": {
                         "type": "text",
                         "placeholder": "属性值"

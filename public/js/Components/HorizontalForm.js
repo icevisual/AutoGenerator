@@ -27,6 +27,10 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
             "attr_name_cn": {
                 "name": "属性名字中", // 字段文本
                 "type": "input",  // 类型 input select
+                "validate" : {
+                    "rules" : "sometimes",
+                    "messages" : 
+                },
                 "attrs": { // 属性
                     "type": "text",
                     "default": "asdda",
@@ -123,8 +127,23 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
                 var fields = inputData.formConfig.fields;
                 var ret = {};
                 for(var key in fields){
+                    var _validate = fields[key]['validate'];
+                    var _is_required = true;
+                    if(undefined !== _validate){
+                        console.log(_validate);
+                        var _rules = _validate['rules'];
+                        var _rulesArray = [];
+                        if(typeof _rules == 'string'){
+                            _rulesArray = _rules.split('|');
+                        }else{
+                            _rulesArray = _rules;
+                        }
+                        if(_rulesArray[0] == 'sometimes'){
+                            _is_required = false;
+                        }
+                    }
                     var _valField = _form.find(fields[key].type + '[name='+key+']');
-                    if(!_valField.val()){
+                    if(_is_required && !_valField.val()){
                         _valField.focus();
                         return false;
                     }

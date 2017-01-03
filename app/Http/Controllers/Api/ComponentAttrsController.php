@@ -23,7 +23,7 @@ class ComponentAttrsController extends Controller
             'data' => $data, // 数据
             'rules' => [
                 'attr_name' => 'required|unique:attrs,attr_name',
-                'attr_value' => 'required',
+                'attr_value' => 'sometimes',
                 'attr_type' => 'required',
                 'form_type' => 'required'
             ], // 条件
@@ -64,7 +64,7 @@ class ComponentAttrsController extends Controller
             'rules' => [
                 'id' => 'required|numeric|exists:attrs',
                 'attr_name' => 'required|unique:attrs,attr_name,'.$data['id'],',id',
-                'attr_value' => 'required',
+                'attr_value' => 'sometimes',
                 'attr_type' => 'required',
                 'form_type' => 'required'
             ], // 条件
@@ -131,6 +131,9 @@ class ComponentAttrsController extends Controller
                     'attr_value' => [
                         'name' => '属性值',
                         'type' => 'input',
+                        "validate" => [
+                        "rules" => "sometimes"
+                        ],
                         'attrs' => [
                             'type' => 'text',
                             'placeholder' => '属性值'
