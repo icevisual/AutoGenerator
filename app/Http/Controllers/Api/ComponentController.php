@@ -23,7 +23,7 @@ class ComponentController extends Controller
                 'component_name' => 'required|unique:component,component_name',
                 'component_desc' => 'required',
                 'attrs' => 'required|array',
-                'attrs.*.default_value' => 'required',
+//                 'attrs.*.default_value' => 'required',
                 'attrs.*.id' => 'required'
             ], // 条件
             'attributes' => [
@@ -62,7 +62,7 @@ class ComponentController extends Controller
                 'component_name' => 'required|unique:component,component_name,'.$data['id'],',id',
                 'component_desc' => 'required',
                 'attrs' => 'required|array',
-                'attrs.*.default_value' => 'required',
+//                 'attrs.*.default_value' => 'required',
                 'attrs.*.id' => 'required'
             ], // 条件
             'attributes' => [
@@ -106,9 +106,10 @@ class ComponentController extends Controller
                             'name' => 'ID',
                             'width' => '20px'
                         ],
-                        '1' => '属性名中',
-                        '2' => '属性名英',
-                        '3' => '数据类型'
+                        '1' => '属性名',
+                        '2' => '属性值',
+                        '3' => '数据类型',
+                        '4' => '渲染类型',
                     ]
                 ],
                 'data' => [
@@ -149,9 +150,9 @@ class ComponentController extends Controller
                             'name' => 'ID',
                             'width' => '20px'
                         ],
-                        '1' => '属性名中',
+                        '1' => '属性名',
                         '2' => '数据类型',
-                        '3' => '默认值'
+                        '3' => '渲染类型',
                     ]
                 ],
                 'data' => [

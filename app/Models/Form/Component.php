@@ -33,7 +33,7 @@ CREATE TABLE `op_component` (
             ComponentAttrs::addRecord([
                 'component_id' => $data['id'],//组件ID
                 'attr_id' => $v['id'],//属性ID
-                'default_value' => $v['default_value'],//属性默认值
+//                 'default_value' => $v['default_value'],//属性默认值
             ]);
         }
         \DB::commit();

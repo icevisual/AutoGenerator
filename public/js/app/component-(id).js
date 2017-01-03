@@ -41,17 +41,21 @@ require(['initialize'], function(EVue) {
                             var attrBindData = [];
                             
                             for(var i in tableData){
-                                if('' == tableData[i]['default_value']){
-                                    return $(this.$children[2].$el).find('tr[data-id='+tableData[i].id+']')
-                                    .find('input')
-                                    .focus();
-                                }else{
-                                    attrBindData.push({
-                                        'id' : tableData[i].id,
-                                        'default_value' : tableData[i].default_value
-                                    });
-//                                    attrBindData[tableData[i].id] = tableData[i].default_value;
-                                }
+//                                if('' == tableData[i]['default_value']){
+//                                    return $(this.$children[2].$el).find('tr[data-id='+tableData[i].id+']')
+//                                    .find('input')
+//                                    .focus();
+//                                }else{
+//                                    attrBindData.push({
+//                                        'id' : tableData[i].id,
+//                                        'default_value' : tableData[i].default_value
+//                                    });
+////                                    attrBindData[tableData[i].id] = tableData[i].default_value;
+//                                }
+                                attrBindData.push({
+                                    'id' : tableData[i].id,
+                                    'default_value' : ''
+                                });
                             }
                             
                             if(Utils.isEmptyObj(attrBindData)){
@@ -104,14 +108,15 @@ require(['initialize'], function(EVue) {
                         var tr$1 = target.parentNode.parentNode.parentNode;
                         var attr_name = tr$1.getElementsByTagName('td')[1].innerHTML;
                         var attr_type = tr$1.getElementsByTagName('td')[3].innerHTML;
+                        var form_type = tr$1.getElementsByTagName('td')[4].innerHTML;
                         if(this.isAttrBinded(attr_id)){
                             return false;
                         }
                         this.appendTableData('attrs_bind_table',{
                             "id": attr_id,
-                            "attr_name_cn": attr_name,
+                            "attr_name": attr_name,
                             "attr_type": attr_type,
-                            "default_value": ""
+                            "form_type": form_type,
                         });
                         this.setAttrBinded(attr_id);
                     }
