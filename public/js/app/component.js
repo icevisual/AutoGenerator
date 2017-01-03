@@ -102,14 +102,18 @@ require(['initialize'], function(EVue) {
                         var attr_id = target.getAttribute("data-id");
                         var tr$1 = target.parentNode.parentNode.parentNode;
                         var attr_name = tr$1.getElementsByTagName('td')[1].innerHTML;
-                        var attr_type = tr$1.getElementsByTagName('td')[3].innerHTML;
-                        var form_type = tr$1.getElementsByTagName('td')[4].innerHTML;
+                        
+                        var attr_value = tr$1.getElementsByTagName('td')[3].innerHTML;
+                        var attr_type = tr$1.getElementsByTagName('td')[4].innerHTML;
+                        var form_type = tr$1.getElementsByTagName('td')[5].innerHTML;
+                        
                         if(this.isAttrBinded(attr_id)){
                             return false;
                         }
                         this.appendTableData('attrs_bind_table',{
                             "id": attr_id,
                             "attr_name": attr_name,
+                            "attr_value": attr_value,
                             "attr_type": attr_type,
                             "form_type": form_type,
                         });

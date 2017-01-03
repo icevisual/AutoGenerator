@@ -14,6 +14,7 @@ class ComponentAttrsController extends Controller
     {
         $data = [
             'attr_name' => \Input::get('attr_name'), // String 属性名称
+            'attr_name_cn' => \Input::get('attr_name_cn'), // String 显示中文名
             'attr_value' => \Input::get('attr_value'), // String 属性值
             'attr_type' => \Input::get('attr_type'), // String 属性数据类型
             'form_type' => \Input::get('form_type')
@@ -22,7 +23,8 @@ class ComponentAttrsController extends Controller
         runCustomValidator([
             'data' => $data, // 数据
             'rules' => [
-                'attr_name' => 'required|unique:attrs,attr_name',
+                'attr_name' => 'required',
+                'attr_name_cn' => 'required',
                 'attr_value' => 'sometimes',
                 'attr_type' => 'required',
                 'form_type' => 'required'
@@ -30,6 +32,7 @@ class ComponentAttrsController extends Controller
             'attributes' => [
                 'form_type' => '表单控件类别',
                 'attr_name' => '属性名称',
+                'attr_name_cn' => '显示中文名',
                 'attr_value' => '属性值',
                 'attr_type' => '属性数据类型'
             ]
@@ -42,7 +45,7 @@ class ComponentAttrsController extends Controller
     public function query()
     {
         $page = \Input::get('p', 1); // 页数
-        $pageSize = \Input::get('n', 10); // 每页条数
+        $pageSize = \Input::get('n', 10000); // 每页条数
         
         $data = Attrs::queryAttrs([], $page, $pageSize);
         
@@ -54,6 +57,7 @@ class ComponentAttrsController extends Controller
         $data = [
             'id' => $id,
             'attr_name' => \Input::get('attr_name'), // String 属性名称
+            'attr_name_cn' => \Input::get('attr_name_cn'), // String 显示中文名
             'attr_value' => \Input::get('attr_value'), // String 属性值
             'attr_type' => \Input::get('attr_type'), // String 属性数据类型
             'form_type' => \Input::get('form_type')
@@ -63,7 +67,8 @@ class ComponentAttrsController extends Controller
             'data' => $data, // 数据
             'rules' => [
                 'id' => 'required|numeric|exists:attrs',
-                'attr_name' => 'required|unique:attrs,attr_name,'.$data['id'],',id',
+                'attr_name' => 'required',
+                'attr_name_cn' => 'required',
                 'attr_value' => 'sometimes',
                 'attr_type' => 'required',
                 'form_type' => 'required'
@@ -72,6 +77,7 @@ class ComponentAttrsController extends Controller
                 'id' => '属性ID',
                 'form_type' => '表单控件类别',
                 'attr_name' => '属性名称',
+                'attr_name_cn' => '显示中文名',
                 'attr_value' => '属性值',
                 'attr_type' => '属性数据类型'
             ]
@@ -120,13 +126,22 @@ class ComponentAttrsController extends Controller
                         'value' => $detail->id
                     ],
                     'attr_name' => [
-                        'name' => '属性名字',
+                        'name' => '属性名',
                         'type' => 'input',
                         'attrs' => [
                             'type' => 'text',
-                            'placeholder' => '属性名字中'
+                            'placeholder' => '属性名'
                         ],
                         'value' => $detail->attr_name
+                    ],
+                    'attr_name_cn' => [
+                        'name' => '显示中文名',
+                        'type' => 'input',
+                        'attrs' => [
+                            'type' => 'text',
+                            'placeholder' => '显示中文名'
+                        ],
+                        'value' => $detail->attr_name_cn
                     ],
                     'attr_value' => [
                         'name' => '属性值',

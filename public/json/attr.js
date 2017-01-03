@@ -22,11 +22,20 @@
             },
             "fields": {
                 "attr_name": {
-                    "name": "属性名字",
+                    "name": "属性名",
                     "type": "input",
                     "attrs": {
                         "type": "text",
-                        "placeholder": "属性名字中"
+                        "placeholder": "属性名"
+                    },
+                    "value": ""
+                },
+                "attr_name_cn": {
+                    "name": "显示中文名",
+                    "type": "input",
+                    "attrs": {
+                        "type": "text",
+                        "placeholder": "显示中文名"
                     },
                     "value": ""
                 },

@@ -23,13 +23,12 @@ class ComponentController extends Controller
      * @apiSuccess {String} form_type 渲染类型
      */
     public function outer_api_components_list(){
-        $page = \Input::get('p', 1); // 页数
-        $pageSize = \Input::get('n', 10); // 每页条数
+//         $page = \In put::get('p', 1); // 页数
+//         $pageSize = \In put::get('n', 10); // 每页条数
         
-        $data = Component::queryComponentsWithDetail([],$page,$pageSize);
+        $data = Component::queryComponentsWithDetail([],1,10000);
         
-        return $this->__json($data);
-        
+        return $this->__json($data['list']);
     }
     
 }

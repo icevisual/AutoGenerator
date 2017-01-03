@@ -126,7 +126,7 @@ CREATE TABLE `op_component` (
             ];
             $at = [];
             foreach ($attrs['attr_id'] as $k1 => $v1){
-                $at[] = [
+                $at[$attrs['attr_name'][$k1]] = [
                     'attr_id' => $attrs['attr_id'][$k1],
                     'attr_name' => $attrs['attr_name'][$k1],
                     'attr_value' => $attrs['attr_value'][$k1],

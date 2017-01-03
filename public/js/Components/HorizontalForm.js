@@ -161,7 +161,7 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
                         'dataType' : 'json',
                         'success' : function(d){
                             if(Utils.apiReqSuccess(d)){
-                                window.location.href = this$1.formConfig.attrs.action.success.redirect
+//                                window.location.href = this$1.formConfig.attrs.action.success.redirect
                             }else{
                                 alert(Utils.apiReqMsg(d));
                             }
