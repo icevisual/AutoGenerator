@@ -106,10 +106,11 @@ class ComponentController extends Controller
                             'name' => 'ID',
                             'width' => '20px'
                         ],
-                        '1' => '属性名',
-                        '2' => '属性值',
-                        '3' => '数据类型',
-                        '4' => '渲染类型',
+                        '属性名',
+                        '显示名称',
+                        '属性值',
+                        '数据类型',
+                        '渲染类型',
                     ]
                 ],
                 'data' => [
@@ -150,11 +151,10 @@ class ComponentController extends Controller
                             'name' => 'ID',
                             'width' => '20px'
                         ],
-                        '1' => '属性名',
-                        '2' => "显示名称",
-                        '3' => '属性值',
-                        '4' => '数据类型',
-                        '5' => '渲染类型',
+                        '属性名',
+                        '属性值',
+                        '数据类型',
+                        '渲染类型',
                     ]
                 ],
                 'data' => [
