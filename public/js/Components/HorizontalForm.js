@@ -130,7 +130,6 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
                     var _validate = fields[key]['validate'];
                     var _is_required = true;
                     if(undefined !== _validate){
-                        console.log(_validate);
                         var _rules = _validate['rules'];
                         var _rulesArray = [];
                         if(typeof _rules == 'string'){

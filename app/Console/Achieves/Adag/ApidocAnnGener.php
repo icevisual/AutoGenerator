@@ -110,7 +110,7 @@ class ApidocAnnGener
                 $data['apiName'] = $funcAnn['@apiName'][0]['type'];
             }
             // TODO Example limit
-            $data['example'] = $this->getInvokeExample($data['uri']);
+            $data['example'] = $this->getInvokeExample($data['uri'],$data['doMethod']);
             
             $routesSelect[] = $data;
             
@@ -125,12 +125,13 @@ class ApidocAnnGener
     }
     
 
-    protected function getInvokeExample($uri)
+    protected function getInvokeExample($uri,$method)
     {
         $list = RequestLog::select([
             'params',
             'return'
         ])->where('uri', $uri)
+            ->where('method',$method)
             ->where('return', '!=', 'null')
             ->whereNotNull('return')
             ->groupBy('sha1')

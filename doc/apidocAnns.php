@@ -11,6 +11,8 @@
      *
      *
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":[{"group":"MAIN NAVIGATION","menus":[{"icon":"fa-dashboard","title":"Demo","submenus":[{"href":"http:\/\/192.168.5.11:17778\/demo","icon":"fa-circle-o","title":"List Demo"},{"href":"http:\/\/192.168.5.11:17778\/demo\/create","icon":"fa-circle-o","title":"Form Demo"}]},{"icon":"fa-files-o","title":"Layout Options","submenus":[{"href":"http:\/\/192.168.5.11:17778\/attrs","icon":"fa-circle-o","title":"ATTRS LIST"},{"href":"http:\/\/192.168.5.11:17778\/attr","icon":"fa-circle-o","title":"ATTRS CREATE"},{"href":"http:\/\/192.168.5.11:17778\/components","icon":"fa-circle-o","title":"COMPONENTS LIST","active":true},{"href":"http:\/\/192.168.5.11:17778\/component","icon":"fa-circle-o","title":"COMPONENTS CREATE"}],"active":true}]}]}
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
      *{"code":1,"msg":"OK","data":[{"group":"MAIN NAVIGATION","menus":[{"icon":"fa-dashboard","title":"Demo","submenus":[{"href":"http:\/\/automation.local.com\/demo","icon":"fa-circle-o","title":"List Demo"},{"href":"http:\/\/automation.local.com\/demo\/create","icon":"fa-circle-o","title":"Form Demo"}]},{"icon":"fa-files-o","title":"Layout Options","submenus":[{"href":"http:\/\/automation.local.com\/attrs","icon":"fa-circle-o","title":"ATTRS LIST","active":true},{"href":"http:\/\/automation.local.com\/attr","icon":"fa-circle-o","title":"ATTRS CREATE"},{"href":"http:\/\/automation.local.com\/components","icon":"fa-circle-o","title":"COMPONENTS LIST"},{"href":"http:\/\/automation.local.com\/component","icon":"fa-circle-o","title":"COMPONENTS CREATE"}],"active":true}]}]}
      *
      *
@@ -48,7 +50,11 @@
      *
      *
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"attr_name":"\u6548\u9a8c","attr_value":"","attr_type":"boolean","form_type":"checkbox","id":9}}
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
      *{"code":1,"msg":"OK","data":{"attr_name":"f1","attr_value":"123123","attr_type":"string","form_type":"input","id":4}}
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"attr_name":"\u5b57\u7b26\u957f\u5ea6","attr_value":"","attr_type":"integer","form_type":"input","id":8}}
      *
      *
      *
@@ -67,9 +73,23 @@
      *
      *
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"total":0,"current_page":1,"last_page":0,"per_page":10,"list":[]}}
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"total":4,"current_page":1,"last_page":1,"per_page":10,"list":[{"id":6,"attr_name":"name","attr_value":"","attr_type":"string","form_type":"input"},{"id":7,"attr_name":"type","attr_value":"","attr_type":"string","form_type":"select"},{"id":8,"attr_name":"\u5b57\u7b26\u957f\u5ea6","attr_value":"","attr_type":"integer","form_type":"input"},{"id":9,"attr_name":"\u6548\u9a8c","attr_value":"","attr_type":"boolean","form_type":"checkbox"}]}}
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"total":1,"current_page":1,"last_page":1,"per_page":10,"list":[{"id":6,"attr_name":"name","attr_value":"","attr_type":"string","form_type":"input"}]}}
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
      *{"code":1,"msg":"OK","data":{"total":3,"current_page":1,"last_page":1,"per_page":10,"list":[{"id":1,"attr_name":"123","attr_value":"123123","attr_type":"float","form_type":"checkbox"},{"id":2,"attr_name":"adf","attr_value":"afdfds","attr_type":"string","form_type":"input"},{"id":3,"attr_name":"asdfsad","attr_value":"asdfasdf","attr_type":"string","form_type":"input"}]}}
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"total":2,"current_page":1,"last_page":1,"per_page":10,"list":[{"id":6,"attr_name":"name","attr_value":"","attr_type":"string","form_type":"input"},{"id":7,"attr_name":"type","attr_value":"","attr_type":"string","form_type":"select"}]}}
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"total":3,"current_page":1,"last_page":1,"per_page":10,"list":[{"id":6,"attr_name":"name","attr_value":"","attr_type":"string","form_type":"input"},{"id":7,"attr_name":"type","attr_value":"","attr_type":"string","form_type":"select"},{"id":8,"attr_name":"\u5b57\u7b26\u957f\u5ea6","attr_value":"","attr_type":"integer","form_type":"input"}]}}
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"total":3,"current_page":1,"last_page":1,"per_page":10,"list":[{"id":2,"attr_name":"adf","attr_value":"afdfds","attr_type":"string","form_type":"input"},{"id":3,"attr_name":"asdfsad","attr_value":"asdfasdf","attr_type":"string","form_type":"input"},{"id":4,"attr_name":"f1","attr_value":"123123","attr_type":"string","form_type":"input"}]}}
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
      *{"code":1,"msg":"OK","data":{"total":4,"current_page":1,"last_page":1,"per_page":10,"list":[{"id":1,"attr_name":"123","attr_value":"123123","attr_type":"float","form_type":"checkbox"},{"id":2,"attr_name":"adf","attr_value":"afdfds","attr_type":"string","form_type":"input"},{"id":3,"attr_name":"asdfsad","attr_value":"asdfasdf","attr_type":"string","form_type":"input"},{"id":4,"attr_name":"f1","attr_value":"123123","attr_type":"string","form_type":"input"}]}}
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"total":2,"current_page":1,"last_page":1,"per_page":10,"list":[{"id":5,"attr_name":"123","attr_value":"","attr_type":"string","form_type":"input"},{"id":6,"attr_name":"name","attr_value":"","attr_type":"string","form_type":"input"}]}}
      *
      *
      *
@@ -87,9 +107,7 @@
      *
      *
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
-     *{"code":1,"msg":"OK","data":{"attr_form":{"attrs":{"caption":"\u65b0\u5efa\u7ec4\u4ef6\u5c5e\u6027","formColor":"box-info","buttons":{"preinstall":{"submit":"1","cancel":"1"}},"action":{"uri":"\/api\/attr\/1","method":"PUT","success":{"redirect":"\/attrs"}}},"fields":{"id":{"name":"\u5c5e\u6027 ID","type":"input","hidden":true,"attrs":{"type":"hidden"},"value":1},"attr_name":{"name":"\u5c5e\u6027\u540d\u5b57","type":"input","attrs":{"type":"text","placeholder":"\u5c5e\u6027\u540d\u5b57\u4e2d"},"value":"123"},"attr_value":{"name":"\u5c5e\u6027\u503c","type":"input","attrs":{"type":"text","placeholder":"\u5c5e\u6027\u503c"},"value":"123123"},"attr_type":{"name":"\u5c5e\u6027\u7c7b\u522b","type":"select","value":"float","data":[{"value":"string","text":"string"},{"value":"integer","text":"integer"},{"value":"float","text":"float"},{"value":"boolean","text":"boolean"},{"value":"array","text":"array"},{"value":"json","text":"json"}]},"form_type":{"name":"\u8868\u5355\u7c7b\u522b","type":"select","value":"checkbox","data":[{"value":"input","text":"input"},{"value":"select","text":"select"},{"value":"checkbox","text":"checkbox"},{"value":"radio","text":"radio"}]}}}}}
-     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
-     *{"code":1,"msg":"OK","data":[]}
+     *{"code":1,"msg":"OK","data":{"attr_form":{"attrs":{"caption":"\u65b0\u5efa\u7ec4\u4ef6\u5c5e\u6027","formColor":"box-info","buttons":{"preinstall":{"submit":"1","cancel":"1"}},"action":{"uri":"\/api\/attr\/5","method":"PUT","success":{"redirect":"\/attrs"}}},"fields":{"id":{"name":"\u5c5e\u6027 ID","type":"input","hidden":true,"attrs":{"type":"hidden"},"value":5},"attr_name":{"name":"\u5c5e\u6027\u540d\u5b57","type":"input","attrs":{"type":"text","placeholder":"\u5c5e\u6027\u540d\u5b57\u4e2d"},"value":"123"},"attr_value":{"name":"\u5c5e\u6027\u503c","type":"input","validate":{"rules":"sometimes"},"attrs":{"type":"text","placeholder":"\u5c5e\u6027\u503c"},"value":"123"},"attr_type":{"name":"\u5c5e\u6027\u7c7b\u522b","type":"select","value":"string","data":[{"value":"string","text":"string"},{"value":"integer","text":"integer"},{"value":"float","text":"float"},{"value":"boolean","text":"boolean"},{"value":"array","text":"array"},{"value":"json","text":"json"}]},"form_type":{"name":"\u6e32\u67d3\u7c7b\u522b","type":"select","value":"input","data":[{"value":"input","text":"input"},{"value":"select","text":"select"},{"value":"checkbox","text":"checkbox"},{"value":"radio","text":"radio"}]}}}}}
      *
      *
      *
@@ -111,8 +129,6 @@
      *
      *
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
-     *{"code":1,"msg":"OK","data":{"attr_form":{"attrs":{"caption":"\u65b0\u5efa\u7ec4\u4ef6\u5c5e\u6027","formColor":"box-info","buttons":{"preinstall":{"submit":"1","cancel":"1"}},"action":{"uri":"\/api\/attr\/1","method":"PUT","success":{"redirect":"\/attrs"}}},"fields":{"id":{"name":"\u5c5e\u6027 ID","type":"input","hidden":true,"attrs":{"type":"hidden"},"value":1},"attr_name":{"name":"\u5c5e\u6027\u540d\u5b57","type":"input","attrs":{"type":"text","placeholder":"\u5c5e\u6027\u540d\u5b57\u4e2d"},"value":"123"},"attr_value":{"name":"\u5c5e\u6027\u503c","type":"input","attrs":{"type":"text","placeholder":"\u5c5e\u6027\u503c"},"value":"123123"},"attr_type":{"name":"\u5c5e\u6027\u7c7b\u522b","type":"select","value":"float","data":[{"value":"string","text":"string"},{"value":"integer","text":"integer"},{"value":"float","text":"float"},{"value":"boolean","text":"boolean"},{"value":"array","text":"array"},{"value":"json","text":"json"}]},"form_type":{"name":"\u8868\u5355\u7c7b\u522b","type":"select","value":"checkbox","data":[{"value":"input","text":"input"},{"value":"select","text":"select"},{"value":"checkbox","text":"checkbox"},{"value":"radio","text":"radio"}]}}}}}
-     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
      *{"code":1,"msg":"OK","data":[]}
      *
      *
@@ -130,8 +146,6 @@
      * @apiParam {String} id id
      *
      *
-     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
-     *{"code":1,"msg":"OK","data":{"attr_form":{"attrs":{"caption":"\u65b0\u5efa\u7ec4\u4ef6\u5c5e\u6027","formColor":"box-info","buttons":{"preinstall":{"submit":"1","cancel":"1"}},"action":{"uri":"\/api\/attr\/1","method":"PUT","success":{"redirect":"\/attrs"}}},"fields":{"id":{"name":"\u5c5e\u6027 ID","type":"input","hidden":true,"attrs":{"type":"hidden"},"value":1},"attr_name":{"name":"\u5c5e\u6027\u540d\u5b57","type":"input","attrs":{"type":"text","placeholder":"\u5c5e\u6027\u540d\u5b57\u4e2d"},"value":"123"},"attr_value":{"name":"\u5c5e\u6027\u503c","type":"input","attrs":{"type":"text","placeholder":"\u5c5e\u6027\u503c"},"value":"123123"},"attr_type":{"name":"\u5c5e\u6027\u7c7b\u522b","type":"select","value":"float","data":[{"value":"string","text":"string"},{"value":"integer","text":"integer"},{"value":"float","text":"float"},{"value":"boolean","text":"boolean"},{"value":"array","text":"array"},{"value":"json","text":"json"}]},"form_type":{"name":"\u8868\u5355\u7c7b\u522b","type":"select","value":"checkbox","data":[{"value":"input","text":"input"},{"value":"select","text":"select"},{"value":"checkbox","text":"checkbox"},{"value":"radio","text":"radio"}]}}}}}
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
      *{"code":1,"msg":"OK","data":[]}
      *
@@ -154,6 +168,8 @@
      *
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
      *{"code":1,"msg":"OK","data":{"component_name":"123dfsa","component_desc":"123","id":11}}
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"component_name":"text","component_desc":"text\u6587\u672c\u6846,password\uff08\u5bc6\u7801\u6846\uff09,time\uff08\u65f6\u95f4\u9009\u62e9\u5668\uff09,number\uff08\u6570\u503c\u6846\uff09,email\uff08\u90ae\u7bb1\uff09,phone number\uff08\u7535\u8bdd\u53f7\u7801\uff09","id":12}}
      *
      *
      * @apiErrorExample Error-Responsee: 
@@ -173,6 +189,14 @@
      * @apiParam {String} [n=10] 每页条数
      *
      *
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"total":1,"current_page":1,"last_page":1,"per_page":10,"list":[{"id":11,"component_name":"123dfsa","component_desc":"123"}]}}
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"total":2,"current_page":1,"last_page":1,"per_page":10,"list":[{"id":9,"component_name":"3123","component_desc":"123123123"},{"id":11,"component_name":"123dfsa","component_desc":"123"}]}}
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"total":0,"current_page":1,"last_page":0,"per_page":10,"list":[]}}
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"total":1,"current_page":1,"last_page":1,"per_page":10,"list":[{"id":12,"component_name":"text","component_desc":"text\u6587\u672c\u6846,password\uff08\u5bc6\u7801\u6846\uff09,time\uff08\u65f6\u95f4\u9009\u62e9\u5668\uff09,number\uff08\u6570\u503c\u6846\uff09,email\uff08\u90ae\u7bb1\uff09,phone number\uff08\u7535\u8bdd\u53f7\u7801\uff09,file(\u4e0a\u4f20\u6587\u4ef6)"}]}}
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
      *{"code":1,"msg":"OK","data":{"total":3,"current_page":1,"last_page":1,"per_page":10,"list":[{"id":8,"component_name":"123","component_desc":"12312312"},{"id":9,"component_name":"3123","component_desc":"123123123"},{"id":11,"component_name":"123dfsa","component_desc":"123"}]}}
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
@@ -194,9 +218,7 @@
      *
      *
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
-     *{"code":1,"msg":"OK","data":[]}
-     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
-     *{"code":1,"msg":"OK","data":{"component_attrs_table":{"attrs":{"caption":"\u7ec4\u4ef6\u5c5e\u6027\u8868","uris":{"query":{"url":"\/api\/attrs","param":[],"method":"GET"}},"ajax":true,"rownum":false,"hidden":[],"operation":true,"operations":{"addbind":{"color":"btn-success","text":"+"}},"header":[{"name":"ID","width":"20px"},"\u5c5e\u6027\u540d","\u5c5e\u6027\u503c","\u6570\u636e\u7c7b\u578b","\u6e32\u67d3\u7c7b\u578b"]},"data":{"total":"2","current_page":"1","last_page":"1","per_page":"10","list":[]}},"attrs_bind_table":{"attrs":{"caption":"\u7ec4\u4ef6\u5c5e\u6027\u8868","ajax":false,"uris":{"query":{"url":"\/api\/attrs","param":[],"method":"GET"}},"rownum":true,"hidden":[],"advancedColumn":{"default_value":{"type":"input"}},"operation":true,"operations":{"attrunbind":{"color":"btn-warning","text":"R"}},"header":[{"name":"ID","width":"20px"},"\u5c5e\u6027\u540d","\u6570\u636e\u7c7b\u578b","\u6e32\u67d3\u7c7b\u578b"]},"data":{"total":"3","current_page":"1","last_page":"1","per_page":"10","list":[{"id":2,"attr_name":"adf","attr_type":"string","form_type":"input"},{"id":3,"attr_name":"asdfsad","attr_type":"string","form_type":"input"}]}},"component_form":{"attrs":{"caption":"\u7ec4\u4ef6","buttons":{"preinstall":{"submit":false,"cancel":"1"},"others":[{"name":"submit","class":"btn-info","event":"submit"}]},"action":{"uri":"\/api\/component\/8","method":"PUT","success":{"redirect":"\/components"}}},"fields":{"id":{"name":" ID","type":"input","hidden":true,"value":8},"component_name":{"name":"\u7ec4\u4ef6\u540d\u79f0","type":"input","attrs":{"type":"text","default":"asdda","placeholder":"\u7ec4\u4ef6\u540d\u79f0"},"value":"123"},"component_desc":{"name":"\u7ec4\u4ef6\u63cf\u8ff0","type":"input","attrs":{"type":"text","placeholder":"\u7ec4\u4ef6\u63cf\u8ff0"},"value":"12312312"}}}}}
+     *{"code":1,"msg":"OK","data":{"component_attrs_table":{"attrs":{"caption":"\u7ec4\u4ef6\u5c5e\u6027\u8868","uris":{"query":{"url":"\/api\/attrs","param":[],"method":"GET"}},"ajax":true,"rownum":false,"hidden":[],"operation":true,"operations":{"addbind":{"color":"btn-success","text":"+"}},"header":[{"name":"ID","width":"20px"},"\u5c5e\u6027\u540d","\u5c5e\u6027\u503c","\u6570\u636e\u7c7b\u578b","\u6e32\u67d3\u7c7b\u578b"]},"data":{"total":"2","current_page":"1","last_page":"1","per_page":"10","list":[]}},"attrs_bind_table":{"attrs":{"caption":"\u7ec4\u4ef6\u5c5e\u6027\u8868","ajax":false,"uris":{"query":{"url":"\/api\/attrs","param":[],"method":"GET"}},"rownum":true,"hidden":[],"advancedColumn":{"default_value":{"type":"input"}},"operation":true,"operations":{"attrunbind":{"color":"btn-warning","text":"R"}},"header":[{"name":"ID","width":"20px"},"\u5c5e\u6027\u540d","\u6570\u636e\u7c7b\u578b","\u6e32\u67d3\u7c7b\u578b"]},"data":{"total":"3","current_page":"1","last_page":"1","per_page":"10","list":[{"id":6,"attr_name":"name","attr_type":"string","form_type":"input"}]}},"component_form":{"attrs":{"caption":"\u7ec4\u4ef6","buttons":{"preinstall":{"submit":false,"cancel":"1"},"others":[{"name":"submit","class":"btn-info","event":"submit"}]},"action":{"uri":"\/api\/component\/12","method":"PUT","success":{"redirect":"\/components"}}},"fields":{"id":{"name":" ID","type":"input","hidden":true,"value":12},"component_name":{"name":"\u7ec4\u4ef6\u540d\u79f0","type":"input","attrs":{"type":"text","default":"asdda","placeholder":"\u7ec4\u4ef6\u540d\u79f0"},"value":"text"},"component_desc":{"name":"\u7ec4\u4ef6\u63cf\u8ff0","type":"input","attrs":{"type":"text","placeholder":"\u7ec4\u4ef6\u63cf\u8ff0"},"value":"text\u6587\u672c\u6846,password\uff08\u5bc6\u7801\u6846\uff09,time\uff08\u65f6\u95f4\u9009\u62e9\u5668\uff09,number\uff08\u6570\u503c\u6846\uff09,email\uff08\u90ae\u7bb1\uff09,phone number\uff08\u7535\u8bdd\u53f7\u7801\uff09"}}}}}
      *
      *
      *
@@ -218,8 +240,6 @@
      *
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
      *{"code":1,"msg":"OK","data":[]}
-     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
-     *{"code":1,"msg":"OK","data":{"component_attrs_table":{"attrs":{"caption":"\u7ec4\u4ef6\u5c5e\u6027\u8868","uris":{"query":{"url":"\/api\/attrs","param":[],"method":"GET"}},"ajax":true,"rownum":false,"hidden":[],"operation":true,"operations":{"addbind":{"color":"btn-success","text":"+"}},"header":[{"name":"ID","width":"20px"},"\u5c5e\u6027\u540d","\u5c5e\u6027\u503c","\u6570\u636e\u7c7b\u578b","\u6e32\u67d3\u7c7b\u578b"]},"data":{"total":"2","current_page":"1","last_page":"1","per_page":"10","list":[]}},"attrs_bind_table":{"attrs":{"caption":"\u7ec4\u4ef6\u5c5e\u6027\u8868","ajax":false,"uris":{"query":{"url":"\/api\/attrs","param":[],"method":"GET"}},"rownum":true,"hidden":[],"advancedColumn":{"default_value":{"type":"input"}},"operation":true,"operations":{"attrunbind":{"color":"btn-warning","text":"R"}},"header":[{"name":"ID","width":"20px"},"\u5c5e\u6027\u540d","\u6570\u636e\u7c7b\u578b","\u6e32\u67d3\u7c7b\u578b"]},"data":{"total":"3","current_page":"1","last_page":"1","per_page":"10","list":[{"id":2,"attr_name":"adf","attr_type":"string","form_type":"input"},{"id":3,"attr_name":"asdfsad","attr_type":"string","form_type":"input"}]}},"component_form":{"attrs":{"caption":"\u7ec4\u4ef6","buttons":{"preinstall":{"submit":false,"cancel":"1"},"others":[{"name":"submit","class":"btn-info","event":"submit"}]},"action":{"uri":"\/api\/component\/8","method":"PUT","success":{"redirect":"\/components"}}},"fields":{"id":{"name":" ID","type":"input","hidden":true,"value":8},"component_name":{"name":"\u7ec4\u4ef6\u540d\u79f0","type":"input","attrs":{"type":"text","default":"asdda","placeholder":"\u7ec4\u4ef6\u540d\u79f0"},"value":"123"},"component_desc":{"name":"\u7ec4\u4ef6\u63cf\u8ff0","type":"input","attrs":{"type":"text","placeholder":"\u7ec4\u4ef6\u63cf\u8ff0"},"value":"12312312"}}}}}
      *
      *
      *
@@ -238,8 +258,6 @@
      *
      * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
      *{"code":1,"msg":"OK","data":[]}
-     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
-     *{"code":1,"msg":"OK","data":{"component_attrs_table":{"attrs":{"caption":"\u7ec4\u4ef6\u5c5e\u6027\u8868","uris":{"query":{"url":"\/api\/attrs","param":[],"method":"GET"}},"ajax":true,"rownum":false,"hidden":[],"operation":true,"operations":{"addbind":{"color":"btn-success","text":"+"}},"header":[{"name":"ID","width":"20px"},"\u5c5e\u6027\u540d","\u5c5e\u6027\u503c","\u6570\u636e\u7c7b\u578b","\u6e32\u67d3\u7c7b\u578b"]},"data":{"total":"2","current_page":"1","last_page":"1","per_page":"10","list":[]}},"attrs_bind_table":{"attrs":{"caption":"\u7ec4\u4ef6\u5c5e\u6027\u8868","ajax":false,"uris":{"query":{"url":"\/api\/attrs","param":[],"method":"GET"}},"rownum":true,"hidden":[],"advancedColumn":{"default_value":{"type":"input"}},"operation":true,"operations":{"attrunbind":{"color":"btn-warning","text":"R"}},"header":[{"name":"ID","width":"20px"},"\u5c5e\u6027\u540d","\u6570\u636e\u7c7b\u578b","\u6e32\u67d3\u7c7b\u578b"]},"data":{"total":"3","current_page":"1","last_page":"1","per_page":"10","list":[{"id":2,"attr_name":"adf","attr_type":"string","form_type":"input"},{"id":3,"attr_name":"asdfsad","attr_type":"string","form_type":"input"}]}},"component_form":{"attrs":{"caption":"\u7ec4\u4ef6","buttons":{"preinstall":{"submit":false,"cancel":"1"},"others":[{"name":"submit","class":"btn-info","event":"submit"}]},"action":{"uri":"\/api\/component\/8","method":"PUT","success":{"redirect":"\/components"}}},"fields":{"id":{"name":" ID","type":"input","hidden":true,"value":8},"component_name":{"name":"\u7ec4\u4ef6\u540d\u79f0","type":"input","attrs":{"type":"text","default":"asdda","placeholder":"\u7ec4\u4ef6\u540d\u79f0"},"value":"123"},"component_desc":{"name":"\u7ec4\u4ef6\u63cf\u8ff0","type":"input","attrs":{"type":"text","placeholder":"\u7ec4\u4ef6\u63cf\u8ff0"},"value":"12312312"}}}}}
      *
      *
      *
