@@ -87,6 +87,10 @@
                     {
                         "value": "radio",
                         "text": "radio"
+                    },
+                    {
+                        "value": "keyOrValue",
+                        "text": "keyOrValue"
                     }
                 ]
             }
