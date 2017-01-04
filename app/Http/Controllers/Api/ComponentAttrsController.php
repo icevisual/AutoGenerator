@@ -15,7 +15,6 @@ class ComponentAttrsController extends Controller
         $data = [
             'attr_name' => \Input::get('attr_name'), // String 属性名称
             'attr_name_cn' => \Input::get('attr_name_cn'), // String 显示中文名
-            'attr_value' => \Input::get('attr_value'), // String 属性值
             'attr_type' => \Input::get('attr_type'), // String 属性数据类型
             'form_type' => \Input::get('form_type')
         ]; // String 表单控件类别
@@ -23,9 +22,8 @@ class ComponentAttrsController extends Controller
         runCustomValidator([
             'data' => $data, // 数据
             'rules' => [
-                'attr_name' => 'required',
+                'attr_name' => 'required|unique:attrs,attr_name',
                 'attr_name_cn' => 'required',
-                'attr_value' => 'sometimes',
                 'attr_type' => 'required',
                 'form_type' => 'required'
             ], // 条件
@@ -33,7 +31,6 @@ class ComponentAttrsController extends Controller
                 'form_type' => '表单控件类别',
                 'attr_name' => '属性名称',
                 'attr_name_cn' => '显示中文名',
-                'attr_value' => '属性值',
                 'attr_type' => '属性数据类型'
             ]
         ]) // 属性名映射
@@ -58,7 +55,6 @@ class ComponentAttrsController extends Controller
             'id' => $id,
             'attr_name' => \Input::get('attr_name'), // String 属性名称
             'attr_name_cn' => \Input::get('attr_name_cn'), // String 显示中文名
-            'attr_value' => \Input::get('attr_value'), // String 属性值
             'attr_type' => \Input::get('attr_type'), // String 属性数据类型
             'form_type' => \Input::get('form_type')
         ]; // String 表单控件类别
@@ -67,9 +63,8 @@ class ComponentAttrsController extends Controller
             'data' => $data, // 数据
             'rules' => [
                 'id' => 'required|numeric|exists:attrs',
-                'attr_name' => 'required',
+                'attr_name' => 'required|unique:attrs,attr_name,'.$data['id'],',id',
                 'attr_name_cn' => 'required',
-                'attr_value' => 'sometimes',
                 'attr_type' => 'required',
                 'form_type' => 'required'
             ], // 条件
@@ -78,7 +73,6 @@ class ComponentAttrsController extends Controller
                 'form_type' => '表单控件类别',
                 'attr_name' => '属性名称',
                 'attr_name_cn' => '显示中文名',
-                'attr_value' => '属性值',
                 'attr_type' => '属性数据类型'
             ]
         ]) // 属性名映射
@@ -113,7 +107,6 @@ class ComponentAttrsController extends Controller
             ]);
             array_set($json, 'attr_form.fields.attr_name.value',$detail->attr_name );
             array_set($json, 'attr_form.fields.attr_name_cn.value',$detail->attr_name_cn );
-            array_set($json, 'attr_form.fields.attr_value.value',$detail->attr_value );
             array_set($json, 'attr_form.fields.attr_type.value',$detail->attr_type );
             array_set($json, 'attr_form.fields.form_type.value',$detail->form_type );
             return $this->__json($json);

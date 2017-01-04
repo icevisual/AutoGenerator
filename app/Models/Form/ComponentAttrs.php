@@ -28,7 +28,7 @@ CREATE TABLE `op_component_attrs` (
         return self::create([
             'component_id' => $data['component_id'], // 组件ID
             'attr_id' => $data['attr_id'], // 属性ID
-//             'default_value' => $data['default_value'] // 属性默认值
+            'default_value' => $data['default_value'] // 属性默认值
         ]);
     }
     
@@ -39,10 +39,9 @@ CREATE TABLE `op_component_attrs` (
             'attrs.id',
             'attrs.attr_name',
             'attrs.attr_name_cn',
-            'attrs.attr_value',
             'attrs.attr_type',
             'attrs.form_type',
-//             'component_attrs.default_value',
+            'component_attrs.default_value',
         ])->join('attrs','attrs.id','=','component_attrs.attr_id')
         ->where('component_attrs.component_id',$id)
         ->get()

@@ -54,10 +54,11 @@ require(['initialize'], function(EVue) {
 //                                }
                                 attrBindData.push({
                                     'id' : tableData[i].id,
-                                    'default_value' : ''
+                                    'default_value' : tableData[i].default_value
                                 });
                             }
-                            
+                            console.log('attrBindData',attrBindData);
+//                            return;
                             if(Utils.isEmptyObj(attrBindData)){
                                 return alert('请选择控件属性');
                             }
@@ -107,10 +108,9 @@ require(['initialize'], function(EVue) {
                         var attr_id = target.getAttribute("data-id");
                         var tr$1 = target.parentNode.parentNode.parentNode;
                         var attr_name = tr$1.getElementsByTagName('td')[1].innerHTML;
-                        
-                        var attr_value = tr$1.getElementsByTagName('td')[3].innerHTML;
-                        var attr_type = tr$1.getElementsByTagName('td')[4].innerHTML;
-                        var form_type = tr$1.getElementsByTagName('td')[5].innerHTML;
+                        var attr_name_cn = tr$1.getElementsByTagName('td')[2].innerHTML;
+                        var attr_type = tr$1.getElementsByTagName('td')[3].innerHTML;
+                        var form_type = tr$1.getElementsByTagName('td')[4].innerHTML;
                         
                         if(this.isAttrBinded(attr_id)){
                             return false;
@@ -119,9 +119,9 @@ require(['initialize'], function(EVue) {
                             "id": attr_id,
                             "attr_name": attr_name,
                             "attr_name_cn": attr_name_cn,
-                            "attr_value": attr_value,
                             "attr_type": attr_type,
                             "form_type": form_type,
+                            "default_value": '',
                         });
                         this.setAttrBinded(attr_id);
                     }

@@ -152,6 +152,7 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
             },
             'doFormSubmit' : function(){
                 var formValidateRet = this.doFormValidate(this.$el,this.$data);
+                console.log(formValidateRet);
                 if(formValidateRet !== false){
                     var this$1 = this;
                     $.ajax({
@@ -161,8 +162,8 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
                         'dataType' : 'json',
                         'success' : function(d){
                             if(Utils.apiReqSuccess(d)){
-                                alert("OK");
-//                                window.location.href = this$1.formConfig.attrs.action.success.redirect
+//                                alert("OK");
+                                window.location.href = this$1.formConfig.attrs.action.success.redirect
                             }else{
                                 alert(Utils.apiReqMsg(d));
                             }
