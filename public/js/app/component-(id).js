@@ -118,6 +118,7 @@ require(['initialize'], function(EVue) {
                         this.appendTableData('attrs_bind_table',{
                             "id": attr_id,
                             "attr_name": attr_name,
+                            "attr_name_cn": attr_name_cn,
                             "attr_value": attr_value,
                             "attr_type": attr_type,
                             "form_type": form_type,

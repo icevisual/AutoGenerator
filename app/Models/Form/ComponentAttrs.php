@@ -38,6 +38,7 @@ CREATE TABLE `op_component_attrs` (
         return self::select([
             'attrs.id',
             'attrs.attr_name',
+            'attrs.attr_name_cn',
             'attrs.attr_value',
             'attrs.attr_type',
             'attrs.form_type',
