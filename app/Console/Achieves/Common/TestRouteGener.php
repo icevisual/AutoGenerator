@@ -240,6 +240,7 @@ EOF;
     }   
     public function randerFunction($data){
         extract($data);
+        $method = strtolower($method);
         $template = <<<EOF
         
     /**
@@ -252,7 +253,7 @@ EOF;
         \$data = [
 $paramKeyValueAnnType
         ];
-        \$ret = \$this->postRetJson($route, \$data)->toJson();
+        \$ret = \$this->{$method}Json($route, \$data)->toJson();
         return \$ret;
     }
 EOF;
@@ -315,6 +316,7 @@ EOF;
             $as = array_get($v, 'as');
             $funcData = [
                 'describe' => $v['uriName'],
+                'method' => $v['doMethod'],
                 'functionName' => '',
                 'paramKeyValueAnnType' => '',
                 'route' => '',

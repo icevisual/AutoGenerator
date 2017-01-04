@@ -16,6 +16,11 @@ use Illuminate\Http\Request;
 
 Route::get('/components/list', [
     'as' => 'outer_api_components_list',
-    'uses' => 'ExternalApi\ComponentController@outer_api_components_list'
+    'uses' => 'ExternalApi\ComponentController@components_list'
+]);
+
+Route::post('/form/save', [
+    'as' => 'outer_api_save_form_component',
+    'uses' => 'ExternalApi\ComponentController@save_form'
 ]);
 

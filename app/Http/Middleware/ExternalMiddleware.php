@@ -28,9 +28,9 @@ class ExternalMiddleware
      */
     public function handle($request, Closure $next)
     {
-
-        self::setHeaders();
-        
+        if(!\App::environment('testing')){
+            self::setHeaders();
+        }
         return $next($request);
     }
 }

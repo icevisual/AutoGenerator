@@ -538,5 +538,6 @@ return array(
     'SebastianBergmann\\ResourceOperations\\ResourceOperations' => $vendorDir . '/sebastian/resource-operations/src/ResourceOperations.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
+    'TestRoutes' => $baseDir . '/tests/TestRoutes.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
 );
