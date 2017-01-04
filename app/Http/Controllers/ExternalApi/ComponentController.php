@@ -35,7 +35,7 @@ class ComponentController extends Controller
      */
     public function save_form(){
         $data = [
-            'components' => \Input::get('components')
+            'components' => \Input::get('components') //{"components":[{"id":"12","attrs":[{"attrId":"132","defaultValue":"ad"},{"attrId":"123","defaultValue":""}]}]}
         ];
         runCustomValidator([
             'data' => $data, // 数据
