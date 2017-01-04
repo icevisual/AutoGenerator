@@ -101,10 +101,9 @@ CREATE TABLE `op_component` (
             \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.id,'{$separator}') AS attr_id"),
             \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.attr_name,'{$separator}') AS attr_name"),
             \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.attr_name_cn,'{$separator}') AS attr_name_cn"),
-            \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.attr_value,'{$separator}') AS attr_value"),
             \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.attr_type,'{$separator}') AS attr_type"),
             \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}attrs.form_type,'{$separator}') AS form_type"),
-//             \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}component_attrs.default_value,'{$separator}') AS default_value"),
+            \DB::raw("GROUP_CONCAT('{$separator}',{$prefix}component_attrs.default_value,'{$separator}') AS default_value"),
 //             'attrs.attr_name_cn',
 //             'attrs.attr_name_en',
 //             'attrs.attr_type',
@@ -122,7 +121,7 @@ CREATE TABLE `op_component` (
                 'attr_id' => groupConcatToArray($v['attr_id'],$separator),
                 'attr_name' => groupConcatToArray($v['attr_name'],$separator),
                 'attr_name_cn' => groupConcatToArray($v['attr_name_cn'],$separator),
-                'attr_value' => groupConcatToArray($v['attr_value'],$separator),
+                'default_value' => groupConcatToArray($v['default_value'],$separator),
                 'attr_type' => groupConcatToArray($v['attr_type'],$separator),
                 'form_type' => groupConcatToArray($v['form_type'],$separator),
             ];
@@ -132,7 +131,7 @@ CREATE TABLE `op_component` (
                     'attrId' => $attrs['attr_id'][$k1],
                     'attrName' => $attrs['attr_name'][$k1],
                     'attrNameCn' => $attrs['attr_name_cn'][$k1],
-                    'attrValue' => $attrs['attr_value'][$k1],
+                    'defaultValue' => $attrs['default_value'][$k1],
                     'attrType' => $attrs['attr_type'][$k1],
                     'formType' => $attrs['form_type'][$k1],
                 ];
@@ -141,7 +140,7 @@ CREATE TABLE `op_component` (
             unset($list['data'][$k]['attr_id']);
             unset($list['data'][$k]['attr_name']);
             unset($list['data'][$k]['attr_name_cn']);
-            unset($list['data'][$k]['attr_value']);
+            unset($list['data'][$k]['default_value']);
             unset($list['data'][$k]['attr_type']);
             unset($list['data'][$k]['form_type']);
         }
