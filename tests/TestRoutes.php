@@ -255,7 +255,7 @@ class TestRoutes extends TestCase
     }
         
     /**
-     * query_forms
+     * 表单列表
      *
      * 
      */
@@ -264,24 +264,24 @@ class TestRoutes extends TestCase
         $data = [
 
         ];
-        $ret = $this->postJson(route('outer_api_query_forms'), $data)->toJson();
+        $ret = $this->getJson(route('outer_api_query_forms'), $data)->toJson();
         return $ret;
     }
         
     /**
-     * forms_detail
+     * 表单详情
      *
      * @param array $params
      *            <pre>
-     *            'id' => '', //String 属性名称-中文
+     *            'id' => '', //String id
      *            </pre>
      */
     public function outer_api_forms_detail($params = [])
     {
         $data = [
-            'id' => array_get($params,'id',''),// 属性名称-中文 String
+            'id' => array_get($params,'id',''),// id String
         ];
-        $ret = $this->postJson(route('outer_api_forms_detail'), $data)->toJson();
+        $ret = $this->getJson(route('outer_api_forms_detail').'?id='.$data['id'], $data)->toJson();
         return $ret;
     }
 

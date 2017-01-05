@@ -235,13 +235,49 @@
      * @apiName POST-api_external_form_save
      * @apiGroup Open_Web
      *
+     * @apiParam {String} name unknown
      * @apiParam {String} components {"components":[{"id":"12","attrs":[{"attrId":"132","defaultValue":"ad"},{"attrId":"123","defaultValue":""}]}]}
      *
      *
-     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
-     *{"code":1,"msg":"OK","data":[]}
      *
      *
+     * @apiErrorExample Error-Responsee: 
+     *{"code":9003,"msg":"\u8868\u5355\u540d\u5b57 \u5df2\u7ecf\u5b58\u5728\u3002","data":[]}
      *
      * @apiSampleRequest http://automation.local.com//api/external/form/save
+     */
+
+    /**
+     * @apiVersion 1.0.0
+     *
+     * @api {GET} api/external/form/query 表单列表
+     * @apiName GET-api_external_form_query
+     * @apiGroup Open_Web
+     *
+     *
+     *
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":[{"id":1,"name":"ddddd"},{"id":2,"name":"666"}]}
+     *
+     *
+     *
+     * @apiSampleRequest http://automation.local.com//api/external/form/query
+     */
+
+    /**
+     * @apiVersion 1.0.0
+     *
+     * @api {GET} api/external/form/detail 表单详情
+     * @apiName GET-api_external_form_detail
+     * @apiGroup Open_Web
+     *
+     * @apiParam {String} id id
+     *
+     *
+     * @apiSuccessExample Success-Response: HTTP/1.1 200 OK
+     *{"code":1,"msg":"OK","data":{"form":{"id":2,"name":"666","createdAt":"2017-01-05 07:04:21","updatedAt":"2017-01-05 07:04:21"},"components":[{"id":12,"componentName":"text","componentDesc":"text\u6587\u672c\u6846,password\uff08\u5bc6\u7801\u6846\uff09,time\uff08\u65f6\u95f4\u9009\u62e9\u5668\uff09,number\uff08\u6570\u503c\u6846\uff09,email\uff08\u90ae\u7bb1\uff09,phone number\uff08\u7535\u8bdd\u53f7\u7801\uff09,file(\u4e0a\u4f20\u6587\u4ef6)","attrs":{"charLength":{"attrId":"8","attrName":"charLength","attrNameCn":"\u5b57\u7b26\u957f\u5ea6","defaultValue":"","attrType":"integer","formType":"input"},"width":{"attrId":"10","attrName":"width","attrNameCn":"\u5bbd\u5ea6","defaultValue":"200","attrType":"integer","formType":"input"},"name":{"attrId":"6","attrName":"name","attrNameCn":"\u540d\u79f0","defaultValue":"111","attrType":"string","formType":"input"},"height":{"attrId":"15","attrName":"height","attrNameCn":"\u9ad8\u5ea6","defaultValue":"36","attrType":"integer","formType":"input"},"type":{"attrId":"7","attrName":"type","attrNameCn":"\u7c7b\u578b","defaultValue":"text,password,time,number,email,phone number,file","attrType":"array","formType":"select"},"require":{"attrId":"9","attrName":"require","attrNameCn":"\u662f\u5426\u5fc5\u586b","defaultValue":"","attrType":"boolean","formType":"checkbox"}}}]}}
+     *
+     *
+     *
+     * @apiSampleRequest http://automation.local.com//api/external/form/detail
      */

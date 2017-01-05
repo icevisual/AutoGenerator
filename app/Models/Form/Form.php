@@ -30,8 +30,13 @@ CREATE TABLE `op_form` (
         
         $separator = '#E#';
         
-        $form = self::find($id);
-        $form = $form->toArray();
+        $form = self::select([
+            'id',
+            'name',
+            'created_at AS createdAt',
+            'updated_at AS updatedAt'
+        ])->where('id',$id)
+        ->first();
         $prefix = \DB::getTablePrefix();
         
         $handler = self::select([

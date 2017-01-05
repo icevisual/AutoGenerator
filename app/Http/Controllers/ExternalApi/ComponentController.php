@@ -30,16 +30,20 @@ class ComponentController extends Controller
         return $this->__json($data['list']);
     }
     
-    
+    /*
+     * 表单列表
+     */
     public function query_forms(){
         $data = Form::queryForms([],1,10000);
         return $this->__json($data['list']);
     }
     
-    
+    /*
+     * 表单详情
+     */
     public function forms_detail(){
         
-        $id = \Input::get('id');
+        $id = \Input::get('id'); // id
         
         $ret = Form::formDetail($id);
         

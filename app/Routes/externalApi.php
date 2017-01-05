@@ -32,12 +32,12 @@ Route::post('/form/save', [
     'uses' => 'ExternalApi\ComponentController@save_form'
 ]);
 
-Route::post('/form/query', [
+Route::get('/form/query', [
     'as' => 'outer_api_query_forms',
     'uses' => 'ExternalApi\ComponentController@query_forms'
 ]);
 
-Route::post('/form/detail', [
+Route::get('/form/detail', [
     'as' => 'outer_api_forms_detail',
     'uses' => 'ExternalApi\ComponentController@forms_detail'
 ]);
