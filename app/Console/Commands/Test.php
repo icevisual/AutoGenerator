@@ -1,12 +1,12 @@
 <?php
-
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\BaseModel;
+use App\Console\Achieves\ConfigParser\SimpleCreate;
 
 class Test extends Command
 {
+
     /**
      * The name and signature of the console command.
      *
@@ -39,8 +39,17 @@ class Test extends Command
     public function handle()
     {
         //
-        $ret = BaseModel::analysisSimpleCreate([], [
-           'data'=> [
+        $ret = SimpleCreate::analysisSimpleCreate([
+            'symbol' => 'simpleCreate',
+            'model' => 'App\Models\Form\Attrs',
+            'createFields' => [
+                'attr_name',
+                'attr_name_cn',
+                'attr_type',
+                'form_type'
+            ]
+        ], [
+            'data' => [
                 'attr_name' => 'data.attr_name',
                 'attr_name_cn' => 'data.attr_name_cn',
                 'attr_value' => 'data.attr_value',

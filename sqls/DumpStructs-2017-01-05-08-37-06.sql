@@ -1,5 +1,5 @@
 -- ----------------------------
--- Date: 2017-01-04 06:58:32
+-- Date: 2017-01-05 08:37:06
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -15,7 +15,7 @@ CREATE TABLE `op_attrs` (
   `attr_type` varchar(80) NOT NULL COMMENT '属性类别',
   `form_type` varchar(80) NOT NULL COMMENT '表单控件类别',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='组件属性表';
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COMMENT='组件属性表';
 
 -- ----------------------------
 -- Table structure for op_component
@@ -26,7 +26,7 @@ CREATE TABLE `op_component` (
   `component_name` varchar(80) NOT NULL COMMENT '组件名称',
   `component_desc` varchar(255) NOT NULL COMMENT '组件描述',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='组件表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COMMENT='组件表';
 
 -- ----------------------------
 -- Table structure for op_component_attrs
@@ -38,19 +38,32 @@ CREATE TABLE `op_component_attrs` (
   `attr_id` int(11) NOT NULL COMMENT '属性ID',
   `default_value` varchar(80) DEFAULT NULL COMMENT '属性默认值',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=126 DEFAULT CHARSET=utf8 COMMENT='组件属性表';
+) ENGINE=InnoDB AUTO_INCREMENT=158 DEFAULT CHARSET=utf8 COMMENT='组件属性表';
 
 -- ----------------------------
--- Table structure for op_component_instance
+-- Table structure for op_form
 -- ----------------------------
-DROP TABLE IF EXISTS `op_component_instance`;
-CREATE TABLE `op_component_instance` (
+DROP TABLE IF EXISTS `op_form`;
+CREATE TABLE `op_form` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(80) NOT NULL COMMENT '表单名称',
+  `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='表单表';
+
+-- ----------------------------
+-- Table structure for op_form_component
+-- ----------------------------
+DROP TABLE IF EXISTS `op_form_component`;
+CREATE TABLE `op_form_component` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `form_id` int(11) NOT NULL COMMENT '表单ID',
   `component_id` int(11) NOT NULL COMMENT '组件ID',
   `attr_id` varchar(80) NOT NULL COMMENT '属性ID',
   `attr_value` varchar(80) NOT NULL COMMENT '属性值',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='组件实例表';
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='组件实例表';
 
 -- ----------------------------
 -- Table structure for op_request_log
@@ -69,7 +82,7 @@ CREATE TABLE `op_request_log` (
   `memory_usage` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '内存使用量MB',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3893 DEFAULT CHARSET=utf8 COMMENT='请求日志';
+) ENGINE=InnoDB AUTO_INCREMENT=4275 DEFAULT CHARSET=utf8 COMMENT='请求日志';
 
 -- ----------------------------
 -- Table structure for op_request_params
@@ -84,5 +97,5 @@ CREATE TABLE `op_request_params` (
   `sha1` varchar(255) DEFAULT NULL COMMENT 'SHA1',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='请求参数日志';
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='请求参数日志';
 
