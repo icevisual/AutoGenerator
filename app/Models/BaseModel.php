@@ -24,13 +24,23 @@ class BaseModel extends \Eloquent
             'return' => 'object'
         ];
         
-        $fields = array_get($config, 'createFields',[]);
+        // 1. 确定保存字段，createFields 和 fieldsMap 字段的 并集就是所有的字段
         
+        $createFields = array_get($config, 'createFields',[]);
+        $fieldsMap = array_get($config, 'fieldsMap',[]);
+        $fields = array_keys(array_flip($createFields) + array_flip(array_keys($fieldsMap)));
+        // 2. 给保存字段设置对应的值
         
+        $createParams = [];
+        foreach ($fields as $k){
+            if(isset($fieldsMap[$k])){
+                $createParams[$k] = array_get($params, $fieldsMap[$k]);
+            }else{
+                $createParams[$k] = array_get($params, 'data.'.$k);
+            }
+        }
         
-        
-        $data = $params[0];
-        $createParams = array_only($data, $config['createFields']);
+        // 2. 调起保存方法
         $ReflectionMethod = new \ReflectionMethod($config['model'].'::create');
         $ret = $ReflectionMethod->invoke(new $config['model'],$createParams);
         return $ret;

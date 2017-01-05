@@ -40,10 +40,10 @@ class Test extends Command
     {
         //
         $ret = BaseModel::analysisSimpleCreate([], [
-            [
+           'data'=> [
                 'attr_name' => 'data.attr_name',
                 'attr_name_cn' => 'data.attr_name_cn',
-                'default_value' => 'data.attr_value',
+                'attr_value' => 'data.attr_value',
                 'attr_type' => 'data.attr_type',
                 'form_type' => 'data.form_type'
             ]
