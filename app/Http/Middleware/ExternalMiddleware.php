@@ -9,13 +9,13 @@ class ExternalMiddleware
     
     public static function setHeaders()
     {
-        $header['Access-Control-Allow-Origin'] = '*';
-        $header['Access-Control-Allow-Methods'] = 'GET, PUT, POST, DELETE, HEAD, OPTIONS';
-        $header['Access-Control-Allow-Headers'] = 'X-Requested-With, Origin, X-Csrftoken, Content-Type, Accept';
+//         $header['Access-Control-Allow-Origin'] = '*';
+//         $header['Access-Control-Allow-Methods'] = 'GET, PUT, POST, DELETE, HEAD, OPTIONS';
+//         $header['Access-Control-Allow-Headers'] = 'X-Requested-With, Origin, X-Csrftoken, Content-Type, Accept';
     
-        foreach ($header as $head => $value) {
-            header("{$head}: {$value}");
-        }
+//         foreach ($header as $head => $value) {
+//             header("{$head}: {$value}");
+//         }
     }
     
 

@@ -236,19 +236,52 @@ class TestRoutes extends TestCase
     }
         
     /**
-     * save_form
+     * 保存表单控件
      *
      * @param array $params
      *            <pre>
-     *            'components' => '', //String unknown
+     *            'name' => '', //String unknown
+     *            'components' => '', //String {"components":[{"id":"12","attrs":[{"attrId":"132","defaultValue":"ad"},{"attrId":"123","defaultValue":""}]}]}
      *            </pre>
      */
     public function outer_api_save_form_component($params = [])
     {
         $data = [
-            'components' => array_get($params,'components',''),// unknown String
+            'name' => array_get($params,'name',''),// unknown String
+            'components' => array_get($params,'components',''),// {"components":[{"id":"12","attrs":[{"attrId":"132","defaultValue":"ad"},{"attrId":"123","defaultValue":""}]}]} String
         ];
         $ret = $this->postJson(route('outer_api_save_form_component'), $data)->toJson();
+        return $ret;
+    }
+        
+    /**
+     * query_forms
+     *
+     * 
+     */
+    public function outer_api_query_forms($params = [])
+    {
+        $data = [
+
+        ];
+        $ret = $this->postJson(route('outer_api_query_forms'), $data)->toJson();
+        return $ret;
+    }
+        
+    /**
+     * forms_detail
+     *
+     * @param array $params
+     *            <pre>
+     *            'id' => '', //String 属性名称-中文
+     *            </pre>
+     */
+    public function outer_api_forms_detail($params = [])
+    {
+        $data = [
+            'id' => array_get($params,'id',''),// 属性名称-中文 String
+        ];
+        $ret = $this->postJson(route('outer_api_forms_detail'), $data)->toJson();
         return $ret;
     }
 

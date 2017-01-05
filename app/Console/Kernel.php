@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         Commands\TestRoute::class,
         Commands\Upgrade::class,
         Commands\DumpStructs::class,
+        Commands\Test::class,
     ];
 
     /**

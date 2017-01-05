@@ -30,16 +30,35 @@ class ComponentController extends Controller
         return $this->__json($data['list']);
     }
     
+    
+    public function query_forms(){
+        $data = Form::queryForms([],1,10000);
+        return $this->__json($data['list']);
+    }
+    
+    
+    public function forms_detail(){
+        
+        $id = \Input::get('id');
+        
+        $ret = Form::formDetail($id);
+        
+        return $this->__json($ret);
+    }
+    
+    
     /**
      * 保存表单控件
      */
     public function save_form(){
         $data = [
+            'name' => \Input::get('name'),
             'components' => \Input::get('components') //{"components":[{"id":"12","attrs":[{"attrId":"132","defaultValue":"ad"},{"attrId":"123","defaultValue":""}]}]}
         ];
         runCustomValidator([
             'data' => $data, // 数据
             'rules' => [
+                'name' => 'required|unique:form',
                 'components' => 'required|array',
                 'components.*.id' => 'required|numeric',
                 'components.*.attrs' => 'required|array',
@@ -47,6 +66,7 @@ class ComponentController extends Controller
 //                 'compoents.*.attrs.*.defaultValue' => 'required',
             ], // 条件
             'attributes' => [
+                'name' => '表单名字',
                 'components' => '组件',
                 'components.*.id' => '组件ID',
                 'components.*.attrs' => '组件属性',
@@ -54,7 +74,7 @@ class ComponentController extends Controller
                 'components.*.attrs.*.defaultValue' => '组件属性值',
             ]
         ]); // 属性名映射
-        $form = Form::createForm($data['components']);
+        $form = Form::createForm($data['name'],$data['components']);
         return $this->__json();
         return $this->__json($form->toArray());
     }

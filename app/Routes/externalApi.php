@@ -11,7 +11,15 @@ use Illuminate\Http\Request;
  * | is assigned the "api" middleware group. Enjoy building your API!
  * |
  */
-
+if(!\App::environment('testing')){
+    $header['Access-Control-Allow-Origin'] = '*';
+    $header['Access-Control-Allow-Methods'] = 'GET, PUT, POST, DELETE, HEAD, OPTIONS';
+    $header['Access-Control-Allow-Headers'] = 'X-Requested-With, Origin, X-Csrftoken, Content-Type, Accept';
+    
+    foreach ($header as $head => $value) {
+        header("{$head}: {$value}");
+    }
+}
 
 
 Route::get('/components/list', [
@@ -23,4 +31,24 @@ Route::post('/form/save', [
     'as' => 'outer_api_save_form_component',
     'uses' => 'ExternalApi\ComponentController@save_form'
 ]);
+
+Route::post('/form/query', [
+    'as' => 'outer_api_query_forms',
+    'uses' => 'ExternalApi\ComponentController@query_forms'
+]);
+
+Route::post('/form/detail', [
+    'as' => 'outer_api_forms_detail',
+    'uses' => 'ExternalApi\ComponentController@forms_detail'
+]);
+
+
+
+
+
+
+
+
+
+
 
