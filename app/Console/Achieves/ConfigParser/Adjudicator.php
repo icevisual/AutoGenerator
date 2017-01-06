@@ -8,10 +8,6 @@ class Adjudicator implements AdjudicatorConstInter
     
     use ConstTrait;
     
-    public static $_ = [
-        self::JUDGE_DATA
-    ];
-    
     public function judgeApiParameter($key,$value){
         return $key == 'data';
     }

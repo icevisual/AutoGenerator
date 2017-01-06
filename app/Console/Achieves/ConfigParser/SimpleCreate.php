@@ -31,6 +31,18 @@ class SimpleCreate extends Parser
             'parameters' => [
                 'data'
             ],
+            'validate' => [
+                'rules' => [
+                    'attr_name' => 'required|unique:attrs,attr_name',
+                    'attr_name_cn' => 'required',
+                    'attr_type' => 'required',
+                    'form_type' => 'required'
+                ],
+                'message' => [
+                    'name.required' => '请填写得得得'
+                ],
+                'attributes' => '',
+            ],
             'createFields' => [
                 'attr_name',
                 'attr_type',
