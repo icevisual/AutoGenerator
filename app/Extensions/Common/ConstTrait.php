@@ -35,6 +35,8 @@ trait ConstTrait
         $InterfaceFileName = explode("\\", $InterfaceNames[0]);
         $InterfaceFileName = end($InterfaceFileName);
         $ReflectionInter = new \ReflectionClass($InterfaceNames[0]);
+        
+        
         $interConstsArray = $ReflectionInter->getConstants();
         $methodsArray = $ReflectionClass->getMethods();
         $processorConstsArray = [];
@@ -52,6 +54,8 @@ trait ConstTrait
         if ($diffArray || $force) {
             $constString = '';
             $interFileName = __DIR__ . DS . $InterfaceFileName . '.php';
+            
+            $interFileName = $ReflectionInter->getFileName();
             $eol = PHP_EOL;
             // $eol = "\r\n";
             foreach ($processorConstsArray as $k => $v) {

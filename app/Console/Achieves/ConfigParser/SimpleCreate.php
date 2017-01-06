@@ -1,7 +1,7 @@
 <?php
 namespace App\Console\Achieves\ConfigParser;
 
-class SimpleCreate
+class SimpleCreate extends Parser
 {
 
     /**
@@ -23,7 +23,7 @@ class SimpleCreate
      * @param unknown $params            
      * @return Ambigous <multitype:, boolean>|multitype:mixed |mixed
      */
-    public static function analysisSimpleCreate($cfg, $params)
+    public static function parseSimpleCreate($cfg, $params)
     {
         $config = [
             'symbol' => 'simpleCreate',
@@ -37,7 +37,7 @@ class SimpleCreate
                 'form_type'
             ],
             'fieldsMap' => [
-                'default_value' => 'data.attr_value',
+                'default_value' => 'data.attr_value'
             ],
             'return' => 'array|object'
         ];
@@ -50,8 +50,8 @@ class SimpleCreate
                 'createFields', // 指明了新建所需的字段
                 'fieldsMap', // 指明了新建数据的字段和取值，取值 Get an item from an array using "dot" notation.
                 'return'
-            ] // 指明返回值，默认为整个新建的对象 array|object ['id']
-, // 数据
+            ], // 指明返回值，默认为整个新建的对象 array|object ['id']
+              // 数据
             'data' => $cfg,
             'rules' => [
                 'symbol' => 'required',
@@ -59,9 +59,9 @@ class SimpleCreate
                 'parameters' => 'array',
                 'createFields' => 'required_without:fieldsMap',
                 'fieldsMap' => 'required_without:createFields'
-            ]
+            ],
             // 'return',
-            , // 条件
+            // 条件
             'config' => [
                 'ReturnOrException' => 0, // Return (0) Or Exception(1)
                 'FirstOrAll' => 1
@@ -113,6 +113,13 @@ class SimpleCreate
             }
         }
         return $ret;
+    }
+
+    
+    
+    public static function flowParser()
+    {
+        
     }
 }
 
