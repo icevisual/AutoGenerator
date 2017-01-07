@@ -77,3 +77,10 @@ Route::delete('/component/{id}', [
 ]);
 
 
+Route::get('/tables', [
+    'as' => 'api_tables_query',
+    'uses' => 'Api\InformationSchemaController@queryTables'
+]);
+
+
+

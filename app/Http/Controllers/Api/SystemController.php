@@ -32,17 +32,17 @@ class SystemController extends Controller
                 'menus' => [
                     [
                         'icon' => 'fa-dashboard',
-                        'title' => 'Demo',
+                        'title' => 'System',
                         'submenus' => [
                             [
-                                'href' => route('demo_list'),
+                                'href' => route('query_tables'),
                                 'icon' => 'fa-circle-o',
-                                'title' => 'List Demo'
+                                'title' => 'QUERY TABLES'
                             ],
                             [
-                                'href' => route('demo_create'),
+                                'href' => route('table_deploy'),
                                 'icon' => 'fa-circle-o',
-                                'title' => 'Form Demo'
+                                'title' => 'TABLE DEPLOY'
                             ]
                         ]
                     ],

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Console\Achieves\ConfigParser\SimpleCreate;
 use App\Console\Achieves\ConfigParser\Adjudicator;
+use App\Models\InformationSchema\Tables;
 
 class Test extends Command
 {
@@ -39,6 +40,10 @@ class Test extends Command
      */
     public function handle()
     {
+       
+        dump( Tables::queryTables());
+        
+        exit;
         
         Adjudicator::autoGeneration('judge','',true);
         

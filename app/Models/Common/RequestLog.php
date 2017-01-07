@@ -1,9 +1,4 @@
 <?php
-/**
- * User: dryyun
- * Time: 2015/11/19 11:16
- * File: AreaMo.php
- */
 namespace App\Models\Common;
 
 use App\Exceptions\NeedRecordException;

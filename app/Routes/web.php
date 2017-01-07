@@ -61,6 +61,14 @@ Route::get('/attr/{id}', [
 ]);
 
 
+Route::get('/tables', [
+    'as' => 'query_tables',
+    'uses' => 'Web\TableController@query'
+]);
 
+Route::get('/table/deploy', [
+    'as' => 'table_deploy',
+    'uses' => 'Web\TableController@deploy'
+]);
 
 

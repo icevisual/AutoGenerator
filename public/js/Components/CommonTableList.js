@@ -88,8 +88,8 @@ define(['Vue','Utils'],function(Vue,Utils) {
             <td>\
               <div class="tools">\
                 <template v-for="(item2,key2) in tableConfig.attrs.operations">\
-                  <a v-if="key2 == \'update\'" :data-row="key" :data-id="item.id" @click.prevent="updateRecord" class="btn btn-primary btn-xs">U</a>\
-                  <a v-else-if="key2 == \'delete\'" :data-row="key" :data-id="item.id" @click.prevent="deleteRecord" class="btn btn-danger btn-xs">D</a>\
+                  <a v-if="key2 == \'update\' && item2" :data-row="key" :data-id="item.id" @click.prevent="updateRecord" class="btn btn-primary btn-xs">U</a>\
+                  <a v-else-if="key2 == \'delete\' && item2" :data-row="key" :data-id="item.id" @click.prevent="deleteRecord" class="btn btn-danger btn-xs">D</a>\
                   <a v-else :data-row="key" :data-event="key2" :data-id="item.id" @click.prevent="btnclick" :class="item2.color" class="btn btn-xs">{{item2.text}}</a>\
                 </template>\
               </div>\
