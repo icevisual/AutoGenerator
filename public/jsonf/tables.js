@@ -1,5 +1,6 @@
 {
     "table": {
+        "type" : "table",
         "attrs": {
             "caption": "数据表列表",
             "RESTful" : true,

@@ -1,5 +1,6 @@
 {
     "attrs_table": {
+        "type" : "table",
         "attrs": {
             "caption": "属性表",
             "RESTful" : true,

@@ -15,6 +15,17 @@ class SystemController extends Controller
         if (file_exists(public_path($file))) {
             $json = file_get_contents($file);
             $json = json_decode($json,1);
+            // 
+            foreach ($json as $k => $v){
+                if (isset($v['type'])) {
+                    if($v['type'] == 'table'){
+                        $queryUri = array_get($v, 'attrs.uris.query.url');
+                        $ret = curl_get( 'http://'.\Request::getHost().'/'.$queryUri);
+                        array_set($json[$k], 'data', $ret['data']);
+                    }
+                }
+            }
+            
             return $this->__json($json);
         }
         return $this->__json(\ErrorCode::SYSTEM_ERROR);
