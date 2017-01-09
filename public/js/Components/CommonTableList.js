@@ -26,16 +26,23 @@ define(['Vue','Utils'],function(Vue,Utils) {
                 }
             },
             "rownum" : true, // 显示行号
+            "pagination" : true,// 是否显示分页
             "hidden" : { // 隐藏的属性
                 "id" : true
+            },
+            "advancedColumn" : {// 高级列渲染
+                "default_value" : { // 行-输入框
+                    "type" : "input"
+                }
             },
             "operation" : true, // 是否有操作按钮
             "operations" : {
                 "update" : true, // 预设 更新 和 删除 按钮
                 "delete" : true,
                 "addbind" : { // 其他按钮  table + {key} 的事件
-                    "color" : "btn-success",
-                    "text" : "+"
+                    "class" : "btn-success",
+                    "name" : "+",
+                    "event" : "addbind"
                 }
             },
             "header": [// 表头
@@ -82,15 +89,25 @@ define(['Vue','Utils'],function(Vue,Utils) {
             <td v-if="tableConfig.attrs.hidden[key1]" class="hide">\
               <input type="hidden" :name="\'row-\' + key" :value="item1">\
             </td>\
+            <td v-else-if="tableConfig.attrs.advancedColumn && tableConfig.attrs.advancedColumn[key1]">\
+              <template v-if="tableConfig.attrs.advancedColumn[key1].type == \'input\'">\
+              <div class="input-group-sm">\
+                <input type="text" v-model="item[key1]" class="form-control" :name="\'row-\' + key" :value="item1">\
+              </div>\
+              </template>\
+            </td>\
             <td v-else>{{item1}}</td>\
           </template>\
           <template v-if="tableConfig.attrs.operation">\
             <td>\
               <div class="tools">\
                 <template v-for="(item2,key2) in tableConfig.attrs.operations">\
-                  <a v-if="key2 == \'update\' && item2" :data-row="key" :data-id="item.id" @click.prevent="updateRecord" class="btn btn-primary btn-xs">U</a>\
-                  <a v-else-if="key2 == \'delete\' && item2" :data-row="key" :data-id="item.id" @click.prevent="deleteRecord" class="btn btn-danger btn-xs">D</a>\
-                  <a v-else :data-row="key" :data-event="key2" :data-id="item.id" @click.prevent="btnclick" :class="item2.color" class="btn btn-xs">{{item2.text}}</a>\
+                  <template v-if="item2">\
+                  <a v-if="key2 == \'update\'" :data-row="key" :data-id="item.id" @click.prevent="updateRecord" class="btn btn-primary btn-xs">U</a>\
+                  <a v-else-if="key2 == \'delete\'" :data-row="key" :data-id="item.id" @click.prevent="deleteRecord" class="btn btn-danger btn-xs">D</a>\
+                  <a v-else-if="item2.event == \'redirect\'" :data-row="key" :data-redirect="item2.uri" :data-id="item.id" @click.prevent="redirectTo" :class="item2.class" class="btn btn-xs">{{item2.name}}</a>\
+                  <a v-else :data-row="key" :data-event="item2.event" :data-id="item.id" @click.prevent="btnclick" :class="item2.class" class="btn btn-xs">{{item2.name}}</a>\
+                  </template>\
                 </template>\
               </div>\
             </td>\
@@ -100,7 +117,7 @@ define(['Vue','Utils'],function(Vue,Utils) {
       </tbody>\
     </table>\
   </div><!-- /.box-body -->\
-  <div class="box-footer clearfix">\
+  <div v-if="tableConfig.attrs.pagination" class="box-footer clearfix">\
     <ul class="pagination pagination-sm no-margin pull-right">\
       <li><a href="#">&laquo;</a></li>\
       <li><a href="#">1</a></li>\
@@ -131,9 +148,16 @@ define(['Vue','Utils'],function(Vue,Utils) {
             'defaultValue':function(v,d){
                 return v?v:d;
             },
+            'redirectWithUri' : function(uri,data){
+                var reqPa = this.parseAjaxParam(uri,data);
+                var redirect = reqPa.url;
+                window.location.href = redirect;
+            },
             'updateRecord' : function(e){
                 var row = e.target.getAttribute('data-row');
-                var val = $(this.$el).find('[name=row-' + row + ']').val();
+                var val = e.target.getAttribute('data-id');
+//                var val = $(this.$el).find('[name=row-' + row + ']').val();
+                return this.redirectWithUri(this.tableConfig.attrs.uris.update,{'id':val});
                 var reqPa = this.parseAjaxParam(this.tableConfig.attrs.uris.update,{'id':val});
                 var redirect = reqPa.url;
                 window.location.href = redirect;
@@ -159,6 +183,11 @@ define(['Vue','Utils'],function(Vue,Utils) {
                         }
                     });
                 }
+            },
+            'redirectTo' : function(e){
+                var key = e.target.getAttribute('data-redirect');
+                var val = e.target.getAttribute('data-id');
+                return this.redirectWithUri(this.tableConfig.attrs.uris[key],{'id':val});
             },
             'btnclick' : function(e){
                 var emitEventType = e.target.getAttribute("data-event");

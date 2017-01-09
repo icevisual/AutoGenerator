@@ -16,10 +16,10 @@
                     "param" : ["id"],
                     "method" : "GET"
                 },
-                "delete" : {
-                    "url" : "/api/component/{id}",
+                "deploy" : {
+                    "url" : "/table/deploy/{id}",
                     "param" : ["id"],
-                    "method" : "DELETE"
+                    "method" : "GET"
                 }
             },
             "rownum" : true,
@@ -29,7 +29,13 @@
             "operation" : true,
             "operations" : {
                 "update" : true,
-                "delete" : false
+                "delete" : false,
+                "deploy" : {
+                    "name" : "DEPLOY",
+                    "class" : "btn-info",
+                    "event" : "redirect",
+                    "uri" : "deploy"
+                }
             },
             "header": [
                 {

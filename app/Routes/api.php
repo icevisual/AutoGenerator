@@ -82,5 +82,8 @@ Route::get('/tables', [
     'uses' => 'Api\InformationSchemaController@queryTables'
 ]);
 
-
+Route::get('/table/deploy/{id?}', [
+    'as' => 'api_tables_deploy',
+    'uses' => 'Api\InformationSchemaController@tableDeploy'
+]);
 

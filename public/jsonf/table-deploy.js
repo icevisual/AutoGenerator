@@ -1,7 +1,7 @@
 {
-    "component_attrs_table": {
+    "table": {
         "attrs": {
-            "caption": "组件属性表",
+            "caption": "组表",
             "uris" : {
                 "query" : {
                     "url" : "/api/attrs",
@@ -10,23 +10,23 @@
                 }
             },
             "ajax" : true,
-            "rownum" : false,
+            "rownum" : true,
+            "pagination" : false,
             "hidden" : {
             },
             "operation" : true,
             "operations" : {
                 "addbind" : {
                     "class" : "btn-success",
-                    "name" : "+",
-                    "event" : "addbind"
+                    "name" : "+"
                 }
             },
             "header": [
-                {"name":"ID","width":"20px"},
-                "属性名",
-                "显示名称",
-                "数据类型",
-                "渲染类型"
+                "字段",
+                "列名",
+                "默认值",
+                "允许空",
+                "类型定义"
             ]
         },
         "data": {
@@ -35,49 +35,6 @@
             "last_page": 1,
             "per_page": 10,
             "list" : []
-        }
-    },
-    "attrs_bind_table": {
-        "attrs": {
-            "caption": "组件属性表",
-            "ajax" : false,
-            "uris" : {
-                "query" : {
-                    "url" : "/api/attrs",
-                    "param" : [],
-                    "method" : "GET"
-                }
-            },
-            "rownum" : true,
-            "hidden" : {
-            },
-            "advancedColumn" : {
-                "default_value" : {
-                    "type" : "input"
-                }
-            },
-            "operation" : true,
-            "operations" : {
-                "attrunbind" : {
-                    "color" : "btn-warning",
-                    "text" : "R"
-                }
-            },
-            "header": [
-                {"name":"ID","width":"20px"},
-                "属性名",
-                "显示名称",
-                "数据类型",
-                "渲染类别",
-                "属性默认值"
-            ]
-        },
-        "data": {
-            "total": 3,
-            "current_page": 1,
-            "last_page": 1,
-            "per_page": 10,
-            "list": []
         }
     },
     "component_form": {

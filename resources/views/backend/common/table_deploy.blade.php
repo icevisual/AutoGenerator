@@ -16,8 +16,8 @@
         <section class="content" id="formDemo">
           <div class="row">
             <!-- left column -->
-            <div class="col-md-12">
-              <advance-table :data-selector="pageConfig.attrs_bind_table" @tableattrunbind="attrUnbind" ></advance-table>
+            <div class="col-md-6">
+              <common-table :data-selector="pageConfig.table"></common-table>
             </div><!--/.col (right) -->
             
           </div>   <!-- /.row -->
