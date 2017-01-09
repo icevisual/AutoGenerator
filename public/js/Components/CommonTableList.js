@@ -30,6 +30,11 @@ define(['Vue','Utils'],function(Vue,Utils) {
             "hidden" : { // 隐藏的属性
                 "id" : true
             },
+            "headerTools" : [{
+                "name" : "Submit",
+                "class" : "btn-info",
+                "event" : "submit"
+            }],
             "advancedColumn" : {// 高级列渲染
                 "default_value" : { // 行-输入框
                     "type" : "input"
@@ -68,6 +73,11 @@ define(['Vue','Utils'],function(Vue,Utils) {
 <div class="box box-info">\
   <div class="box-header with-border">\
     <h3 class="box-title">{{tableConfig.attrs.caption}}</h3>\
+      <div v-if="tableConfig.attrs.headerTools" class="pull-right box-tools">\
+      <template v-for="item in tableConfig.attrs.headerTools">\
+        <button class="btn btn-sm" :class="item.class" :data-event="item.event" v-on:click.prevent="btnclick">{{item.name}}</button>\
+      </template>\
+      </div>\
   </div><!-- /.box-header -->\
   <div class="box-body">\
     <table class="table table-bordered">\
@@ -125,6 +135,7 @@ define(['Vue','Utils'],function(Vue,Utils) {
       <li><a href="#">3</a></li>\
       <li><a href="#">&raquo;</a></li>\
     </ul>\
+            <button type="submit" class="btn btn-primary">Submit</button>\
   </div>\
 </div><!-- /.box -->\
 ',

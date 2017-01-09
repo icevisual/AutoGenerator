@@ -21,12 +21,23 @@
                     "name" : "+"
                 }
             },
+            "advancedColumn" : {
+                "validate" : {
+                    "type" : "input"
+                }
+            },
+            "headerTools" : [{
+                "name" : "Submit",
+                "class" : "btn-info",
+                "event" : "submit"
+            }],
             "header": [
                 "字段",
                 "列名",
                 "默认值",
                 "允许空",
-                "类型定义"
+                "类型定义",
+                "验证规则"
             ]
         },
         "data": {

@@ -59,8 +59,9 @@
             "operation" : true,
             "operations" : {
                 "attrunbind" : {
-                    "color" : "btn-warning",
-                    "text" : "R"
+                    "class" : "btn-warning",
+                    "name" : "R",
+                    "event" : "attrunbind"
                 }
             },
             "header": [

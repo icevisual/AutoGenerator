@@ -50,11 +50,11 @@ class SystemController extends Controller
                                 'icon' => 'fa-circle-o',
                                 'title' => 'QUERY TABLES'
                             ],
-                            [
-                                'href' => route('table_deploy'),
-                                'icon' => 'fa-circle-o',
-                                'title' => 'TABLE DEPLOY'
-                            ]
+//                             [
+//                                 'href' => route('table_deploy'),
+//                                 'icon' => 'fa-circle-o',
+//                                 'title' => 'TABLE DEPLOY'
+//                             ]
                         ]
                     ],
                     [

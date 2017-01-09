@@ -23,7 +23,7 @@
               
             <div class="col-md-6">
 <!--               <horizontal-form :data-selector="pageConfig.attr_form"   @formcancel="cancelAddNewAttr"   @formsubmit="addNewAttr" ></horizontal-form> -->
-              <advance-table :data-selector="pageConfig.attrs_bind_table" @tableattrunbind="attrUnbind" ></advance-table>
+              <common-table :data-selector="pageConfig.attrs_bind_table" @tableattrunbind="attrUnbind" ></common-table>
                    
             </div><!--/.col (right) -->
             

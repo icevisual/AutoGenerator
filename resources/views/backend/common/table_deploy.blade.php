@@ -16,8 +16,8 @@
         <section class="content" id="formDemo">
           <div class="row">
             <!-- left column -->
-            <div class="col-md-6">
-              <common-table :data-selector="pageConfig.table"></common-table>
+            <div class="col-md-12">
+              <common-table :data-selector="pageConfig.table" @tablesubmit="tablesubmit"></common-table>
             </div><!--/.col (right) -->
             
           </div>   <!-- /.row -->

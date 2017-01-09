@@ -28,6 +28,7 @@ class Columns extends BaseModel
             'COLUMNS.IS_NULLABLE',
 //             'COLUMNS.DATA_TYPE',
             'COLUMNS.COLUMN_TYPE',
+            \DB::raw("'' AS validate"),
 //             'COLUMNS.CHARACTER_MAXIMUM_LENGTH',
 //             'COLUMNS.NUMERIC_PRECISION',
 //             'COLUMNS.NUMERIC_SCALE',
