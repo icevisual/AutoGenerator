@@ -66,9 +66,18 @@ Route::get('/tables', [
     'uses' => 'Web\TableController@query'
 ]);
 
+Route::get('/table', [
+    'as' => 'table_create',
+    'uses' => 'Web\TableController@create'
+]);
+
+
 Route::get('/table/deploy/{id?}', [
     'as' => 'table_deploy',
     'uses' => 'Web\TableController@deploy'
 ]);
+
+
+
 
 

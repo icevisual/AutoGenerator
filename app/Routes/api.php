@@ -81,9 +81,28 @@ Route::get('/tables', [
     'as' => 'api_tables_query',
     'uses' => 'Api\InformationSchemaController@queryTables'
 ]);
+Route::post('/table/{id}', [
+    'as' => 'api_create_table',
+    'uses' => 'Api\TablesController@create'
+]);
+Route::put('/table/{id}', [
+    'as' => 'api_update_tables',
+    'uses' => 'Api\InformationSchemaController@update'
+]);
+Route::delete('/table/{id}', [
+    'as' => 'api_delete_query',
+    'uses' => 'Api\InformationSchemaController@delete'
+]);
+
+
 
 Route::get('/table/deploy/{id?}', [
     'as' => 'api_tables_deploy',
     'uses' => 'Api\InformationSchemaController@tableDeploy'
+]);
+
+Route::POST('/table/deploy', [
+    'as' => 'api_save_table_deploy',
+    'uses' => 'Api\InformationSchemaController@saveTableDeploy'
 ]);
 

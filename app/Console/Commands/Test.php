@@ -41,6 +41,11 @@ class Test extends Command
     public function handle()
     {
        
+        
+        $ret = \App\Models\System\Tables::queryTables();
+        
+        edump($ret);
+        
         dump( Tables::queryTables());
         
         exit;

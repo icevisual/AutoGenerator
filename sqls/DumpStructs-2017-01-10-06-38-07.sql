@@ -1,5 +1,5 @@
 -- ----------------------------
--- Date: 2017-01-07 09:42:28
+-- Date: 2017-01-10 06:38:07
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -16,6 +16,25 @@ CREATE TABLE `op_attrs` (
   `form_type` varchar(80) NOT NULL COMMENT '表单控件类别',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='组件属性表';
+
+-- ----------------------------
+-- Table structure for op_columns
+-- ----------------------------
+DROP TABLE IF EXISTS `op_columns`;
+CREATE TABLE `op_columns` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `TABLE_ID` int(11) NOT NULL COMMENT '表ID',
+  `COLUMN_NAME` varchar(64) NOT NULL DEFAULT '字段名',
+  `COLUMN_NAME_CN` varchar(100) DEFAULT '' COMMENT '中文字段名',
+  `COLUMN_DEFAULT` varchar(100) DEFAULT NULL COMMENT '默认值',
+  `IS_NULLABLE` varchar(3) NOT NULL COMMENT '允许空',
+  `DATA_TYPE` varchar(64) NOT NULL COMMENT '数据类型',
+  `CHARACTER_MAXIMUM_LENGTH` bigint(21) unsigned DEFAULT NULL COMMENT '字符长度',
+  `NUMERIC_PRECISION` bigint(21) unsigned DEFAULT NULL COMMENT '位数',
+  `NUMERIC_SCALE` bigint(21) unsigned DEFAULT NULL COMMENT '精度',
+  `COLUMN_COMMENT` varchar(1024) NOT NULL DEFAULT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for op_component
@@ -82,7 +101,7 @@ CREATE TABLE `op_request_log` (
   `memory_usage` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '内存使用量MB',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4321 DEFAULT CHARSET=utf8 COMMENT='请求日志';
+) ENGINE=InnoDB AUTO_INCREMENT=4899 DEFAULT CHARSET=utf8 COMMENT='请求日志';
 
 -- ----------------------------
 -- Table structure for op_request_params
@@ -98,4 +117,15 @@ CREATE TABLE `op_request_params` (
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='请求参数日志';
+
+-- ----------------------------
+-- Table structure for op_tables
+-- ----------------------------
+DROP TABLE IF EXISTS `op_tables`;
+CREATE TABLE `op_tables` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `TABLE_NAME` varchar(80) NOT NULL COMMENT '表名',
+  `TABLE_COMMENT` varchar(255) DEFAULT NULL COMMENT '表备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='TABLES表';
 

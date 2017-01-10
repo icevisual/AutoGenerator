@@ -65,6 +65,42 @@ require(['initialize'], function(EVue) {
                     },
                     'tablesubmit' : function(e){
                         console.log("tablesubmit");
+                        
+                        var thisTableKey = 'table';
+                        var tableData = this.getTableData('table');
+                        var validateData = [];
+                        
+                        for(var i in tableData){
+                            validateData.push({
+                                'column' : tableData[i].COLUMN_NAME,
+                                'validate' : tableData[i].validate
+                            });
+                        }
+                        console.log('validateData',validateData);
+                        if(Utils.isEmptyObj(validateData)){
+                            return;
+                        }
+                        
+                        var reqCfg = vmForm.pageConfig[thisTableKey].attrs.uris.save;
+                        
+                        Utils.ajax({
+                            'url' : reqCfg.url,
+                            'method' : reqCfg.method,
+                            'data' : {
+                                'tablename' : vmForm.pageConfig[thisTableKey].attrs.tablename,
+                                'validate' : validateData
+                            },
+                            'success' : function(d){
+                                if(Utils.apiReqSuccess(d)){
+//                                    window.location.href = reqCfg.success.redirect
+                                }else{
+                                    alert(Utils.apiReqMsg(d));
+                                }
+                            },
+                            'error' : function(d){
+                                
+                            }
+                        });
                     }
                 }
             });

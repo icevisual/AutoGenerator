@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\Common;
+namespace App\Models\System;
 
 use App\Models\BaseModel;
 
@@ -17,7 +17,15 @@ class Tables extends BaseModel
         
         return $table['TABLE_NAME'];
     }
-
+    
+    public static function createNewTable($data){
+    
+    }
+    
+    public static function updateTable(){
+    
+    }
+    
 }
 
 

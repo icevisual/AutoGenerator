@@ -7,6 +7,14 @@
                     "url" : "/api/attrs",
                     "param" : [],
                     "method" : "GET"
+                },
+                "save" : {
+                    "url" : "/api/table/deploy",
+                    "param" : [],
+                    "method" : "POST",
+                    "success" : {
+                        "redirect" : "/tables"
+                    }
                 }
             },
             "ajax" : true,
@@ -14,7 +22,7 @@
             "pagination" : false,
             "hidden" : {
             },
-            "operation" : true,
+            "operation" : false,
             "operations" : {
                 "addbind" : {
                     "class" : "btn-success",
@@ -37,7 +45,10 @@
                 "默认值",
                 "允许空",
                 "类型定义",
-                "验证规则"
+                {
+                    "name" : "验证规则",
+                    "width" : "500px"
+                }
             ]
         },
         "data": {

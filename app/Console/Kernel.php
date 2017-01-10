@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         Commands\Upgrade::class,
         Commands\DumpStructs::class,
         Commands\Test::class,
+        Commands\Generator::class,
     ];
 
     /**

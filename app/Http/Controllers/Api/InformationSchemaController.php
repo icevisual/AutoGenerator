@@ -7,7 +7,7 @@ use App\Models\Form\Attrs;
 use App\Models\Form\Component;
 use App\Models\Form\ComponentAttrs;
 use App\Models\InformationSchema\Tables;
-use App\Models\Common\Tables AS OpTables;
+use App\Models\System\Tables AS OpTables;
 use App\Models\InformationSchema\Columns;
 
 class InformationSchemaController extends Controller
@@ -20,6 +20,24 @@ class InformationSchemaController extends Controller
         return $this->__json($data);
     }
     
+    
+    public function saveTableDeploy(){
+        
+        $data = [
+            'tablename' => \Input::get('tablename'), // String 控件名称
+            'validate' => \Input::get('validate')// String 属性数据类型
+        ];
+        runCustomValidator([
+            'data' => $data, // 数据
+            'rules' => [
+                'tablename' => 'required|exists:tables,table_name',
+                'validate' => 'array',
+            ], // 条件
+        ]); // 属性名映射
+        
+        return $this->__json($data);
+    }
+        
     public function tableDeploy($id){
         
         $tname = OpTables::getTableName($id);
@@ -30,6 +48,7 @@ class InformationSchemaController extends Controller
             $json = file_get_contents(public_path($file));
             $json = json_decode($json,1);
             array_set($json, 'table.attrs.caption', '表 ['.$tname.'] 字段');
+            array_set($json, 'table.attrs.tablename',$tname);
 //             array_set($json, 'component_form.attrs.action.method', 'PUT');
 //             array_set($json, 'component_form.fields.id', [
 //                 'name' => ' ID',

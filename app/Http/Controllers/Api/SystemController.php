@@ -17,7 +17,7 @@ class SystemController extends Controller
             $json = json_decode($json,1);
             // 
             foreach ($json as $k => $v){
-                if (isset($v['type'])) {
+                if (isset($v['type']) && array_get($v, 'attrs.ajax')) {
                     if($v['type'] == 'table'){
                         $queryUri = array_get($v, 'attrs.uris.query.url');
                         $ret = curl_get( 'http://'.\Request::getHost().'/'.$queryUri);
@@ -50,11 +50,11 @@ class SystemController extends Controller
                                 'icon' => 'fa-circle-o',
                                 'title' => 'QUERY TABLES'
                             ],
-//                             [
-//                                 'href' => route('table_deploy'),
-//                                 'icon' => 'fa-circle-o',
-//                                 'title' => 'TABLE DEPLOY'
-//                             ]
+                            [
+                                'href' => route('table_create'),
+                                'icon' => 'fa-circle-o',
+                                'title' => 'TABLE DEPLOY'
+                            ]
                         ]
                     ],
                     [

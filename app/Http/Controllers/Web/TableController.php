@@ -14,6 +14,11 @@ class TableController extends Controller
         return view('backend.common.table_deploy');
     }
     
+    public function create(){
+        return view('backend.common.table');
+    }
+    
+    
 }
 
 
