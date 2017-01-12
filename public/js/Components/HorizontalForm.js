@@ -178,7 +178,7 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
                 var eventPrefix = 'form';
                 var emitEventType = e.target.getAttribute("data-event");
                 if('submit' == emitEventType){
-                    this.$emit(eventPrefix + 'submit',this.doFormValidate(this.$el,this.$data),this.$data);
+                    this.$emit(eventPrefix + 'submit',this.doFormValidate(this.$el,this.$data),this.$el);
                 }else{
                     this.$emit(eventPrefix + emitEventType,e);
                 }

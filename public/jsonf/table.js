@@ -56,14 +56,23 @@
                 "id" : true
             },
             "operation" : true,
-            "operations" : {
-                "deploy" : {
-                    "name" : "DEPLOY",
-                    "class" : "btn-info",
-                    "event" : "redirect",
-                    "uri" : "deploy"
-                }
-            },
+            "operations" : [{
+                "name" : "R",
+                "class" : "btn-warning",
+                "event" : "reomve"
+            },{
+                "name" : "U",
+                "class" : "btn-info",
+                "event" : "update"
+            },{
+                "name" : "^",
+                "class" : "btn-info",
+                "event" : "up"
+            },{
+                "name" : "v",
+                "class" : "btn-info",
+                "event" : "down"
+            }],
             "header": [
                 "字段",
                 "名称",
@@ -86,9 +95,14 @@
             "formColor" : "box-info",
             "buttons": {
                 "preinstall": {
-                    "submit": true,
-                    "cancel": true
-                }
+                    "submit": false,
+                    "cancel": false
+                },
+                "others" : [{
+                    "class" : "btn-info",
+                    "event" : "submit",
+                    "name"  : "Submit"
+                }]
             },
             "action" : {
                 "uri" : "/api/table",
@@ -120,6 +134,9 @@
             "COLUMN_DEFAULT": {
                 "name": "默认值",
                 "type": "input",
+                "validate" : {
+                    "rules" : "sometimes"
+                },
                 "attrs": {
                     "type": "text",
                     "placeholder": "默认值"
@@ -215,6 +232,9 @@
             "CHARACTER_MAXIMUM_LENGTH": {
                 "name": "字符长度",
                 "type": "input",
+                "validate" : {
+                    "rules" : "sometimes"
+                },
                 "attrs": {
                     "type": "text",
                     "placeholder": "字符长度"
@@ -224,6 +244,9 @@
             "NUMERIC_PRECISION": {
                 "name": "位数",
                 "type": "input",
+                "validate" : {
+                    "rules" : "sometimes"
+                },
                 "attrs": {
                     "type": "text",
                     "placeholder": "位数"
@@ -233,6 +256,9 @@
             "NUMERIC_SCALE": {
                 "name": "精度",
                 "type": "input",
+                "validate" : {
+                    "rules" : "sometimes"
+                },
                 "attrs": {
                     "type": "text",
                     "placeholder": "精度"
