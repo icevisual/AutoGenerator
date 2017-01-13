@@ -16,11 +16,11 @@
         <section class="content" id="formDemo">
           <div class="row">
             <div class="col-md-6">
-              <horizontal-form :data-selector="pageConfig.table_form"  ></horizontal-form>
-              <horizontal-form :data-selector="pageConfig.column_form" @formsubmit="AddColumn" ></horizontal-form>
+              <horizontal-form :data-selector="pageConfig.table_form"  @formsubmit="submitTable"></horizontal-form>
+              <horizontal-form :data-selector="pageConfig.column_form" @formsubmit="AddColumn"></horizontal-form>
             </div><!--/.col (right) -->
             <div class="col-md-6">
-              <common-table :data-selector="pageConfig.table" @tableremove="RemoveField" @tableupdate="UpdateField" ></common-table>
+              <common-table :data-selector="pageConfig.table" @tableremove="RemoveField" @tableupdate="UpdateField"></common-table>
             </div><!--/.col (right) -->
           </div>   <!-- /.row -->
         </section><!-- /.content -->

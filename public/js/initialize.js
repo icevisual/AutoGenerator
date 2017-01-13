@@ -55,19 +55,35 @@ define(['Vue','jQuery','Components','ALTApp','demo','Utils'],function(Vue,$) {
                 this.pageConfig[key].data.list.splice(row,1);
             },
             'isMarked' : function(runtimeKey,key){
-                
-                return (undefined !== this.runtime[runtimeKey][key] && false !== this.runtime[runtimeKey][key])
-                
-                return true === this.runtime[runtimeKey][key];
+                if(undefined === key){
+                    return (undefined !== this.runtime[runtimeKey] && false !== this.runtime[runtimeKey]);
+                }
+                return (undefined !== this.runtime[runtimeKey][key] && false !== this.runtime[runtimeKey][key]);
             },
-            'mark' : function(runtimeKey,key,data){
+            'markWithKey' : function(runtimeKey,key,data){
                 if(undefined === data){
                     this.runtime[runtimeKey][key] = true;
                 }else{
                     this.runtime[runtimeKey][key] = data;
                 }
-            }, 
+            },
+            'mark' : function(runtimeKey,data){
+                if(undefined === data){
+                    this.runtime[runtimeKey] = true;
+                }else{
+                    this.runtime[runtimeKey] = data;
+                }
+            },
+            'getMarkedData' : function(runtimeKey,key){
+                if(undefined === key){
+                    return this.runtime[runtimeKey];
+                }
+                return this.runtime[runtimeKey][key];
+            },
             'unmark' : function(runtimeKey,key){
+                if(undefined === key){
+                    return this.runtime[runtimeKey] = false;
+                }
                 this.runtime[runtimeKey][key] = false;
             }, 
             'formReset' : function(formTag){
@@ -104,8 +120,16 @@ define(['Vue','jQuery','Components','ALTApp','demo','Utils'],function(Vue,$) {
             'appendTableData' : function(tableTag,data){
                 this.pageConfig[tableTag].data.list.push(data);
             },
-            'getTableData' : function(tableTag){
-                return this.pageConfig[tableTag].data.list;
+            'getTableData' : function(tableTag,row){
+                if(undefined === row){
+                    return this.pageConfig[tableTag].data.list;
+                }
+                return this.pageConfig[tableTag].data.list[row];
+            },
+            'updateTableRow' : function(tableTag,row,data){
+                for(var i in data){
+                    this.pageConfig[tableTag].data.list[row][i] = data[i];
+                }
             }
         }
     });

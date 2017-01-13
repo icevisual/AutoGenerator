@@ -53,7 +53,11 @@
             },
             "rownum" : true,
             "hidden" : {
-                "id" : true
+                "id" : true,
+                "CHARACTER_MAXIMUM_LENGTH" : true,
+                "NUMERIC_PRECISION" : true,
+                "NUMERIC_SCALE" : true,
+                "COLUMN_COMMENT" : true
             },
             "operation" : true,
             "operations" : [{

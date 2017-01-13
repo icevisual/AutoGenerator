@@ -128,7 +128,7 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
                 var ret = {};
                 for(var key in fields){
                     var _validate = fields[key]['validate'];
-                    var _is_required = true;
+                    var _isRequired = true;
                     if(undefined !== _validate){
                         var _rules = _validate['rules'];
                         var _rulesArray = [];
@@ -138,11 +138,11 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
                             _rulesArray = _rules;
                         }
                         if(_rulesArray[0] == 'sometimes'){
-                            _is_required = false;
+                            _isRequired = false;
                         }
                     }
                     var _valField = _form.find(fields[key].type + '[name='+key+']');
-                    if(_is_required && !_valField.val()){
+                    if(_isRequired && !_valField.val()){
                         _valField.focus();
                         return false;
                     }
