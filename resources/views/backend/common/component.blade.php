@@ -17,7 +17,7 @@
           <div class="row">
             <!-- left column -->
             <div class="col-md-6">
-              <horizontal-form :data-selector="pageConfig.component_form" @formsubmit="submitComponent" ></horizontal-form>
+              <horizontal-form :data-selector="pageConfig.component_form" @formvalidate="submitComponent" ></horizontal-form>
               <common-table :data-selector="pageConfig.component_attrs_table" @tableaddbind="tableaddbind" ></common-table>
             </div><!--/.col (left) -->
               

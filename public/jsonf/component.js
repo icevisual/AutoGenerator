@@ -84,19 +84,11 @@
     "component_form": {
         "attrs": {
             "caption": "组件",
-            "buttons": {
-                "preinstall": {
-                    "submit": false,
-                    "cancel": true
-                },
-                "others" : [
-                    {
-                        "name":"submit",
-                        "class" : "btn-info",
-                        "event" : "submit"
-                    }
-                ]
-            },
+            "buttons": [{
+                "name" : "Submit",
+                "class" : "btn-info",
+                "event" : "validate"
+            }],
             "action" : {
                 "uri" : "/api/component",
                 "method" : "POST",

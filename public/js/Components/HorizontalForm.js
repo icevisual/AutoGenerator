@@ -94,12 +94,9 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
       </template>\
     </div><!-- /.box-body -->\
     <div class="box-footer">\
-      <template v-for="(item,key,index) in formConfig.attrs.buttons.preinstall">\
-         <button v-if="\'submit\' == key && item" type="submit" class="btn btn-info pull-right" :class="index > 0 ? \'margin-r-5\':\'\'" :data-event="key" v-on:click.prevent="doFormSubmit">Submit</button>\
-         <button v-if="\'cancel\' == key && item" class="btn btn-default pull-right" :class="index > 0 ? \'margin-r-5\':\'\'" :data-event="key" v-on:click.prevent="btnclick">Cancel</button>\
-      </template>\
-      <template v-for="(item,key) in formConfig.attrs.buttons.others">\
-         <button class="btn pull-right margin-r-5" :class="item.class" :data-event="item.event" v-on:click.prevent="btnclick">{{item.name}}</button>\
+      <template v-for="(item,key) in formConfig.attrs.buttons">\
+         <button v-if="key > 0" class="btn pull-right margin-r-5"  :data-key="key" :class="item.class" :data-event="item.event" v-on:click.prevent="btnclick">{{item.name}}</button>\
+         <button v-else class="btn pull-right" :class="item.class" :data-key="key" :data-event="item.event" v-on:click.prevent="btnclick">{{item.name}}</button>\
       </template>\
     </div><!-- /.box-footer -->\
   </form>\
@@ -107,16 +104,6 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
 ',
         'props' : ['dataSelector'],
         'data' : function () {
-            var btnDefault = {
-                'preinstall' : {
-                    'submit' : true,
-                    'cancel' : true,
-                },
-                'others' : []
-            };
-            if(!this.dataSelector.attrs['buttons']){
-                this.dataSelector.attrs['buttons'] = btnDefault;
-            }
             return {
                 formConfig: this.dataSelector, 
             };
@@ -174,11 +161,30 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
                     });
                 }
             },
+            'isAutoHanding' : function(eventType){
+                var eventMap = {
+                    'submit' : true,
+                    'validate' : true
+                };
+                return undefined !== eventMap[eventType];
+            },
+            'autoProcess' : function(eventType,e){
+                switch(eventType){
+                    case 'submit':
+                        return this.doFormSubmit();
+                        break;
+                    case 'validate':
+                        return this.$emit('formvalidate',this.doFormValidate(this.$el,this.$data),this.$el);
+                        break;
+                    default:;
+                }
+            },
             'btnclick' : function(e){
                 var eventPrefix = 'form';
                 var emitEventType = e.target.getAttribute("data-event");
-                if('submit' == emitEventType){
-                    this.$emit(eventPrefix + 'submit',this.doFormValidate(this.$el,this.$data),this.$el);
+                var btnKey = e.target.getAttribute("data-key");
+                if(this.isAutoHanding(emitEventType)){
+                    this.autoProcess(emitEventType,e);
                 }else{
                     this.$emit(eventPrefix + emitEventType,e);
                 }

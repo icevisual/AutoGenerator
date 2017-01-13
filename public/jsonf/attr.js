@@ -3,12 +3,11 @@
         "attrs": {
             "caption" : "新建组件属性",
             "formColor" : "box-info",
-            "buttons": {
-                "preinstall": {
-                    "submit": true,
-                    "cancel": true
-                }
-            },
+            "buttons": [{
+                "name" : "Submit",
+                "class" : "btn-info",
+                "event" : "submit"
+            }],
             "action" : {
                 "uri" : "/api/attr",
                 "method" : "POST",

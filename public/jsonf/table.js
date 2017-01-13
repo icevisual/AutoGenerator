@@ -3,12 +3,11 @@
         "attrs": {
             "caption" : "新建表",
             "formColor" : "box-info",
-            "buttons": {
-                "preinstall": {
-                    "submit": true,
-                    "cancel": true
-                }
-            },
+            "buttons" : [{
+                "name" : "Submit",
+                "class" : "btn-info",
+                "event" : "submit"
+            }],
             "action" : {
                 "uri" : "/api/table",
                 "method" : "POST",
@@ -89,17 +88,11 @@
         "attrs": {
             "caption" : "字段编辑",
             "formColor" : "box-info",
-            "buttons": {
-                "preinstall": {
-                    "submit": false,
-                    "cancel": false
-                },
-                "others" : [{
-                    "class" : "btn-info",
-                    "event" : "submit",
-                    "name"  : "Submit"
-                }]
-            },
+            "buttons": [{
+                "class" : "btn-info",
+                "event" : "validate",
+                "name"  : "Submit"
+            }],
             "action" : {
                 "uri" : "/api/table",
                 "method" : "POST",
