@@ -20,7 +20,7 @@
               <horizontal-form :data-selector="pageConfig.column_form" @formsubmit="AddColumn" ></horizontal-form>
             </div><!--/.col (right) -->
             <div class="col-md-6">
-              <common-table :data-selector="pageConfig.table"  ></common-table>
+              <common-table :data-selector="pageConfig.table" @tableremove="RemoveField" @tableupdate="UpdateField" ></common-table>
             </div><!--/.col (right) -->
           </div>   <!-- /.row -->
         </section><!-- /.content -->

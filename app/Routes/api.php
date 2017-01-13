@@ -83,7 +83,7 @@ Route::get('/tables', [
 ]);
 Route::post('/table/{id}', [
     'as' => 'api_create_table',
-    'uses' => 'Api\TablesController@create'
+    'uses' => 'Api\TableController@create'
 ]);
 Route::put('/table/{id}', [
     'as' => 'api_update_tables',

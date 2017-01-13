@@ -51,6 +51,35 @@ define(['Vue','jQuery','Components','ALTApp','demo','Utils'],function(Vue,$) {
     
     var EVue = Vue.extend({
         'methods' : {
+            'removeTableRow' : function(key,row){
+                this.pageConfig[key].data.list.splice(row,1);
+            },
+            'isMarked' : function(runtimeKey,key){
+                
+                return (undefined !== this.runtime[runtimeKey][key] && false !== this.runtime[runtimeKey][key])
+                
+                return true === this.runtime[runtimeKey][key];
+            },
+            'mark' : function(runtimeKey,key,data){
+                if(undefined === data){
+                    this.runtime[runtimeKey][key] = true;
+                }else{
+                    this.runtime[runtimeKey][key] = data;
+                }
+            }, 
+            'unmark' : function(runtimeKey,key){
+                this.runtime[runtimeKey][key] = false;
+            }, 
+            'formReset' : function(formTag){
+                var fields = this.pageConfig[formTag].fields;
+                for(var i in fields){
+                    if(undefined !== fields[i]['default']){
+                        fields[i].value = fields[i]['default'];
+                    }else{
+                        fields[i].value = '';
+                    }
+                }
+            },
             'formFieldReset' : function(formTag,field,defaultValue){
                 var defaultVal = this.pageConfig[formTag].fields[field].default;
                 defaultVal = undefined === defaultValue ? defaultVal : defaultValue;

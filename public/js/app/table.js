@@ -17,10 +17,28 @@ require(['initialize'], function(EVue) {
                 'el' : '#formDemo',
                 'data' : {
                     'pageConfig' : Utils.apiReqData(d) ,
+                    'runtime' : {
+                        'fields' : {},
+                    }
+                },
+                'created' : function(){
+                    var fieldList = this.getTableData('table');
+                    for(var i = 0 ; i < fieldList.length ; i ++ ){
+                        this.runtime.fields[fieldList[i].COLUMN_NAME] = true;
+                    }
                 },
                 'methods' : {
+                    'RemoveField' : function(e){
+                        var row = e.target.getAttribute('data-row');
+                        var key = $(e.target).parents('tr').find('td').eq(1).html();
+                        console.log('key = ' + key,this.runtime['fields'][key]);
+                        this.unmark('fields',key);
+                        this.removeTableRow('table',row);
+                    },
+                    'UpdateField' : function(){
+                        
+                    },
                     'AddColumn' : function(formValidateRet,formEl){
-                        console.log('AddColumn',formValidateRet,formEl);
                         var columnTypeValidate = {
                             "bigint": "NUMERIC_PRECISION",
                             "int": "NUMERIC_PRECISION",
@@ -48,22 +66,23 @@ require(['initialize'], function(EVue) {
                                     }
                                 }
                             }
-                                
-        //                          if(this.isAttrBinded(attr_id)){
-        //                          return false;
-        //                      }
-                              this.appendTableData('table',{
-                                  "COLUMN_NAME": formValidateRet['COLUMN_NAME'],
-                                  "COLUMN_NAME_CN": formValidateRet['COLUMN_NAME_CN'],
-                                  "DATA_TYPE": formValidateRet['DATA_TYPE'],
-                                  "IS_NULLABLE": formValidateRet['IS_NULLABLE'],
-                                  "COLUMN_DEFAULT": formValidateRet['COLUMN_DEFAULT'],
-                              });
-                              // set key added
-        //                      this.setAttrBinded(attr_id);
-                              
+                            if(this.isMarked('fields',formValidateRet['COLUMN_NAME'])){
+                                console.log('Has Already Marked');
+                                return false;
+                            }
+                            console.log('formValidateRet',formValidateRet);
+                            this.appendTableData('table',{
+                                "COLUMN_NAME": formValidateRet['COLUMN_NAME'],
+                                "COLUMN_NAME_CN": formValidateRet['COLUMN_NAME_CN'],
+                                "DATA_TYPE": formValidateRet['DATA_TYPE'],
+                                "IS_NULLABLE": formValidateRet['IS_NULLABLE'],
+                                "COLUMN_DEFAULT": formValidateRet['COLUMN_DEFAULT'],
+                            });
+                            // set key added
+                            this.mark('fields',formValidateRet['COLUMN_NAME'],formValidateRet);
+                            // Clear form
+                            this.formReset('column_form');
                         }
-
                     }
                 }
             });

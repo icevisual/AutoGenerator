@@ -53,7 +53,7 @@ class SystemController extends Controller
                             [
                                 'href' => route('table_create'),
                                 'icon' => 'fa-circle-o',
-                                'title' => 'TABLE DEPLOY'
+                                'title' => 'TABLE CREATE'
                             ]
                         ]
                     ],

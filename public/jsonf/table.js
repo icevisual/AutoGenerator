@@ -59,19 +59,11 @@
             "operations" : [{
                 "name" : "R",
                 "class" : "btn-warning",
-                "event" : "reomve"
+                "event" : "remove"
             },{
                 "name" : "U",
                 "class" : "btn-info",
                 "event" : "update"
-            },{
-                "name" : "^",
-                "class" : "btn-info",
-                "event" : "up"
-            },{
-                "name" : "v",
-                "class" : "btn-info",
-                "event" : "down"
             }],
             "header": [
                 "字段",
@@ -120,7 +112,7 @@
                     "type": "text",
                     "placeholder": "字段名"
                 },
-                "value": ""
+                "value": "kkkkkk"
             },
             "COLUMN_NAME_CN": {
                 "name": "中文字段名",
@@ -129,7 +121,7 @@
                     "type": "text",
                     "placeholder": "中文字段名"
                 },
-                "value": ""
+                "value": "中文字段名"
             },
             "COLUMN_DEFAULT": {
                 "name": "默认值",
@@ -147,6 +139,7 @@
                 "name": "允许空",
                 "type": "select",
                 "value": "YES",
+                "default": "YES",
                 "data": [
                     {
                         "value": "YES",
@@ -162,6 +155,7 @@
                 "name": "数据类型",
                 "type": "select",
                 "value": "varchar",
+                "default": "varchar",
                 "data": [
                     {
                         "value": "bigint",
@@ -239,7 +233,7 @@
                     "type": "text",
                     "placeholder": "字符长度"
                 },
-                "value": ""
+                "value": "12"
             },
             "NUMERIC_PRECISION": {
                 "name": "位数",
@@ -272,7 +266,7 @@
                     "type": "text",
                     "placeholder": "备注"
                 },
-                "value": ""
+                "value": "备注备注备注"
             }
         }
     }

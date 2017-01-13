@@ -97,7 +97,7 @@ define(['Vue','Utils'],function(Vue,Utils) {
           <td v-if="tableConfig.attrs.rownum">{{key + 1}}</td>\
           <template v-for="(item1,key1) in item">\
             <td v-if="tableConfig.attrs.hidden[key1]" class="hide">\
-              <input type="hidden" :name="\'row-\' + key" :value="item1">\
+              <input type="hidden" :name="\'row-\' + key + \'-\' + key1" :value="item1">\
             </td>\
             <td v-else-if="tableConfig.attrs.advancedColumn && tableConfig.attrs.advancedColumn[key1]">\
               <template v-if="tableConfig.attrs.advancedColumn[key1].type == \'input\'">\
@@ -177,7 +177,7 @@ define(['Vue','Utils'],function(Vue,Utils) {
                 // TODO confirm
                 if(confirm('是否确定删除？')){
                     var row = e.target.getAttribute('data-row');
-                    var val = $(this.$el).find('[name=row-'+row+']').val();
+                    var val = $(this.$el).find('[name=row-'+row+'-id]').val();
                     var reqPa = this.parseAjaxParam(this.tableConfig.attrs.uris.delete,{'id':val});
                     Utils.ajax({
                         'url' : reqPa.url ,
