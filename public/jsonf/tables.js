@@ -22,7 +22,7 @@
                     "method" : "DELETE"
                 },
                 "deploy" : {
-                    "url" : "/table/deploy/{id}",
+                    "url" : "/table/{id}/deploy",
                     "param" : ["id"],
                     "method" : "GET"
                 }

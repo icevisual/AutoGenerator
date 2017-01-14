@@ -100,12 +100,12 @@ Route::delete('/table/{id}', [
 
 
 
-Route::get('/table/deploy/{id?}', [
+Route::get('/table/{id}/deploy', [
     'as' => 'api_tables_deploy',
     'uses' => 'Api\InformationSchemaController@tableDeploy'
 ]);
 
-Route::POST('/table/deploy', [
+Route::POST('/table/{id}/deploy', [
     'as' => 'api_save_table_deploy',
     'uses' => 'Api\InformationSchemaController@saveTableDeploy'
 ]);

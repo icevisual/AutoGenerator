@@ -6,7 +6,8 @@ require(['initialize'], function(EVue) {
     var mtc = window.location.pathname.match(/\/(\d+)/);
     
     $.ajax({
-        'url' : '/api/table/deploy/' + mtc[1],
+        'url' : '/api/table/'+mtc[1],
+        'method' : 'GET',
         'dataType' : 'json',
         'data' : {
         },
