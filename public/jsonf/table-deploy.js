@@ -39,17 +39,17 @@
                 "class" : "btn-info",
                 "event" : "submit"
             }],
-            "header": [
-                "字段",
-                "列名",
-                "默认值",
-                "允许空",
-                "类型定义",
-                {
+            "header": {
+                "COLUMN_NAME" : "字段",
+                "COLUMN_NAME_CN" : "列名",
+                "COLUMN_DEFAULT" : "默认值",
+                "IS_NULLABLE" : "允许空",
+                "DATA_TYPE" : "类型定义",
+                "validate" : {
                     "name" : "验证规则",
                     "width" : "500px"
                 }
-            ]
+            }
         },
         "data": {
             "total": 2,

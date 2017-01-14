@@ -69,13 +69,13 @@
                 "class" : "btn-info",
                 "event" : "update"
             }],
-            "header": [
-                "字段",
-                "名称",
-                "类型",
-                "允许空",
-                "默认值"
-            ]
+            "header": {
+                "COLUMN_NAME" : "字段",
+                "COLUMN_NAME_CN" :"名称",
+                "DATA_TYPE" :"类型",
+                "IS_NULLABLE" :"允许空",
+                "COLUMN_DEFAULT" :"默认值"
+            }
         },
         "data": {
             "total": 0,

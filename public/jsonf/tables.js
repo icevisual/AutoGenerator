@@ -42,13 +42,13 @@
                     "uri" : "deploy"
                 }
             },
-            "header": [
-                {
+            "header": {
+                "TABLE_NAME" : {
                     "name": "表名",
                     "width":"200px"
                 },
-                "描述"
-            ]
+                "TABLE_COMMENT" : "描述"
+            }
         },
         "data": {
             "total": 0,

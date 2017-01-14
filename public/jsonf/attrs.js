@@ -31,15 +31,15 @@
                 "update" : true,
                 "delete" : true
             },
-            "header": [
-                {
+            "header": {
+                "attr_name" : {
                     "name": "属性名",
                     "width":"200px"
                 },
-                "显示名称",
-                "数据类型",
-                "渲染类型"
-            ]
+                "attr_name_cn" : "显示名称",
+                "attr_type" : "数据类型",
+                "form_type" : "渲染类型"
+            }
         },
         "data": {
             "total": 2,

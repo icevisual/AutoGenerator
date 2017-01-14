@@ -30,13 +30,13 @@
                 "update" : true,
                 "delete" : true
             },
-            "header": [
-                {
+            "header": {
+                "component_name" : {
                     "name": "组件名称",
                     "width":"200px"
                 },
-                "组件描述"
-            ]
+                "component_desc" : "组件描述"
+            }
         },
         "data": {
             "total": 0,

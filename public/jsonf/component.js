@@ -21,13 +21,13 @@
                     "event" : "addbind"
                 }
             },
-            "header": [
-                {"name":"ID","width":"20px"},
-                "属性名",
-                "显示名称",
-                "数据类型",
-                "渲染类型"
-            ]
+            "header": {
+                "id" : {"name":"ID","width":"20px"},
+                "attr_name" : "属性名",
+                "attr_name_cn" : "显示名称",
+                "attr_type" : "数据类型",
+                "form_type" : "渲染类型"
+            }
         },
         "data": {
             "total": 2,
@@ -64,14 +64,14 @@
                     "event" : "attrunbind"
                 }
             },
-            "header": [
-                {"name":"ID","width":"20px"},
-                "属性名",
-                "显示名称",
-                "数据类型",
-                "渲染类别",
-                "属性默认值"
-            ]
+            "header": {
+                "id" : {"name":"ID","width":"20px"},
+                "attr_name" : "属性名",
+                "attr_name_cn" : "显示名称",
+                "attr_type" : "数据类型",
+                "form_type" : "渲染类型",
+                "default_value" : "属性默认值"
+            }
         },
         "data": {
             "total": 3,

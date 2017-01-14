@@ -56,14 +56,14 @@ define(['Vue','Utils'],function(Vue,Utils) {
                     "uri" : "deploy"
                 }
             },
-            "header": [// 表头
-                {
+            "header": {// 表头和列表项
+                "attr_name" : {
                     "name": "属性名中",
                     "width":"200px" // 列宽
                 },
-                "属性名英",
-                "数据类型"
-            ]
+                "attr_type" : "属性名中",
+                "data_type" : "数据类型"
+            }
         },
         "data": {
             "total": 2, // 分页信息
@@ -101,7 +101,7 @@ define(['Vue','Utils'],function(Vue,Utils) {
       <template v-for="(item,key) in tableConfig.data.list">\
         <tr :data-id="item.id">\
           <td v-if="tableConfig.attrs.rownum">{{key + 1}}</td>\
-          <template v-for="(item1,key1) in item">\
+          <template v-for="(item1,key1) in tableConfig.attrs.header">\
             <td v-if="tableConfig.attrs.hidden[key1]" class="hide">\
               <input type="hidden" :name="\'row-\' + key + \'-\' + key1" :value="item1">\
             </td>\
@@ -112,7 +112,7 @@ define(['Vue','Utils'],function(Vue,Utils) {
               </div>\
               </template>\
             </td>\
-            <td v-else>{{item1}}</td>\
+            <td v-else>{{item[key1]}}</td>\
           </template>\
           <template v-if="tableConfig.attrs.operation">\
             <td>\
