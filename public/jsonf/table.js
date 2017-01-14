@@ -110,7 +110,7 @@
                     "type": "text",
                     "placeholder": "字段名"
                 },
-                "value": "kkkkkk"
+                "value": ""
             },
             "COLUMN_NAME_CN": {
                 "name": "中文字段名",
@@ -119,7 +119,7 @@
                     "type": "text",
                     "placeholder": "中文字段名"
                 },
-                "value": "中文字段名"
+                "value": ""
             },
             "COLUMN_DEFAULT": {
                 "name": "默认值",
@@ -264,7 +264,7 @@
                     "type": "text",
                     "placeholder": "备注"
                 },
-                "value": "备注备注备注"
+                "value": ""
             }
         }
     }

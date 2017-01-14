@@ -140,8 +140,8 @@ require(['initialize'], function(EVue) {
                                 'dataType' : 'json',
                                 'success' : function(d){
                                     if(Utils.apiReqSuccess(d)){
-                                        alert("OK");
-//                                        window.location.href = this$1.pageConfig.table_form.attrs.action.success.redirect
+//                                        alert("OK");
+                                        window.location.href = this$1.pageConfig.table_form.attrs.action.success.redirect
                                     }else{
                                         alert(Utils.apiReqMsg(d));
                                     }

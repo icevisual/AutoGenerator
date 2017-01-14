@@ -48,6 +48,12 @@ define(['Vue','Utils'],function(Vue,Utils) {
                     "class" : "btn-success",
                     "name" : "+",
                     "event" : "addbind"
+                },
+                "deploy" : {
+                    "name" : "DEPLOY",
+                    "class" : "btn-info",
+                    "event" : "redirect", // 预设 redirect 事件 ，已 uri 指向的地址做跳转
+                    "uri" : "deploy"
                 }
             },
             "header": [// 表头

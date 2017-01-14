@@ -4,17 +4,11 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
         "attrs": {
             "caption" : "新建组件属性",
             "formColor" : "box-warning",
-            "buttons": {
-                "preinstall": {
-                    "submit": true,
-                    "cancel": true
-                },
-                "others" : [{
-                    "class" : "btn-info",
-                    "event" : "other",
-                    "name"  : "other"
-                }]
-            },
+            "buttons": [{
+                "class" : "btn-info",
+                "event" : "other",// 已预设 submit 和 validate 事件 
+                "name"  : "other"
+            }],
             "action" : { // form 属性
                 "uri" : "/api/attr",
                 "method" : "POST",
