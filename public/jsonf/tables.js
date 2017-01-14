@@ -12,9 +12,14 @@
                     "method" : "GET"
                 },
                 "update" : {
-                    "url" : "/component/{id}",
+                    "url" : "/table/{id}",
                     "param" : ["id"],
                     "method" : "GET"
+                },
+                "delete" : {
+                    "url" : "/api/table/{id}",
+                    "param" : ["id"],
+                    "method" : "DELETE"
                 },
                 "deploy" : {
                     "url" : "/table/deploy/{id}",
@@ -29,7 +34,7 @@
             "operation" : true,
             "operations" : {
                 "update" : true,
-                "delete" : false,
+                "delete" : true,
                 "deploy" : {
                     "name" : "DEPLOY",
                     "class" : "btn-info",

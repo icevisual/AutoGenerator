@@ -2,9 +2,10 @@ require(['initialize'], function(EVue) {
     var $ = require('jQuery'),
         Vue = require('Vue'),
         Utils = require('Utils');
+    var mtc = window.location.pathname.match(/\/(\d+)/);
     
     $.ajax({
-        'url' : '/api/formConfig',
+        'url' :  '/api/table/' + mtc[1],
         'dataType' : 'json',
         'data' : {
             pathname : window.location.pathname
@@ -91,7 +92,7 @@ require(['initialize'], function(EVue) {
                                     this.unmark(fieldsMapKey,sourceData['COLUMN_NAME']);
                                 }
                                 // 更新数据
-                                this.markWithKey(fieldsMapKey,formValidateRet['COLUMN_NAME']);
+                                this.markWithKey(fieldsMapKey,formValidateRet['COLUMN_NAME'],formValidateRet);
                                 // 更新显示的列表数据
                                 this.updateTableRow(fieldsTableKey,this.getMarkedData(isUpdatingKey),formValidateRet);
                                 // 清空表单
@@ -116,7 +117,7 @@ require(['initialize'], function(EVue) {
                                     "COLUMN_COMMENT": formValidateRet['COLUMN_COMMENT'],
                                 });
                                 // 标为已存在
-                                this.markWithKey(fieldsMapKey,formValidateRet['COLUMN_NAME']);
+                                this.markWithKey(fieldsMapKey,formValidateRet['COLUMN_NAME'],formValidateRet);
                                 // 清空表单
                                 this.formReset(columnFormKey);
                             }

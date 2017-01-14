@@ -79,19 +79,23 @@ Route::delete('/component/{id}', [
 
 Route::get('/tables', [
     'as' => 'api_tables_query',
-    'uses' => 'Api\InformationSchemaController@queryTables'
+    'uses' => 'Api\TableController@query'
 ]);
 Route::post('/table', [
     'as' => 'api_create_table',
     'uses' => 'Api\TableController@create'
 ]);
+Route::get('/table/{id}', [
+    'as' => 'api_table_detail',
+    'uses' => 'Api\TableController@detail'
+]);
 Route::put('/table/{id}', [
     'as' => 'api_update_tables',
-    'uses' => 'Api\InformationSchemaController@update'
+    'uses' => 'Api\TableController@update'
 ]);
 Route::delete('/table/{id}', [
     'as' => 'api_delete_query',
-    'uses' => 'Api\InformationSchemaController@delete'
+    'uses' => 'Api\TableController@delete'
 ]);
 
 

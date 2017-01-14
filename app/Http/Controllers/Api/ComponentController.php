@@ -104,8 +104,10 @@ class ComponentController extends Controller
     public function delete($id)
     {
         if ($id) {
+            \DB::beginTransaction();
             Component::where('id', $id)->delete();
             ComponentAttrs::where('component_id', $id)->delete();
+            \DB::commit();
         }
         return $this->__json();
     }

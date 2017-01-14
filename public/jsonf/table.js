@@ -53,6 +53,7 @@
             "rownum" : true,
             "hidden" : {
                 "id" : true,
+                "TABLE_ID" : true,
                 "CHARACTER_MAXIMUM_LENGTH" : true,
                 "NUMERIC_PRECISION" : true,
                 "NUMERIC_SCALE" : true,

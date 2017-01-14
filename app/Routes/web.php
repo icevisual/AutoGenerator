@@ -66,7 +66,7 @@ Route::get('/tables', [
     'uses' => 'Web\TableController@query'
 ]);
 
-Route::get('/table', [
+Route::get('/table/{id?}', [
     'as' => 'table_create',
     'uses' => 'Web\TableController@create'
 ]);

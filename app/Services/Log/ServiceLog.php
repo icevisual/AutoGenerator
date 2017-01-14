@@ -18,6 +18,10 @@ class ServiceLog
      */
     public static function sqlLog($sql, $bindings, $time)
     {
+        if(strpos($sql, 'insert into `op_request_log`')!== false){
+            return ;
+        }
+        
         $i = 0;
         $bindings && $sql = preg_replace_callback('/\?/', function ($matchs) use(&$i, $bindings) {
             return '\'' . $bindings[$i ++] . '\'';
