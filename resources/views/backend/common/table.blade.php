@@ -16,7 +16,7 @@
         <section class="content" id="formDemo">
           <div class="row">
             <div class="col-md-6">
-              <horizontal-form :data-selector="pageConfig.table_form"  @formsubmit="submitTable"></horizontal-form>
+              <horizontal-form :data-selector="pageConfig.table_form"  @formvalidate="submitTable"></horizontal-form>
               <common-table :data-selector="pageConfig.table" @tableremove="RemoveField" @tableupdate="UpdateField"></common-table>
             </div><!--/.col (left) -->
             <div class="col-md-6">

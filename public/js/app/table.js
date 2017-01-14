@@ -110,6 +110,10 @@ require(['initialize'], function(EVue) {
                                     "DATA_TYPE": formValidateRet['DATA_TYPE'],
                                     "IS_NULLABLE": formValidateRet['IS_NULLABLE'],
                                     "COLUMN_DEFAULT": formValidateRet['COLUMN_DEFAULT'],
+                                    "CHARACTER_MAXIMUM_LENGTH": formValidateRet['CHARACTER_MAXIMUM_LENGTH'],
+                                    "NUMERIC_PRECISION": formValidateRet['NUMERIC_PRECISION'],
+                                    "NUMERIC_SCALE": formValidateRet['NUMERIC_SCALE'],
+                                    "COLUMN_COMMENT": formValidateRet['COLUMN_COMMENT'],
                                 });
                                 // 标为已存在
                                 this.markWithKey(fieldsMapKey,formValidateRet['COLUMN_NAME'],formValidateRet);
@@ -119,9 +123,35 @@ require(['initialize'], function(EVue) {
                         }
                     },
                     'submitTable' : function(formValidateRet,formEl){
-                        console.log(formValidateRet);
-                        console.log(this.pageConfig.table.list);
-                        console.log(this.runtime.fields);
+                        if(false !== formValidateRet){
+                            var fieldData = this.getTableData('table');
+                            if(fieldData.length <= 0){
+                                return alert('请加入字段');
+                            }
+                            var this$1 = this;
+                            $.ajax({
+                                'url' : this.pageConfig.table_form.attrs.action.uri,
+                                'method' : this.pageConfig.table_form.attrs.action.method,
+                                'data' : {
+                                    'table_name' : formValidateRet['TABLE_NAME'],
+                                    'table_comment' : formValidateRet['TABLE_COMMENT'],
+                                    'columns' : fieldData
+                                },
+                                'dataType' : 'json',
+                                'success' : function(d){
+                                    if(Utils.apiReqSuccess(d)){
+                                        alert("OK");
+//                                        window.location.href = this$1.pageConfig.table_form.attrs.action.success.redirect
+                                    }else{
+                                        alert(Utils.apiReqMsg(d));
+                                    }
+                                },
+                                'error' : function(d){
+                                    console.log(d);
+                                }
+                            });
+                            
+                        }
                     }
                 }
             });

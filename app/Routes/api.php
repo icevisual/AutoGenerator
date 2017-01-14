@@ -81,7 +81,7 @@ Route::get('/tables', [
     'as' => 'api_tables_query',
     'uses' => 'Api\InformationSchemaController@queryTables'
 ]);
-Route::post('/table/{id}', [
+Route::post('/table', [
     'as' => 'api_create_table',
     'uses' => 'Api\TableController@create'
 ]);

@@ -18,9 +18,12 @@ class TableController extends Controller
         runCustomValidator([
             'data' => $data, // 数据
             'rules' => [
-                'table_name' => 'required|unique:tables,table_name',
+                'table_name' => 'required|regex:/^[a-zA-Z][\d\w\_]*$/i|unique:tables,table_name',
                 'table_comment' => 'required',
                 'columns' => 'required|array',
+                'columns.*.COLUMN_NAME' => 'required',
+                'columns.*.COLUMN_NAME_CN' => 'required',
+                'columns.*.COLUMN_COMMENT' => 'required',
             ], // 条件
             'attributes' => [
                 'component_name' => '组件名称',
@@ -30,7 +33,7 @@ class TableController extends Controller
             ]
         ]); // 属性名映射
         $obj = Tables::createNewTable($data);
-        return $this->__json($obj->toArray());
+        return $this->__json($obj);
     }
 
     public function query()
@@ -74,7 +77,7 @@ class TableController extends Controller
     {
         $detail = Component::componentDetail($id);
         
-        $file = 'jsonf/component.js';
+        $file = 'jsonf/table.js';
         if (file_exists(public_path($file))) {
         
             $json = file_get_contents(public_path($file));

@@ -6,7 +6,7 @@
             "buttons" : [{
                 "name" : "Submit",
                 "class" : "btn-info",
-                "event" : "submit"
+                "event" : "validate"
             }],
             "action" : {
                 "uri" : "/api/table",
