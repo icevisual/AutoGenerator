@@ -37,7 +37,12 @@ class DumpStructs extends Command
     protected function dumpStructs(){
         $tables = $this->getTableNames();
         
-        $filename = base_path('sqls').DIRECTORY_SEPARATOR.'DumpStructs-'.date('Y-m-d-H-i-s').'.sql';
+        $filename = base_path('sqls').DIRECTORY_SEPARATOR.'Auto-Dump-Structs.sql';
+        $backup_filename = base_path('sqls').DIRECTORY_SEPARATOR.'Auto-Dump-Structs.bak.sql';
+        
+        if(file_exists($filename)){
+            @copy($filename, $backup_filename);
+        }
         
         $fp = fopen($filename,'w');
         

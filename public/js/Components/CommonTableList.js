@@ -281,22 +281,24 @@ define(['Vue','Utils'],function(Vue,Utils) {
         },
         'mounted' : function(){
             var this$1 = this;
-            var reqPa = this.parseAjaxParam(this.tableConfig.attrs.uris.query);
-            this.tableConfig.attrs.ajax && !this$1.tableConfig.data.list.length && Utils.ajax({
-                'url' : reqPa.url,
-                'method' : reqPa.method,
-//                'async' : false,
-                'success' : function(d){
-                    if(Utils.apiReqSuccess(d)){
-                        this$1.tableConfig.data = Utils.apiReqData(d);
-                    }else{
-                        alert(Utils.apiReqMsg(d));
+            if(this.tableConfig.attrs.ajax){
+                var reqPa = this.parseAjaxParam(this.tableConfig.attrs.uris.query);
+                !this$1.tableConfig.data.list.length && Utils.ajax({
+                    'url' : reqPa.url,
+                    'method' : reqPa.method,
+//                    'async' : false,
+                    'success' : function(d){
+                        if(Utils.apiReqSuccess(d)){
+                            this$1.tableConfig.data = Utils.apiReqData(d);
+                        }else{
+                            alert(Utils.apiReqMsg(d));
+                        }
+                    },
+                    'error' : function(d){
+                        console.log(arguments);
                     }
-                },
-                'error' : function(d){
-                    console.log(arguments);
-                }
-            });
+                });
+            }
         }
     });
     return Vue;

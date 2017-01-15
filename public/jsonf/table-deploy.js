@@ -4,8 +4,8 @@
             "caption": "组表",
             "uris" : {
                 "save" : {
-                    "url" : "/api/table/deploy",
-                    "param" : [],
+                    "url" : "/api/table/{id}/deploy",
+                    "param" : ["id"],
                     "method" : "POST",
                     "success" : {
                         "redirect" : "/tables"
@@ -39,7 +39,7 @@
             "headerTools" : [{
                 "name" : "Submit",
                 "class" : "btn-info",
-                "event" : "submit"
+                "event" : "savevalidation"
             },{
                 "name" : "U",
                 "class" : "btn-info",

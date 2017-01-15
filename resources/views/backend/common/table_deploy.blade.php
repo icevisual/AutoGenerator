@@ -17,7 +17,7 @@
           <div class="row">
             <!-- left column -->
             <div class="col-md-12">
-              <common-table :data-selector="pageConfig.table" @tablesubmit="tablesubmit"></common-table>
+              <common-table :data-selector="pageConfig.table" @tablesavevalidation="tablesubmit"></common-table>
             </div><!--/.col (right) -->
             
           </div>   <!-- /.row -->

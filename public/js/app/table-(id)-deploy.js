@@ -73,7 +73,7 @@ require(['initialize'], function(EVue) {
                         var validateData = [];
                         
                         for(var i in tableData){
-                            validateData.push({
+                            tableData[i].validate && validateData.push({
                                 'column' : tableData[i].COLUMN_NAME,
                                 'validate' : tableData[i].validate
                             });
@@ -82,14 +82,13 @@ require(['initialize'], function(EVue) {
                         if(Utils.isEmptyObj(validateData)){
                             return;
                         }
-                        
                         var reqCfg = vmForm.pageConfig[thisTableKey].attrs.uris.save;
-                        
+                        var tableId = vmForm.pageConfig[thisTableKey].attrs.data.id;
+                        var parsedCfg = Utils.parseUriPattern(reqCfg,{'id':tableId});
                         Utils.ajax({
-                            'url' : reqCfg.url,
-                            'method' : reqCfg.method,
+                            'url' : parsedCfg.url,
+                            'method' : parsedCfg.method,
                             'data' : {
-                                'tablename' : vmForm.pageConfig[thisTableKey].attrs.tablename,
                                 'validate' : validateData
                             },
                             'success' : function(d){

@@ -106,6 +106,6 @@ Route::get('/table/{id}/deploy', [
 
 Route::POST('/table/{id}/deploy', [
     'as' => 'api_save_table_deploy',
-    'uses' => 'Api\InformationSchemaController@saveTableDeploy'
+    'uses' => 'Api\TableController@saveTableDeploy'
 ]);
 

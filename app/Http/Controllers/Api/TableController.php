@@ -8,6 +8,25 @@ use App\Models\System\Columns;
 
 class TableController extends Controller
 {
+    
+    public function saveTableDeploy($id){
+    
+        $data = [
+            'id' => $id, // String 控件名称
+            'validate' => \Input::get('validate')// String 属性数据类型
+        ];
+        runCustomValidator([
+            'data' => $data, // 数据
+            'rules' => [
+                'id' => 'required|exists:tables',
+                'validate' => 'array',
+            ], // 条件
+        ]); // 属性名映射
+    
+        return $this->__json($data);
+    }
+    
+    
 
     public function tableDeploy($id)
     {
