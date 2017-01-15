@@ -231,7 +231,7 @@
                     "type": "text",
                     "placeholder": "字符长度"
                 },
-                "value": "12"
+                "value": ""
             },
             "NUMERIC_PRECISION": {
                 "name": "位数",

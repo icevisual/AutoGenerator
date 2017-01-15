@@ -8,8 +8,45 @@ use App\Models\System\Columns;
 
 class TableController extends Controller
 {
-    
-    public function getValidateCondition($type,$params = []){
+
+    public function tableDeploy($id)
+    {
+        runCustomValidator([
+            'data' => [
+                'id' => $id
+            ], // 数据
+            'rules' => [
+                'id' => 'required|exists:tables'
+            ], // 条件
+        ]);
+        
+        $tname = Tables::getTableName($id);
+        $detail = Columns::queryTableColumns($id);
+//         dump($detail);
+        $file = 'jsonf/table-deploy.js';
+        if (file_exists(public_path($file))) {
+            
+            $json = file_get_contents(public_path($file));
+            $json = json_decode($json, 1);
+            array_set($json, 'table.attrs.caption', '表 [' . $tname . '] 字段');
+            array_set($json, 'table.attrs.tablename', $tname);
+            // array_set($json, 'component_form.attrs.action.method', 'PUT');
+            // array_set($json, 'component_form.fields.id', [
+            // 'name' => ' ID',
+            // 'type' => 'input',
+            // 'hidden' => true,
+            // 'value' => $detail['component']['id']
+            // ]);
+            // array_set($json, 'component_form.fields.component_name.value',$detail['component']['component_name'] );
+            // array_set($json, 'component_form.fields.component_desc.value',$detail['component']['component_desc'] );
+            array_set($json, 'table.data.list', $detail);
+            return $this->__json($json);
+        }
+        return $this->__json(\ErrorCode::SYSTEM_ERROR);
+    }
+
+    public function getValidateCondition($type, $params = [])
+    {
         $config = [
             'rules' => [
                 'id' => 'required|exists:tables',
@@ -18,7 +55,7 @@ class TableController extends Controller
                 'columns' => 'required|array',
                 'columns.*.COLUMN_NAME' => 'required',
                 'columns.*.COLUMN_NAME_CN' => 'required',
-                'columns.*.COLUMN_COMMENT' => 'required',
+                'columns.*.COLUMN_COMMENT' => 'required'
             ], // 条件
             'attributes' => [
                 'table_name' => '表名',
@@ -26,40 +63,41 @@ class TableController extends Controller
                 'columns' => '表字段',
                 'columns.*.COLUMN_NAME' => '字段名',
                 'columns.*.COLUMN_NAME_CN' => '字段中文名',
-                'columns.*.COLUMN_COMMENT' => '字段备注',
+                'columns.*.COLUMN_COMMENT' => '字段备注'
             ]
         ];
         // create 去掉 ID
         // update 加上 ID exists，unique 加上 ID 排除，需传入 ID
-        switch ($type){
-            case 'create' :
+        switch ($type) {
+            case 'create':
                 unset($config['rules']['id']);
                 break;
-            case 'update' :
-                foreach ($config['rules'] as $k => $v){
-                    if(strpos($v, 'unique:') !== false){
-                        foreach (explode('|', $v) as $v1){
-                            if(strpos($v1, 'unique:') === 0){
-                                $config['rules'][$k] = str_replace($v1, $v1.','.$params['id'].',id', $config['rules'][$k]);
+            case 'update':
+                foreach ($config['rules'] as $k => $v) {
+                    if (strpos($v, 'unique:') !== false) {
+                        foreach (explode('|', $v) as $v1) {
+                            if (strpos($v1, 'unique:') === 0) {
+                                $config['rules'][$k] = str_replace($v1, $v1 . ',' . $params['id'] . ',id', $config['rules'][$k]);
                                 break 2;
                             }
                         }
                     }
                 }
                 break;
-            default:;
+            default:
+                ;
         }
         return $config;
     }
-    
 
     public function create()
     {
         $data = [
             'table_name' => \Input::get('table_name'), // String 控件名称
             'table_comment' => \Input::get('table_comment'), // String 控件描述
-            'columns' => \Input::get('columns')// String 属性数据类型
-        ];
+            'columns' => \Input::get('columns')
+        ] // String 属性数据类型
+;
         
         $config = $this->getValidateCondition('create');
         $config['data'] = $data;
@@ -84,10 +122,11 @@ class TableController extends Controller
             'id' => $id,
             'table_name' => \Input::get('table_name'), // String 控件名称
             'table_comment' => \Input::get('table_comment'), // String 控件描述
-            'columns' => \Input::get('columns')// String 属性数据类型
-        ];
+            'columns' => \Input::get('columns')
+        ] // String 属性数据类型
+;
         
-        $config = $this->getValidateCondition('update',[
+        $config = $this->getValidateCondition('update', [
             'id' => $data['id']
         ]);
         $config['data'] = $data;
@@ -102,10 +141,10 @@ class TableController extends Controller
         
         $file = 'jsonf/table.js';
         if (file_exists(public_path($file))) {
-        
+            
             $json = file_get_contents(public_path($file));
-            $json = json_decode($json,1);
-            array_set($json, 'table_form.attrs.action.uri', '/api/table/'.$id);
+            $json = json_decode($json, 1);
+            array_set($json, 'table_form.attrs.action.uri', '/api/table/' . $id);
             array_set($json, 'table_form.attrs.action.method', 'PUT');
             array_set($json, 'table_form.fields.id', [
                 'name' => ' ID',
@@ -115,7 +154,7 @@ class TableController extends Controller
             ]);
             array_set($json, 'table_form.fields.TABLE_NAME.value', $detail['table_name']);
             array_set($json, 'table_form.fields.TABLE_COMMENT.value', $detail['table_comment']);
-            array_set($json, 'table.data.list',$detail['columns'] );
+            array_set($json, 'table.data.list', $detail['columns']);
             return $this->__json($json);
         }
         return $this->__json(\ErrorCode::SYSTEM_ERROR);

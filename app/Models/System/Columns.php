@@ -10,6 +10,11 @@ class Columns extends BaseModel
     public $timestamps = false;
     
     public $guarded = [];
+    
+    
+    public static function queryTableColumns($table_id){
+        return self::where('TABLE_ID',$table_id)->get()->toArray();
+    }
 
     public static function createNewColumn($data){
     

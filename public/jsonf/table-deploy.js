@@ -15,12 +15,18 @@
                     "success" : {
                         "redirect" : "/tables"
                     }
+                },
+                "update" : {
+                    "url" : "/table/{id}",
+                    "param" : ["id"],
+                    "method" : "GET"
                 }
             },
             "ajax" : true,
             "rownum" : true,
             "pagination" : false,
             "hidden" : {
+                "id" : true
             },
             "operation" : false,
             "operations" : {
@@ -38,6 +44,11 @@
                 "name" : "Submit",
                 "class" : "btn-info",
                 "event" : "submit"
+            },{
+                "name" : "U",
+                "class" : "btn-info",
+                "event" : "redirect", 
+                "uri" : "update"
             }],
             "header": {
                 "COLUMN_NAME" : "字段",
@@ -52,57 +63,11 @@
             }
         },
         "data": {
-            "total": 2,
+            "total": 0,
             "current_page": 1,
             "last_page": 1,
             "per_page": 10,
             "list" : []
-        }
-    },
-    "component_form": {
-        "attrs": {
-            "caption": "组件",
-            "buttons": {
-                "preinstall": {
-                    "submit": false,
-                    "cancel": true
-                },
-                "others" : [
-                    {
-                        "name":"submit",
-                        "class" : "btn-info",
-                        "event" : "submit"
-                    }
-                ]
-            },
-            "action" : {
-                "uri" : "/api/component",
-                "method" : "POST",
-                "success" : {
-                    "redirect" : "/components"
-                }
-            }
-        },
-        "fields": {
-            "component_name": {
-                "name": "组件名称",
-                "type": "input",
-                "attrs": {
-                    "type": "text",
-                    "default": "asdda",
-                    "placeholder": "组件名称"
-                },
-                "value": ""
-            },
-            "component_desc": {
-                "name": "组件描述",
-                "type": "input",
-                "attrs": {
-                    "type": "text",
-                    "placeholder": "组件描述"
-                },
-                "value": ""
-            }
         }
     }
 }
