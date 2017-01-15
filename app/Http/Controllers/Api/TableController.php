@@ -20,7 +20,7 @@ class TableController extends Controller
             ], // 条件
         ]);
         
-        $tname = Tables::getTableName($id);
+        $table = Tables::find($id);
         $detail = Columns::queryTableColumns($id);
 //         dump($detail);
         $file = 'jsonf/table-deploy.js';
@@ -28,8 +28,8 @@ class TableController extends Controller
             
             $json = file_get_contents(public_path($file));
             $json = json_decode($json, 1);
-            array_set($json, 'table.attrs.caption', '表 [' . $tname . '] 字段');
-            array_set($json, 'table.attrs.tablename', $tname);
+            array_set($json, 'table.attrs.caption', '表 [' . $table['TABLE_NAME'] . '] 字段');
+            array_set($json, 'table.attrs.data', $table);
             // array_set($json, 'component_form.attrs.action.method', 'PUT');
             // array_set($json, 'component_form.fields.id', [
             // 'name' => ' ID',

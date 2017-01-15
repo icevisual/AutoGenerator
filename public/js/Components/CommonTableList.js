@@ -5,9 +5,15 @@ define(['Vue','Utils'],function(Vue,Utils) {
     /**
     {
         "attrs": {
-            "caption": "属性表",
-            "RESTful" : true,
-            "ajax" : true,// 用 Ajax 获取数据
+            "caption" : "属性表",// 列表的名称
+            "RESTful" : true,   // 是否以 RESTful 分割处理接口，当前未使用 
+            "ajax" : true,      // 是否自动用 Ajax 获取数据（调用 uris.query）
+            "rownum" : true,    // 是否显示行号
+            "pagination" : true,// 是否显示分页
+            "operation" : true, // 是否渲染每行的操作按钮
+            "data" : {
+                "id" : 1
+            },
             "uris" : {
                 "query" : { // 预设列表接口
                     "url" : "/api/attrs",
@@ -22,41 +28,46 @@ define(['Vue','Utils'],function(Vue,Utils) {
                 "delete" : {
                     "url" : "/api/{id}",
                     "param" : ["id"],
-                    "method" : "DELETE"
+                    "method" : "DELETE",
+                    "success" : {//成功后的动作
+                        "redirect" : "/table",
+                        "reload" : true,
+                        "alert" : "OK"
+                    }
                 }
             },
-            "rownum" : true, // 显示行号
-            "pagination" : true,// 是否显示分页
-            "hidden" : { // 隐藏的属性
+            "hidden" : { // 隐藏的属性,需要判断是否为隐藏，所有要Object
                 "id" : true
             },
-            "headerTools" : [{
-                "name" : "Submit",
-                "class" : "btn-info",
-                "event" : "submit"
+            "headerTools" : [{//  列表头部的按钮
+                "name" : "Submit",      // 按钮显示的标题
+                "class" : "btn-info",   // 按钮的颜色
+                "event" : "submit"      // 按钮触发的时间
             }],
-            "advancedColumn" : {// 高级列渲染
+            "advancedColumn" : {// 高级列渲染,需要判断是否为高级渲染，所有要Object
                 "default_value" : { // 行-输入框
                     "type" : "input"
                 }
             },
-            "operation" : true, // 是否有操作按钮
-            "operations" : {
-                "update" : true, // 预设 更新 和 删除 按钮
-                "delete" : true,
-                "addbind" : { // 其他按钮  table + {key} 的事件
-                    "class" : "btn-success",
-                    "name" : "+",
-                    "event" : "addbind"
-                },
-                "deploy" : {
-                    "name" : "DEPLOY",
-                    "class" : "btn-info",
-                    "event" : "redirect", // 预设 redirect 事件 ，已 uri 指向的地址做跳转
-                    "uri" : "deploy"
-                }
-            },
-            "header": {// 表头和列表项
+            "operations" : [{// 预设 更新 和 删除 按钮
+                "class" : "btn-info",
+                "name" : "U",
+                "event" : "update"
+            },{
+                "class" : "btn-danger",
+                "name" : "D",
+                "event" : "delete"
+            },{ // 其他按钮  table + {key} 的事件
+                "class" : "btn-success",
+                "name" : "+",
+                "event" : "addbind"
+            },{
+                "name" : "DEPLOY",
+                "class" : "btn-info",
+                "event" : "redirect", // 预设 redirect 事件 ，已 uri 指向的地址做跳转
+                "uri" : "deploy"
+            }],
+            "header": {// 表头和列表项,Key 用于指定对应的列表属性 Key
                 "attr_name" : {
                     "name": "属性名中",
                     "width":"200px" // 列宽
@@ -80,8 +91,9 @@ define(['Vue','Utils'],function(Vue,Utils) {
   <div class="box-header with-border">\
     <h3 class="box-title">{{tableConfig.attrs.caption}}</h3>\
       <div v-if="tableConfig.attrs.headerTools" class="pull-right box-tools">\
-      <template v-for="item in tableConfig.attrs.headerTools">\
-        <button class="btn btn-sm" :class="item.class" :data-event="item.event" v-on:click.prevent="btnclick">{{item.name}}</button>\
+      <template v-for="(item,key) in tableConfig.attrs.headerTools">\
+        <a v-if="0"></a>\
+        <a v-else class="btn btn-sm" :data-position="\'headerTools\'" :data-key="key" :class="item.class" :data-event="item.event" v-on:click.prevent="btnclick">{{item.name}}</a>\
       </template>\
       </div>\
   </div><!-- /.box-header -->\
@@ -119,10 +131,8 @@ define(['Vue','Utils'],function(Vue,Utils) {
               <div class="tools">\
                 <template v-for="(item2,key2) in tableConfig.attrs.operations">\
                   <template v-if="item2">\
-                  <a v-if="key2 == \'update\'" :data-row="key" :data-id="item.id" @click.prevent="updateRecord" class="btn btn-primary btn-xs">U</a>\
-                  <a v-else-if="key2 == \'delete\'" :data-row="key" :data-id="item.id" @click.prevent="deleteRecord" class="btn btn-danger btn-xs">D</a>\
-                  <a v-else-if="item2.event == \'redirect\'" :data-row="key" :data-redirect="item2.uri" :data-id="item.id" @click.prevent="redirectTo" :class="item2.class" class="btn btn-xs">{{item2.name}}</a>\
-                  <a v-else :data-row="key" :data-event="item2.event" :data-id="item.id" @click.prevent="btnclick" :class="item2.class" class="btn btn-xs">{{item2.name}}</a>\
+                    <a v-if="0"></a>\
+                    <a v-else :data-row="key" :data-key="key2" :data-position="\'operations\'" :data-event="item2.event" :data-id="item.id" @click.prevent="btnclick" :class="item2.class" class="btn btn-xs">{{item2.name}}</a>\
                   </template>\
                 </template>\
               </div>\
@@ -141,14 +151,39 @@ define(['Vue','Utils'],function(Vue,Utils) {
       <li><a href="#">3</a></li>\
       <li><a href="#">&raquo;</a></li>\
     </ul>\
-            <button type="submit" class="btn btn-primary">Submit</button>\
   </div>\
 </div><!-- /.box -->\
 ',
         'props' : ['dataSelector'],
         'data' : function () {
+            // 初始化 默认按钮配置
+            var defaultBtnConfig = {
+                "update" : {
+                    "name" : "U",
+                    "class" : "btn-primary",
+                    "event" : "update"
+                },
+                "delete" : {
+                    "name" : "D",
+                    "class" : "btn-danger",
+                    "event" : "delete"
+                }
+            };
+            var inputData = this.dataSelector;
+            // 按钮位置
+            var btnPositionSet = ['headerTools','operations'];
+            for(var i in btnPositionSet){
+                for(var key in inputData['attrs'][btnPositionSet[i]]){
+                    if(undefined !== defaultBtnConfig[key]){
+                        if(true === inputData['attrs'][btnPositionSet[i]][key]){
+                            // 设置了预设按钮，则将按钮配置设置为默认按钮配置
+                            inputData['attrs'][btnPositionSet[i]][key] = defaultBtnConfig[key];
+                        }
+                    }
+                }
+            }
             return {
-                tableConfig: this.dataSelector, 
+                tableConfig: inputData, 
             };
         },
         'methods' : {
@@ -202,19 +237,51 @@ define(['Vue','Utils'],function(Vue,Utils) {
                 }
             },
             'redirectTo' : function(e){
-                var key = e.target.getAttribute('data-redirect');
-                var val = e.target.getAttribute('data-id');
-                return this.redirectWithUri(this.tableConfig.attrs.uris[key],{'id':val});
+                var key         = e.target.getAttribute('data-key');
+                var position    = e.target.getAttribute('data-position');
+                var uriKey      = this.tableConfig.attrs[position][key].uri;
+                var val         = e.target.getAttribute('data-id');
+                if(!val){
+                    val = this.tableConfig.attrs.data.id;
+                }
+                return this.redirectWithUri(this.tableConfig.attrs.uris[uriKey],{'id':val});
+            },
+            'isAutoHanding' : function(eventType){
+                var eventMap = {
+                    'redirect' : true,
+                    'update' : true,
+                    'delete' : true
+                };
+                return undefined !== eventMap[eventType];
+            },
+            'autoProcess' : function(eventType,e){
+                switch(eventType){
+                    case 'redirect':
+                        return this.redirectTo(e);
+                        break;
+                    case 'update':
+                        return this.updateRecord(e);
+                        break;
+                    case 'delete':
+                        return this.deleteRecord(e);
+                        break;
+                    default:;
+                }
             },
             'btnclick' : function(e){
+                var eventPrefix = 'table';
                 var emitEventType = e.target.getAttribute("data-event");
-                this.$emit('table' + emitEventType,e);
-            }
+                var btnKey = e.target.getAttribute("data-key");
+                if(this.isAutoHanding(emitEventType)){
+                    this.autoProcess(emitEventType,e);
+                }else{
+                    this.$emit(eventPrefix + emitEventType,e);
+                }
+            },
         },
         'mounted' : function(){
             var this$1 = this;
             var reqPa = this.parseAjaxParam(this.tableConfig.attrs.uris.query);
-            var redirect = reqPa.url;
             this.tableConfig.attrs.ajax && !this$1.tableConfig.data.list.length && Utils.ajax({
                 'url' : reqPa.url,
                 'method' : reqPa.method,

@@ -3,11 +3,6 @@
         "attrs": {
             "caption": "组表",
             "uris" : {
-                "query" : {
-                    "url" : "/api/attrs",
-                    "param" : [],
-                    "method" : "GET"
-                },
                 "save" : {
                     "url" : "/api/table/deploy",
                     "param" : [],
@@ -22,13 +17,14 @@
                     "method" : "GET"
                 }
             },
-            "ajax" : true,
+            "ajax" : false,
             "rownum" : true,
             "pagination" : false,
             "hidden" : {
                 "id" : true
             },
             "operation" : false,
+            "data" : {},
             "operations" : {
                 "addbind" : {
                     "class" : "btn-success",

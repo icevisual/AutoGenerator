@@ -9,7 +9,4 @@ require.config({
 define(['HorizontalForm','CommonTableList'],function() {
     
     
-    
-    
-    
 });
