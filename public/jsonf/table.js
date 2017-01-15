@@ -67,7 +67,7 @@
             },{
                 "name" : "U",
                 "class" : "btn-info",
-                "event" : "update"
+                "event" : "modify"
             }],
             "header": {
                 "COLUMN_NAME" : "字段",
@@ -263,6 +263,18 @@
                 "attrs": {
                     "type": "text",
                     "placeholder": "备注"
+                },
+                "value": ""
+            },
+            "COLUMN_VALIDATE": {
+                "name": "验证规则",
+                "type": "input",
+                "validate" : {
+                    "rules" : "sometimes"
+                },
+                "attrs": {
+                    "type": "text",
+                    "placeholder": "验证规则"
                 },
                 "value": ""
             }

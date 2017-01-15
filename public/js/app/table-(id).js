@@ -39,7 +39,7 @@ require(['initialize'], function(EVue) {
                     'UpdateField' : function(e){
                         var row = e.target.getAttribute('data-row');
                         var key = $(e.target).parents('tr').find('td').eq(1).html();
-                        var formData = this.getMarkedData('fields',key);
+                        var formData = this.getTableData('table',row);
                         for(var i in formData){
                             this.formFieldReset('column_form',i,formData[i]);
                         }

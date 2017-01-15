@@ -97,7 +97,10 @@ define(['Vue','jQuery','Components','ALTApp','demo','Utils'],function(Vue,$) {
                 }
             },
             'formFieldReset' : function(formTag,field,defaultValue){
-                var defaultVal = this.pageConfig[formTag].fields[field].default;
+                if(undefined === this.pageConfig[formTag].fields[field]){
+                    return false;
+                }
+                var defaultVal = this.pageConfig[formTag].fields[field]['default'];
                 defaultVal = undefined === defaultValue ? defaultVal : defaultValue;
                 if(undefined === defaultVal){
                     this.pageConfig[formTag].fields[field].value = '';

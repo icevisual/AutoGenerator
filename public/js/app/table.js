@@ -36,6 +36,7 @@ require(['initialize'], function(EVue) {
                         this.removeTableRow('table',row);
                     },
                     'UpdateField' : function(e){
+                        console.log('UpdateField');
                         var row = e.target.getAttribute('data-row');
                         var key = $(e.target).parents('tr').find('td').eq(1).html();
                         var formData = this.getMarkedData('fields',key);

@@ -272,6 +272,7 @@ define(['Vue','Utils'],function(Vue,Utils) {
                 var eventPrefix = 'table';
                 var emitEventType = e.target.getAttribute("data-event");
                 var btnKey = e.target.getAttribute("data-key");
+                console.log('emitEventType',emitEventType);
                 if(this.isAutoHanding(emitEventType)){
                     this.autoProcess(emitEventType,e);
                 }else{
