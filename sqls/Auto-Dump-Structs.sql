@@ -1,5 +1,5 @@
 -- ----------------------------
--- Date: 2017-01-15 16:33:25
+-- Date: 2017-01-15 18:55:31
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,6 +33,7 @@ CREATE TABLE `op_columns` (
   `NUMERIC_PRECISION` bigint(21) unsigned DEFAULT NULL COMMENT '位数',
   `NUMERIC_SCALE` bigint(21) unsigned DEFAULT NULL COMMENT '精度',
   `COLUMN_COMMENT` varchar(1024) NOT NULL COMMENT '备注',
+  `COLUMN_VALIDATE` varchar(255) DEFAULT NULL COMMENT '字段验证规则',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
@@ -101,7 +102,7 @@ CREATE TABLE `op_request_log` (
   `memory_usage` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '内存使用量MB',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5959 DEFAULT CHARSET=utf8 COMMENT='请求日志';
+) ENGINE=InnoDB AUTO_INCREMENT=6008 DEFAULT CHARSET=utf8 COMMENT='请求日志';
 
 -- ----------------------------
 -- Table structure for op_request_params

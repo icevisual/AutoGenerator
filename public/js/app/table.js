@@ -36,10 +36,9 @@ require(['initialize'], function(EVue) {
                         this.removeTableRow('table',row);
                     },
                     'UpdateField' : function(e){
-                        console.log('UpdateField');
                         var row = e.target.getAttribute('data-row');
                         var key = $(e.target).parents('tr').find('td').eq(1).html();
-                        var formData = this.getMarkedData('fields',key);
+                        var formData = this.getTableData('table',row);
                         for(var i in formData){
                             this.formFieldReset('column_form',i,formData[i]);
                         }
@@ -62,7 +61,7 @@ require(['initialize'], function(EVue) {
                             // 不同类型字段的长度、精度验证
                             if(requiredColumns ){
                                 var columnsArray = requiredColumns.split(',');
-                                var numericRegex = /^[1-9]\d*$/;
+                                var numericRegex = /^0|([1-9]\d*)$/;
                                 for(var i in columnsArray){
                                     var key = columnsArray[i];
                                     if(undefined !== formValidateRet[key]){
@@ -141,8 +140,8 @@ require(['initialize'], function(EVue) {
                                 'dataType' : 'json',
                                 'success' : function(d){
                                     if(Utils.apiReqSuccess(d)){
-//                                        alert("OK");
-                                        window.location.href = this$1.pageConfig.table_form.attrs.action.success.redirect
+                                        alert("OK");
+//                                        window.location.href = this$1.pageConfig.table_form.attrs.action.success.redirect
                                     }else{
                                         alert(Utils.apiReqMsg(d));
                                     }

@@ -62,7 +62,7 @@ require(['initialize'], function(EVue) {
                             // 不同类型字段的长度、精度验证
                             if(requiredColumns ){
                                 var columnsArray = requiredColumns.split(',');
-                                var numericRegex = /^[1-9]\d*$/;
+                                var numericRegex = /^0|([1-9]\d*)$/;
                                 for(var i in columnsArray){
                                     var key = columnsArray[i];
                                     if(undefined !== formValidateRet[key]){
@@ -92,7 +92,7 @@ require(['initialize'], function(EVue) {
                                     this.unmark(fieldsMapKey,sourceData['COLUMN_NAME']);
                                 }
                                 // 更新数据
-                                this.markWithKey(fieldsMapKey,formValidateRet['COLUMN_NAME'],formValidateRet);
+                                this.markWithKey(fieldsMapKey,formValidateRet['COLUMN_NAME']);
                                 // 更新显示的列表数据
                                 this.updateTableRow(fieldsTableKey,this.getMarkedData(isUpdatingKey),formValidateRet);
                                 // 清空表单
@@ -117,7 +117,7 @@ require(['initialize'], function(EVue) {
                                     "COLUMN_COMMENT": formValidateRet['COLUMN_COMMENT'],
                                 });
                                 // 标为已存在
-                                this.markWithKey(fieldsMapKey,formValidateRet['COLUMN_NAME'],formValidateRet);
+                                this.markWithKey(fieldsMapKey,formValidateRet['COLUMN_NAME']);
                                 // 清空表单
                                 this.formReset(columnFormKey);
                             }
