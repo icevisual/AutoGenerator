@@ -4,7 +4,7 @@
             "caption" : "新建表",
             "formColor" : "box-info",
             "buttons" : [{
-                "name" : "Submit",
+                "name" : "Save Table",
                 "class" : "btn-info",
                 "event" : "validate"
             }],
@@ -92,7 +92,7 @@
             "buttons": [{
                 "class" : "btn-info",
                 "event" : "validate",
-                "name"  : "Submit"
+                "name"  : "Save Column"
             }],
             "action" : {
                 "uri" : "/api/table",
@@ -148,6 +148,25 @@
                         "text": "NO"
                     }
                 ]
+            },
+            "IS_INPUT": {
+                "name": "接口参数",
+                "type": "select",
+                "validate" : {
+                    "rules" : "sometimes"
+                },
+                "attrs": {
+                    "type": "radio",
+                    "placeholder": "接口参数"
+                },
+                "data" : [{
+                    "value" : 1,
+                    "text" : "否"
+                },{
+                    "value" : 2,
+                    "text" : "是"
+                }],
+                "value": 1
             },
             "DATA_TYPE": {
                 "name": "数据类型",

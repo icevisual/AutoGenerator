@@ -59,7 +59,7 @@ require(['initialize'], function(EVue) {
                         if(false !== formValidateRet){
                             var requiredColumns = columnTypeValidate[formValidateRet['DATA_TYPE']];
                             // 不同类型字段的长度、精度验证
-                            if(requiredColumns ){
+                            if(requiredColumns){
                                 var columnsArray = requiredColumns.split(',');
                                 var numericRegex = /^0|([1-9]\d*)$/;
                                 for(var i in columnsArray){
@@ -73,6 +73,14 @@ require(['initialize'], function(EVue) {
                                     }
                                 }
                             }
+                            
+                            if('NO' === formValidateRet['IS_NULLABLE']){
+                                if(!formValidateRet['COLUMN_DEFAULT'] && 1 === parseInt(formValidateRet['IS_INPUT'])){
+                                    alert('当字段必填时，需有默认值或者为接口输入');
+                                    return ;
+                                }
+                            }
+                            
                             var isUpdatingKey = 'isUpdating',// 是否在更新
                                 fieldsTableKey = 'table', // 字段表KEY
                                 fieldsMapKey = 'fields', // 已加字段MAP KEY
