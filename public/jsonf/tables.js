@@ -20,11 +20,6 @@
                     "url" : "/api/table/{id}",
                     "param" : ["id"],
                     "method" : "DELETE"
-                },
-                "deploy" : {
-                    "url" : "/table/{id}/deploy",
-                    "param" : ["id"],
-                    "method" : "GET"
                 }
             },
             "rownum" : true,
@@ -34,13 +29,7 @@
             "operation" : true,
             "operations" : {
                 "update" : true,
-                "delete" : true,
-                "deploy" : {
-                    "name" : "DEPLOY",
-                    "class" : "btn-info",
-                    "event" : "redirect",
-                    "uri" : "deploy"
-                }
+                "delete" : true
             },
             "header": {
                 "TABLE_NAME" : {

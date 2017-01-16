@@ -73,7 +73,7 @@
                 "COLUMN_NAME" : "字段",
                 "COLUMN_NAME_CN" :"名称",
                 "DATA_TYPE" :"类型",
-                "IS_NULLABLE" :"允许空",
+                "IS_NULLABLE" :"允许NULL",
                 "COLUMN_DEFAULT" :"默认值"
             }
         },
@@ -134,7 +134,7 @@
                 "value": ""
             },
             "IS_NULLABLE": {
-                "name": "允许空",
+                "name": "允许NULL",
                 "type": "select",
                 "value": "YES",
                 "default": "YES",
