@@ -160,13 +160,13 @@
                     "placeholder": "接口参数"
                 },
                 "data" : [{
-                    "value" : 1,
+                    "value" : "1",
                     "text" : "否"
                 },{
-                    "value" : 2,
+                    "value" : "2",
                     "text" : "是"
                 }],
-                "value": 1
+                "value": "1"
             },
             "DATA_TYPE": {
                 "name": "数据类型",
