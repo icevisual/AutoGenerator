@@ -38,8 +38,9 @@ class GenerateAPI extends Command
      */
     public function handle()
     {
+        $GenerateBasicCRUD = new GenerateBasicCRUD();
         
-        GenerateBasicCRUD::run();
+        $GenerateBasicCRUD->run();
         //
     }
 }

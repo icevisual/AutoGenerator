@@ -45,7 +45,7 @@
                     "value" : "auto",
                     "text" : "auto"
                 }],
-                "value": "mysql"
+                "value": "auto"
             }
         }
     },

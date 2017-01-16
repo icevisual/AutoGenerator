@@ -66,5 +66,36 @@ class Controller extends BaseController
         ], func_get_args());
     }
     
+    protected $_customValidateConfig = [];
+    
+    public function getValidateCondition($type, $params = [])
+    {
+        $config = $this->_customValidateConfig;
+        // create 去掉 ID
+        // update 加上 ID exists，unique 加上 ID 排除，需传入 ID
+        switch ($type) {
+            case 'create':
+                unset($config['rules']['id']);
+                break;
+            case 'update':
+                foreach ($config['rules'] as $k => $v) {
+                    if (strpos($v, 'unique:') !== false) {
+                        foreach (explode('|', $v) as $v1) {
+                            if (strpos($v1, 'unique:') === 0) {
+                                $config['rules'][$k] = str_replace($v1, $v1 . ',' . $params['id'] . ',id', $config['rules'][$k]);
+                                break 2;
+                            }
+                        }
+                    }
+                }
+                break;
+            default:
+                ;
+        }
+        return $config;
+    }
+    
+    
+    
     
 }

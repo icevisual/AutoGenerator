@@ -1,5 +1,5 @@
 -- ----------------------------
--- Date: 2017-01-15 18:55:31
+-- Date: 2017-01-16 22:33:50
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,6 +28,7 @@ CREATE TABLE `op_columns` (
   `COLUMN_NAME_CN` varchar(100) DEFAULT '' COMMENT '中文字段名',
   `COLUMN_DEFAULT` varchar(100) DEFAULT NULL COMMENT '默认值',
   `IS_NULLABLE` varchar(3) NOT NULL COMMENT '允许空',
+  `IS_INPUT` tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否从接口输入获取，1否，2是',
   `DATA_TYPE` varchar(64) NOT NULL COMMENT '数据类型',
   `CHARACTER_MAXIMUM_LENGTH` bigint(21) unsigned DEFAULT NULL COMMENT '字符长度',
   `NUMERIC_PRECISION` bigint(21) unsigned DEFAULT NULL COMMENT '位数',
@@ -86,6 +87,17 @@ CREATE TABLE `op_form_component` (
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COMMENT='组件实例表';
 
 -- ----------------------------
+-- Table structure for op_migrations
+-- ----------------------------
+DROP TABLE IF EXISTS `op_migrations`;
+CREATE TABLE `op_migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- ----------------------------
 -- Table structure for op_request_log
 -- ----------------------------
 DROP TABLE IF EXISTS `op_request_log`;
@@ -102,7 +114,7 @@ CREATE TABLE `op_request_log` (
   `memory_usage` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '内存使用量MB',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6008 DEFAULT CHARSET=utf8 COMMENT='请求日志';
+) ENGINE=InnoDB AUTO_INCREMENT=6111 DEFAULT CHARSET=utf8 COMMENT='请求日志';
 
 -- ----------------------------
 -- Table structure for op_request_params
@@ -127,6 +139,7 @@ CREATE TABLE `op_tables` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `TABLE_NAME` varchar(80) NOT NULL COMMENT '表名',
   `TABLE_COMMENT` varchar(255) DEFAULT NULL COMMENT '表备注',
+  `CONNECTION` varchar(64) NOT NULL DEFAULT 'mysql' COMMENT '数据库连接',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='TABLES表';
 
