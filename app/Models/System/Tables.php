@@ -23,6 +23,7 @@ class Tables extends BaseModel
         $tableData = [
             'TABLE_NAME' => $data['table_name'],
             'TABLE_COMMENT' => $data['table_comment'],
+            'CONNECTION' => $data['connection'],
         ];
         \DB::beginTransaction();
         $table = self::create($tableData);
@@ -41,6 +42,7 @@ class Tables extends BaseModel
             'id' =>  $table['id'],
             'table_name' => $table['TABLE_NAME'],
             'table_comment' => $table['TABLE_COMMENT'],
+            'connection' => $table['CONNECTION'],
             'columns' => $columns
         ];
         return $detail;
@@ -53,6 +55,7 @@ class Tables extends BaseModel
             'tables.id',
             'tables.TABLE_NAME',
             'tables.TABLE_COMMENT',
+            'tables.CONNECTION',
         ]);;
         $paginate = $handler->paginate($pageSize, [
             '*'
@@ -73,6 +76,7 @@ class Tables extends BaseModel
         $updateData = [
             'TABLE_NAME' => $data['table_name'],
             'TABLE_COMMENT' => $data['table_comment'],
+            'CONNECTION' => $data['connection'],
         ];
         \DB::beginTransaction();
         $table = self::where('id',$data['id'])->update($updateData);

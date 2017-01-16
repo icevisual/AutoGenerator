@@ -66,6 +66,20 @@ return [
             'engine' => null,
         ],
         
+        'auto' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => 'auto',
+            'username' => env('DB_USERNAME', 'forge'),
+            'password' => env('DB_PASSWORD', ''),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => 'at_',
+            'strict' => false,
+            'engine' => null,
+        ],
+        
         'information_schema' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),

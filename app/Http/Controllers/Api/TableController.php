@@ -71,6 +71,7 @@ class TableController extends Controller
                 'id' => 'required|exists:tables',
                 'table_name' => 'required|regex:/^[a-zA-Z][\d\w\_]*$/i|unique:tables,table_name',
                 'table_comment' => 'required',
+                'connection' => 'required',
                 'columns' => 'required|array',
                 'columns.*.COLUMN_NAME' => 'required',
                 'columns.*.COLUMN_NAME_CN' => 'required',
@@ -112,8 +113,9 @@ class TableController extends Controller
     public function create()
     {
         $data = [
-            'table_name' => \Input::get('table_name'), // String 控件名称
-            'table_comment' => \Input::get('table_comment'), // String 控件描述
+            'table_name' => \Input::get('TABLE_NAME'), // String 控件名称
+            'table_comment' => \Input::get('TABLE_COMMENT'), // String 控件描述
+            'connection' => \Input::get('CONNECTION'), // String 控件描述
             'columns' => \Input::get('columns')
         ] // String 属性数据类型
 ;
@@ -139,8 +141,9 @@ class TableController extends Controller
     {
         $data = [
             'id' => $id,
-            'table_name' => \Input::get('table_name'), // String 控件名称
-            'table_comment' => \Input::get('table_comment'), // String 控件描述
+            'table_name' => \Input::get('TABLE_NAME'), // String 控件名称
+            'table_comment' => \Input::get('TABLE_COMMENT'), // String 控件描述
+            'connection' => \Input::get('CONNECTION'), // String 控件描述
             'columns' => \Input::get('columns')
         ] // String 属性数据类型
 ;
@@ -173,6 +176,7 @@ class TableController extends Controller
             ]);
             array_set($json, 'table_form.fields.TABLE_NAME.value', $detail['table_name']);
             array_set($json, 'table_form.fields.TABLE_COMMENT.value', $detail['table_comment']);
+            array_set($json, 'table_form.fields.CONNECTION.value', $detail['connection']);
             array_set($json, 'table.data.list', $detail['columns']);
             return $this->__json($json);
         }

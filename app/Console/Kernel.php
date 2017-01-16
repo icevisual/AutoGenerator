@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
         Commands\DumpStructs::class,
         Commands\Test::class,
         Commands\Generator::class,
+        Commands\GenerateAPI::class,
     ];
 
     /**

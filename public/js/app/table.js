@@ -137,14 +137,12 @@ require(['initialize'], function(EVue) {
                                 return alert('请加入字段');
                             }
                             var this$1 = this;
+                            
+                            formValidateRet['columns'] = fieldData;
                             $.ajax({
                                 'url' : this.pageConfig.table_form.attrs.action.uri,
                                 'method' : this.pageConfig.table_form.attrs.action.method,
-                                'data' : {
-                                    'table_name' : formValidateRet['TABLE_NAME'],
-                                    'table_comment' : formValidateRet['TABLE_COMMENT'],
-                                    'columns' : fieldData
-                                },
+                                'data' : formValidateRet,
                                 'dataType' : 'json',
                                 'success' : function(d){
                                     if(Utils.apiReqSuccess(d)){

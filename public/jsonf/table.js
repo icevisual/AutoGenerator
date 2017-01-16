@@ -34,6 +34,18 @@
                     "placeholder": "表备注"
                 },
                 "value": ""
+            },
+            "CONNECTION": {
+                "name": "数据库连接",
+                "type": "select",
+                "data" : [{
+                    "value" : "mysql",
+                    "text" : "mysql"
+                },{
+                    "value" : "auto",
+                    "text" : "auto"
+                }],
+                "value": "mysql"
             }
         }
     },

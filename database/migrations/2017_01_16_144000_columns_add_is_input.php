@@ -14,7 +14,7 @@ class ColumnsAddIsInput extends Migration
     public function up()
     {
         //
-        Schema::table('columns',function(Blueprint $table){
+        \Schema::table('columns',function(Blueprint $table){
             $table->tinyInteger('IS_INPUT')->default(1)->comment('是否从接口输入获取，1否，2是')->after('IS_NULLABLE');
         });
     }
@@ -27,7 +27,7 @@ class ColumnsAddIsInput extends Migration
     public function down()
     {
         //
-        Schema::table('columns',function(Blueprint $table){
+        \Schema::table('columns',function(Blueprint $table){
             $table->dropColumn('IS_INPUT');
         });
     }
