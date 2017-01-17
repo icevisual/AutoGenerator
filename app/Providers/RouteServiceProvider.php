@@ -41,7 +41,37 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapExternalApiRoutes();
         //
+        
+        $this->mapAutoRoutes();
+        // include automake route file 
     }
+    
+    /**
+     * Define the "api" routes for the application.
+     *
+     * These routes are typically stateless.
+     *
+     * @return void
+     */
+    protected function mapAutoRoutes()
+    {
+        Route::group([
+//             'middleware' => 'externalApi',
+            'namespace' => $this->namespace,
+            'prefix' => 'api/auto',
+        ], function ($router) {
+            
+            $autoPath = app_path('Routes/AutoMake');
+            
+            $scandir = scandir($autoPath);
+            foreach ($scandir as $v){
+                if(strpos($v, '.php') == strlen($v) - 4){
+                    require app_path('Routes/AutoMake/'.$v);
+                }
+            }
+        });
+    }
+    
     
     
     /**

@@ -41,6 +41,18 @@ class Test extends Command
     public function handle()
     {
         
+        $str = 'externalApi.php';
+        
+        dump(strpos($str, '.php'));
+        dump(strlen($str) - 4);
+        strlen($str) - 4 ;
+        dump(strpos($str, '.php') == strlen($str) - 4); ;
+        
+        
+        dd($str);
+        
+        
+        
         $ret = \App\Models\System\Tables::tableDetail(10);
         
         edump($ret);

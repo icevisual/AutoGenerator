@@ -7,54 +7,43 @@ use App\Models\System\Columns;
 
 class GenerateBasicCRUD
 {
-
-    public function makeModel($id)
-    {
-        $table = Tables::find($id);
-        
-        $config = \Config::get('database.connections');
-        
-        $modelNameCamel = ucfirst(camel_case($table['TABLE_NAME']));
-        
-        $connectionNameCamel = ucfirst(camel_case($table['CONNECTION']));
-        
-        $dist = app_path('Models/AutoMake/' . $connectionNameCamel);
-        
-        if (! file_exists($dist)) {
-            @mkdir($dist);
-        }
-        
-        $distFile = $dist . '/' . $modelNameCamel . '.php';
-        
-        $template = <<<EOL
-<?php
-namespace App\Models\AutoMake\\{$connectionNameCamel};
-
-use App\Models\BaseModel;
-
-class {$modelNameCamel} extends BaseModel
-{
-    protected \$connection = '{$table['CONNECTION']}';
-
-    protected \$table = '{$table['TABLE_NAME']}';
-    
-    public \$timestamps = false;
-    
-    public \$guarded = [];   
-}
-EOL;
-        file_put_contents($distFile, $template);
-        
-        return [
-            'namespace' => "App\Models\AutoMake\\{$connectionNameCamel}",
-            'class' => $modelNameCamel
-        ];
+    protected function convertCamelName($name){
+        return ucfirst(camel_case($name));
     }
-
-    public function makeFunction($config, $func = 'create')
-    {}
-
-    public function getArrayOutput($data)
+    
+    protected function convertModelData($columnConfig){
+        $_inputMap = [];
+        $tabPlaceholder = '    ';
+        $linePrefix = str_repeat($tabPlaceholder, 3);
+        foreach ($columnConfig as $v) {
+            if ($v['IS_INPUT'] == Columns::IS_INPUT_YES) {
+                // TODO Parse DATA_TYPE
+                if($v['COLUMN_DEFAULT'] && 'NULL' != $v['COLUMN_DEFAULT']){
+                    $_inputMap[] = $linePrefix . "'{$v['COLUMN_NAME']}' => array_get(\$data, '{$v['COLUMN_NAME']}','{$v['COLUMN_DEFAULT']}')," . PHP_EOL;
+                }else{
+                    $_inputMap[] = $linePrefix . "'{$v['COLUMN_NAME']}' => array_get(\$data, '{$v['COLUMN_NAME']}')," . PHP_EOL;
+                }
+                // TODO Parse default value
+            }
+        }
+        $ret = implode('', $_inputMap);
+        return substr($ret, 0, 0 - strlen(PHP_EOL));
+    }
+    
+    protected function convertQueryColumns($table,$columnConfig){
+        $_inputMap = [];
+        $tabPlaceholder = '    ';
+        $linePrefix = str_repeat($tabPlaceholder, 3);
+        foreach ($columnConfig as $v) {
+            if ($v['IS_INPUT'] == Columns::IS_INPUT_YES) {
+                $_inputMap[] = $linePrefix . "'{$table['TABLE_NAME']}.{$v['COLUMN_NAME']}'," . PHP_EOL;
+            }
+        }
+        $ret = implode('', $_inputMap);
+        return substr($ret, 0, 0 - strlen(PHP_EOL));
+    }
+    
+    protected function convertArrayOutput($data)
     {
         ob_start();
         echoArrayKV($data);
@@ -73,25 +62,8 @@ EOL;
         }
         return $ret;
     }
-
-    public function makeValidateConfig($columnConfig)
-    {
-        $_customValidateConfig = [];
-        
-        $_customValidateConfig = [
-            'rules' => [], // 条件
-            'attributes' => []
-        ];
-        
-        foreach ($columnConfig as $v) {
-            $_customValidateConfig['rules'][$v['COLUMN_NAME']] = $v['COLUMN_VALIDATE'];
-            $_customValidateConfig['attributes'][$v['COLUMN_NAME']] = $v['COLUMN_NAME_CN'];
-        }
-        $str = $this->getArrayOutput($_customValidateConfig);
-        return $str;
-    }
-
-    public function makeInputMap($columnConfig)
+    
+    protected function convertInputMap($columnConfig)
     {
         $_inputMap = [];
         $tabPlaceholder = '    ';
@@ -99,33 +71,145 @@ EOL;
         foreach ($columnConfig as $v) {
             if ($v['IS_INPUT'] == Columns::IS_INPUT_YES) {
                 // TODO Parse DATA_TYPE
-                $_inputMap[] = $linePrefix . "'{$v['COLUMN_NAME']}' => \Input::get('{$v['COLUMN_NAME']}'), // {$v['DATA_TYPE']} {$v['COLUMN_NAME_CN']}" . PHP_EOL;
+                if($v['COLUMN_DEFAULT'] && 'NULL' != $v['COLUMN_DEFAULT']){
+                    $_inputMap[] = $linePrefix . "'{$v['COLUMN_NAME']}' => \Input::get('{$v['COLUMN_NAME']}','{$v['COLUMN_DEFAULT']}'), // {$v['DATA_TYPE']} {$v['COLUMN_NAME_CN']}" . PHP_EOL;
+                }else{
+                    $_inputMap[] = $linePrefix . "'{$v['COLUMN_NAME']}' => \Input::get('{$v['COLUMN_NAME']}'), // {$v['DATA_TYPE']} {$v['COLUMN_NAME_CN']}" . PHP_EOL;
+                }
                 // TODO Parse default value
             }
         }
         $ret = implode('', $_inputMap);
         return substr($ret, 0, 0 - strlen(PHP_EOL));
     }
-
-    public function makeController($id)
+    
+    protected function convertValidateConfig($columnConfig,$table)
     {
-        $dist = app_path('Http/Controllers/AutoMake/TableController.php');
+        $_customValidateConfig = [];
+    
+        $_customValidateConfig = [
+            'rules' => [
+                'id' => 'required|exists:'.$table['TABLE_NAME']
+            ], // 条件
+            'attributes' => []
+        ];
+    
+        foreach ($columnConfig as $v) {
+            if($v['IS_INPUT'] == Columns::IS_INPUT_YES){
+                $_customValidateConfig['rules'][$v['COLUMN_NAME']] = $v['COLUMN_VALIDATE'];
+                $_customValidateConfig['attributes'][$v['COLUMN_NAME']] = $v['COLUMN_NAME_CN'];
+            }
+        }
+        $str = $this->convertArrayOutput($_customValidateConfig);
+        return $str;
+    }
+    
+    
+    public function makeModel($table,$columnConfig)
+    {
+        $config = \Config::get('database.connections');
         
-        $_columnConfig = Columns::queryColumnsConfig($id);
+        $modelNameCamel = $this->convertCamelName($table['TABLE_NAME']);
         
-        $_customValidateConfig = $this->makeValidateConfig($_columnConfig);
+        $connectionNameCamel = $this->convertCamelName($table['CONNECTION']);
         
-        $_inputMap = $this->makeInputMap($_columnConfig);
+        $dist = app_path('Models/AutoMake/' . $connectionNameCamel);
         
-        $_model = $this->makeModel($id);
+        if (! file_exists($dist)) {
+            @mkdir($dist);
+        }
+        
+        $distFile = $dist . '/' . $modelNameCamel . '.php';
+        
+        $modelData = $this->convertModelData($columnConfig);
+        
+        $queryColumns = $this->convertQueryColumns($table,$columnConfig);
+        
+        $template = <<<EOL
+<?php
+namespace App\Models\AutoMake\\{$connectionNameCamel};
+
+use App\Models\BaseModel;
+
+class {$modelNameCamel} extends BaseModel
+{
+    protected \$connection = '{$table['CONNECTION']}';
+
+    protected \$table = '{$table['TABLE_NAME']}';
+    
+    public \$timestamps = false;
+    
+    public \$guarded = [];    
+    
+    public static function createRecord(\$data){
+        \$createData = [
+$modelData
+        ];
+        return self::create(\$createData);
+    }
+    
+    public static function updateRecord(\$data){
+        \$updateData = [
+$modelData
+        ];
+        \$table = self::where('id',\$data['id'])->update(\$updateData);
+        return \$table;
+    }
+    
+    public static function queryRecords(\$search = [],\$page = 1,\$pageSize = 1000,\$order = []){
+
+        \$handler = self::select([
+$queryColumns
+        ]);
+        \$paginate = \$handler->paginate(\$pageSize, [
+            '*'
+        ], 'p', \$page);
+        \$list = \$paginate->toArray();
+    
+        \$data = [
+            'total' => \$list['total'],
+            'current_page' => \$list['current_page'],
+            'last_page' => \$list['last_page'],
+            'per_page' => \$list['per_page'],
+            'list' => \$list['data']
+        ];
+        return \$data;
+    }
+    
+    public static function recordDelete(\$id){
+        return self::where('id',\$id)->delete();
+    }
+    
+    public static function recordDetail(\$id){
+        return self::where('id',\$id)->first();
+    }
+}
+EOL;
+        file_put_contents($distFile, $template);
+        
+        return [
+            'namespace' => "App\Models\AutoMake\\{$connectionNameCamel}",
+            'class' => $modelNameCamel
+        ];
+    }
+
+    
+    public function makeController($_table,$_columnConfig,$_model)
+    {
+        $_customValidateConfig = $this->convertValidateConfig($_columnConfig,$_table);
+        
+        $_inputMap = $this->convertInputMap($_columnConfig);
         
         $_modelFullClass = $_model['namespace'].'/'.$_model['class'];
         
         $_modelFullClass = trim($_modelFullClass,'\\');
         
         $_modelFullClass = str_replace('/', '\\', $_modelFullClass);
-        // dd($_inputMap);
-        // makeInputMap
+        
+        $_controllerName = $this->convertCamelName($_table['TABLE_NAME']);
+        
+        $dist = app_path('Http/Controllers/AutoMake/'.$_controllerName.'Controller.php');
+        
         // TODO 生成 APIDoc 注释
         $template = <<<EOL
 <?php
@@ -135,7 +219,7 @@ use App\Http\Controllers\Controller;
 use App\Exceptions\ServiceException;
 use $_modelFullClass;
 
-class TableController extends Controller
+class {$_controllerName}Controller extends Controller
 {
     protected \$_customValidateConfig = $_customValidateConfig
 
@@ -171,7 +255,7 @@ $_inputMap
         ]);
         \$config['data'] = \$data;
         runCustomValidator(\$config); // 属性名映射
-        \$obj = {$_model['class']}::updateTable(\$data);
+        \$obj = {$_model['class']}::updateRecord(\$data);
         return \$this->__json();
     }
 
@@ -188,9 +272,11 @@ $_inputMap
     }
 }
 EOL;
-        
-        dump($template);
         file_put_contents($dist, $template);
+        return [
+            'namespace' => "App\Http\Controllers\AutoMake",
+            'class' => "{$_controllerName}Controller",
+        ];
     }
 
     protected $_customValidateConfig = [
@@ -205,31 +291,55 @@ EOL;
         ]
     ];
 
+    
+    public function makeRoute($_table,$_controller)
+    {
+        
+        $tableName = $_table['TABLE_NAME'];
+        $controllerClass = $_controller['class'];
+        $dist = app_path('Routes/AutoMake/'.$tableName.'.php');
+        $template =<<<EOL
+<?php
+
+
+Route::get('/{$tableName}', [
+    'as' => 'api_auto_{$tableName}_query',
+    'uses' => 'AutoMake\\{$controllerClass}@query'
+]);
+Route::post('/{$tableName}', [
+    'as' => 'api_auto_{$tableName}_create',
+    'uses' => 'AutoMake\\{$controllerClass}@create'
+]);
+Route::get('/{$tableName}/{id}', [
+    'as' => 'api_auto_{$tableName}_detail',
+    'uses' => 'AutoMake\\{$controllerClass}@detail'
+]);
+Route::put('/{$tableName}/{id}', [
+    'as' => 'api_auto_{$tableName}_update',
+    'uses' => 'AutoMake\\{$controllerClass}@update'
+]);
+Route::delete('/{$tableName}/{id}', [
+    'as' => 'api_auto_{$tableName}_delete',
+    'uses' => 'AutoMake\\{$controllerClass}@delete'
+]);
+EOL;
+        
+        file_put_contents($dist, $template);
+    }
+    
     public function run($id = 2)
     {
-        $this->makeController($id);
         
-        exit();
+        $_table = Tables::find($id);
         
-        $this->makeValidateConfig($id);
+        $_columnConfig = Columns::queryColumnsConfig($_table['id']);
         
-        exit();
-        dump($this->_customValidateConfig);
+        $_model = $this->makeModel($_table,$_columnConfig);
         
-        ob_start();
+        $_controller = $this->makeController($_table,$_columnConfig,$_model);
+
+        $this->makeRoute($_table,$_controller);
         
-        echoArrayKV($this->_customValidateConfig);
-        
-        $output = ob_get_clean();
-        
-        dump('    protected  $_customValidateConfig = ' . $output);
-        
-        exit();
-        
-        // make controller , make function ,make model ,make route
-        $model = $this->makeModel($id);
-        
-        $this->makeController($id, $model);
         
         //
         // \Schema::table('columns',function(Blueprint $table){

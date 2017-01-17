@@ -9,6 +9,17 @@ class ApiTest extends TestRoutes
 
     public function testA()
     {
+        
+        
+        $ret = $this->api_auto_attrs_create([
+            'attr_name' => 'adsfdsaf', //Varchar 属性名字
+            'attr_name_cn' => 'safsadf', //Varchar 显示中文名
+            'attr_type' => 'asdf', //Varchar 属性类别
+            'form_type' => 'asdfadfs', //Varchar 表单控件类别
+        ]);
+        
+        $this->output($ret);
+        exit;
         $ret = $this->outer_api_save_form_component([
             'name' => 'ddddd',
             'components' => [
