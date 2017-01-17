@@ -7,20 +7,23 @@ use App\Models\System\Columns;
 
 class GenerateBasicCRUD
 {
-    protected function convertCamelName($name){
+
+    protected function convertCamelName($name)
+    {
         return ucfirst(camel_case($name));
     }
-    
-    protected function convertModelData($columnConfig){
+
+    protected function convertModelData($columnConfig)
+    {
         $_inputMap = [];
         $tabPlaceholder = '    ';
         $linePrefix = str_repeat($tabPlaceholder, 3);
         foreach ($columnConfig as $v) {
             if ($v['IS_INPUT'] == Columns::IS_INPUT_YES) {
                 // TODO Parse DATA_TYPE
-                if($v['COLUMN_DEFAULT'] && 'NULL' != $v['COLUMN_DEFAULT']){
+                if ($v['COLUMN_DEFAULT'] && 'NULL' != $v['COLUMN_DEFAULT']) {
                     $_inputMap[] = $linePrefix . "'{$v['COLUMN_NAME']}' => array_get(\$data, '{$v['COLUMN_NAME']}','{$v['COLUMN_DEFAULT']}')," . PHP_EOL;
-                }else{
+                } else {
                     $_inputMap[] = $linePrefix . "'{$v['COLUMN_NAME']}' => array_get(\$data, '{$v['COLUMN_NAME']}')," . PHP_EOL;
                 }
                 // TODO Parse default value
@@ -29,8 +32,9 @@ class GenerateBasicCRUD
         $ret = implode('', $_inputMap);
         return substr($ret, 0, 0 - strlen(PHP_EOL));
     }
-    
-    protected function convertQueryColumns($table,$columnConfig){
+
+    protected function convertQueryColumns($table, $columnConfig)
+    {
         $_inputMap = [];
         $tabPlaceholder = '    ';
         $linePrefix = str_repeat($tabPlaceholder, 3);
@@ -42,7 +46,7 @@ class GenerateBasicCRUD
         $ret = implode('', $_inputMap);
         return substr($ret, 0, 0 - strlen(PHP_EOL));
     }
-    
+
     protected function convertArrayOutput($data)
     {
         ob_start();
@@ -62,7 +66,7 @@ class GenerateBasicCRUD
         }
         return $ret;
     }
-    
+
     protected function convertInputMap($columnConfig)
     {
         $_inputMap = [];
@@ -71,9 +75,9 @@ class GenerateBasicCRUD
         foreach ($columnConfig as $v) {
             if ($v['IS_INPUT'] == Columns::IS_INPUT_YES) {
                 // TODO Parse DATA_TYPE
-                if($v['COLUMN_DEFAULT'] && 'NULL' != $v['COLUMN_DEFAULT']){
+                if ($v['COLUMN_DEFAULT'] && 'NULL' != $v['COLUMN_DEFAULT']) {
                     $_inputMap[] = $linePrefix . "'{$v['COLUMN_NAME']}' => \Input::get('{$v['COLUMN_NAME']}','{$v['COLUMN_DEFAULT']}'), // {$v['DATA_TYPE']} {$v['COLUMN_NAME_CN']}" . PHP_EOL;
-                }else{
+                } else {
                     $_inputMap[] = $linePrefix . "'{$v['COLUMN_NAME']}' => \Input::get('{$v['COLUMN_NAME']}'), // {$v['DATA_TYPE']} {$v['COLUMN_NAME_CN']}" . PHP_EOL;
                 }
                 // TODO Parse default value
@@ -82,20 +86,20 @@ class GenerateBasicCRUD
         $ret = implode('', $_inputMap);
         return substr($ret, 0, 0 - strlen(PHP_EOL));
     }
-    
-    protected function convertValidateConfig($columnConfig,$table)
+
+    protected function convertValidateConfig($columnConfig, $table)
     {
         $_customValidateConfig = [];
-    
+        
         $_customValidateConfig = [
             'rules' => [
-                'id' => 'required|exists:'.$table['TABLE_NAME']
+                'id' => 'required|exists:' . $table['TABLE_NAME']
             ], // 条件
             'attributes' => []
         ];
-    
+        
         foreach ($columnConfig as $v) {
-            if($v['IS_INPUT'] == Columns::IS_INPUT_YES){
+            if ($v['IS_INPUT'] == Columns::IS_INPUT_YES) {
                 $_customValidateConfig['rules'][$v['COLUMN_NAME']] = $v['COLUMN_VALIDATE'];
                 $_customValidateConfig['attributes'][$v['COLUMN_NAME']] = $v['COLUMN_NAME_CN'];
             }
@@ -103,9 +107,8 @@ class GenerateBasicCRUD
         $str = $this->convertArrayOutput($_customValidateConfig);
         return $str;
     }
-    
-    
-    public function makeModel($table,$columnConfig)
+
+    public function makeModel($table, $columnConfig)
     {
         $config = \Config::get('database.connections');
         
@@ -123,7 +126,7 @@ class GenerateBasicCRUD
         
         $modelData = $this->convertModelData($columnConfig);
         
-        $queryColumns = $this->convertQueryColumns($table,$columnConfig);
+        $queryColumns = $this->convertQueryColumns($table, $columnConfig);
         
         $template = <<<EOL
 <?php
@@ -193,22 +196,21 @@ EOL;
         ];
     }
 
-    
-    public function makeController($_table,$_columnConfig,$_model)
+    public function makeController($_table, $_columnConfig, $_model)
     {
-        $_customValidateConfig = $this->convertValidateConfig($_columnConfig,$_table);
+        $_customValidateConfig = $this->convertValidateConfig($_columnConfig, $_table);
         
         $_inputMap = $this->convertInputMap($_columnConfig);
         
-        $_modelFullClass = $_model['namespace'].'/'.$_model['class'];
+        $_modelFullClass = $_model['namespace'] . '/' . $_model['class'];
         
-        $_modelFullClass = trim($_modelFullClass,'\\');
+        $_modelFullClass = trim($_modelFullClass, '\\');
         
         $_modelFullClass = str_replace('/', '\\', $_modelFullClass);
         
         $_controllerName = $this->convertCamelName($_table['TABLE_NAME']);
         
-        $dist = app_path('Http/Controllers/AutoMake/'.$_controllerName.'Controller.php');
+        $dist = app_path('Http/Controllers/AutoMake/' . $_controllerName . 'Controller.php');
         
         // TODO 生成 APIDoc 注释
         $template = <<<EOL
@@ -275,7 +277,7 @@ EOL;
         file_put_contents($dist, $template);
         return [
             'namespace' => "App\Http\Controllers\AutoMake",
-            'class' => "{$_controllerName}Controller",
+            'class' => "{$_controllerName}Controller"
         ];
     }
 
@@ -291,14 +293,12 @@ EOL;
         ]
     ];
 
-    
-    public function makeRoute($_table,$_controller)
+    public function makeRoute($_table, $_controller)
     {
-        
         $tableName = $_table['TABLE_NAME'];
         $controllerClass = $_controller['class'];
-        $dist = app_path('Routes/AutoMake/'.$tableName.'.php');
-        $template =<<<EOL
+        $dist = app_path('Routes/AutoMake/' . $tableName . '.php');
+        $template = <<<EOL
 <?php
 
 
@@ -326,28 +326,75 @@ EOL;
         
         file_put_contents($dist, $template);
     }
-    
+
+    public function makeTable($_table, $_columnConfig)
+    {
+        // \Illuminate\Database\Schema\Builder  
+        
+        $Builder = \Schema::connection($_table['CONNECTION']);
+        $map = [
+            'bigint' => 'bigInteger',
+            'char' => 'char',
+            'date' => 'date',
+            'datetime' => 'dateTime',
+            'decimal' => 'decimal',
+            'double' => 'double',
+            'float' => 'float',
+            'int' => 'integer',
+            'mediumint' => 'mediumInteger',
+            'smallint' => 'smallInteger',
+            'text' => 'text',
+            'time' => 'time',
+            'timestamp' => 'timestamp',
+            'tinyint' => 'tinyInteger',
+            'varchar' => 'string'
+        ];
+        
+        
+        
+        
+        $Builder->table($_table['TABLE_NAME'], function (Blueprint $table) {
+            
+            $table->bigInteger($column, $autoIncrement = false, $unsigned = false);
+            $table->char($column, $length = 255);
+            $table->date($column);
+            $table->dateTime($column);
+            $table->decimal($column, $total = 8, $places = 2);
+            $table->double($column, $total = null, $places = null);
+            $table->float($column, $total = 8, $places = 2);
+            $table->integer($column, $autoIncrement = false, $unsigned = false);
+            $table->mediumInteger($column, $autoIncrement = false, $unsigned = false);
+            $table->smallInteger($column, $autoIncrement = false, $unsigned = false);
+            $table->text($column);
+            $table->time($column);
+            $table->timestamp($column);
+            $table->tinyInteger($column, $autoIncrement = false, $unsigned = false);
+            $table->string($column, $length = 255);
+            
+            $table->dropColumn('DDDD');
+        });
+        
+        \Schema::table('columns', function (Blueprint $table) {
+            $table->tinyInteger('IS_INPUT')
+                ->default(1)
+                ->comment('是否从接口输入获取，1否，2是')
+                ->after('IS_NULLABLE');
+        });
+    }
+
     public function run($id = 2)
     {
-        
         $_table = Tables::find($id);
         
         $_columnConfig = Columns::queryColumnsConfig($_table['id']);
         
-        $_model = $this->makeModel($_table,$_columnConfig);
+        $this->makeTable($_table, $_columnConfig);
         
-        $_controller = $this->makeController($_table,$_columnConfig,$_model);
+        $_model = $this->makeModel($_table, $_columnConfig);
+        
+        $_controller = $this->makeController($_table, $_columnConfig, $_model);
 
         $this->makeRoute($_table,$_controller);
-        
-        
-        //
-        // \Schema::table('columns',function(Blueprint $table){
-        // $table->dropColumn('DDDD');
-        // });
-        
-        // \Schema::table('columns',function(Blueprint $table){
-        // $table->tinyInteger('IS_INPUT')->default(1)->comment('是否从接口输入获取，1否，2是')->after('IS_NULLABLE');
-        // });
+
     }
 }
