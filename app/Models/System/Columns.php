@@ -23,6 +23,7 @@ class Columns extends BaseModel
             'columns.IS_INPUT',
             'columns.DATA_TYPE',
             'columns.COLUMN_VALIDATE',
+            'columns.COLUMN_COMMENT',
         ])->where('TABLE_ID',$id)
           ->get()
           ->toArray();

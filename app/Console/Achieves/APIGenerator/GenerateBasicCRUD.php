@@ -87,19 +87,40 @@ class GenerateBasicCRUD
         return substr($ret, 0, 0 - strlen(PHP_EOL));
     }
 
+    protected function ruleAddConnect($rule,$connection = 'auto')
+    {
+        $needle = 'exists:';
+        $haystack = $rule;
+        if (($pos = strpos($haystack, $needle)) !== false) {
+            $rest = substr($haystack, $pos + strlen($needle));
+            
+            $ruleConfig = explode('|', $rest,2);
+            $ruleConfig = $ruleConfig[0];
+            
+            $arimTable = explode(',', $ruleConfig,2);
+            $arimTable = $arimTable[0];
+            
+            if(strpos($arimTable, '.') === false){
+                return substr($haystack, 0,$pos).$needle.$connection.'.'.$rest;
+            }
+        }
+        return $rule;
+    }
+
     protected function convertValidateConfig($columnConfig, $table)
     {
         $_customValidateConfig = [];
         
         $_customValidateConfig = [
             'rules' => [
-                'id' => 'required|exists:' . $table['TABLE_NAME']
+                'id' => 'required|exists:' . $table['CONNECTION'] . '.' . $table['TABLE_NAME']
             ], // 条件
             'attributes' => []
         ];
         
         foreach ($columnConfig as $v) {
             if ($v['IS_INPUT'] == Columns::IS_INPUT_YES) {
+                
                 $_customValidateConfig['rules'][$v['COLUMN_NAME']] = $v['COLUMN_VALIDATE'];
                 $_customValidateConfig['attributes'][$v['COLUMN_NAME']] = $v['COLUMN_NAME_CN'];
             }
@@ -327,10 +348,16 @@ EOL;
         file_put_contents($dist, $template);
     }
 
+    protected function convertDefault($defaultValue)
+    {
+        if ('NULL' == $defaultValue) {
+            return NULL;
+        }
+        return $defaultValue;
+    }
+
     public function makeTable($_table, $_columnConfig)
     {
-        // \Illuminate\Database\Schema\Builder  
-        
         $Builder = \Schema::connection($_table['CONNECTION']);
         $map = [
             'bigint' => 'bigInteger',
@@ -350,29 +377,64 @@ EOL;
             'varchar' => 'string'
         ];
         
+        if ($Builder->hasTable($_table['TABLE_NAME'])) {
+            $Builder->drop($_table['TABLE_NAME']);
+        }
         
-        
-        
-        $Builder->table($_table['TABLE_NAME'], function (Blueprint $table) {
+        // nginx
+        $Builder->create($_table['TABLE_NAME'], function (Blueprint $table) use($map, $_columnConfig) {
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_general_ci';
             
-            $table->bigInteger($column, $autoIncrement = false, $unsigned = false);
-            $table->char($column, $length = 255);
-            $table->date($column);
-            $table->dateTime($column);
-            $table->decimal($column, $total = 8, $places = 2);
-            $table->double($column, $total = null, $places = null);
-            $table->float($column, $total = 8, $places = 2);
-            $table->integer($column, $autoIncrement = false, $unsigned = false);
-            $table->mediumInteger($column, $autoIncrement = false, $unsigned = false);
-            $table->smallInteger($column, $autoIncrement = false, $unsigned = false);
-            $table->text($column);
-            $table->time($column);
-            $table->timestamp($column);
-            $table->tinyInteger($column, $autoIncrement = false, $unsigned = false);
-            $table->string($column, $length = 255);
+            foreach ($_columnConfig as $v) {
+                $func = $map[$v['DATA_TYPE']];
+                
+                if ('id' == $v['COLUMN_NAME']) {
+                    $columnDefine = $table->$func($v['COLUMN_NAME'], true, true);
+                } else {
+                    $columnDefine = $table->$func($v['COLUMN_NAME']);
+                }
+                
+                if ('YES' == $v['IS_NULLABLE']) {
+                    $columnDefine->nullable();
+                }
+                $defaultValue = $this->convertDefault($v['COLUMN_DEFAULT']);
+                if ($defaultValue) {
+                    $columnDefine->default($defaultValue);
+                }
+                if ($v['COLUMN_COMMENT']) {
+                    $columnDefine->comment($v['COLUMN_COMMENT']);
+                }
+            }
             
-            $table->dropColumn('DDDD');
+            // $table->bigInteger($column, $autoIncrement = false, $unsigned = false);
+            // $table->char($column, $length = 255);
+            // $table->date($column);
+            // $table->dateTime($column);
+            // $table->decimal($column, $total = 8, $places = 2);
+            // $table->double($column, $total = null, $places = null);
+            // $table->float($column, $total = 8, $places = 2);
+            // $table->integer($column, $autoIncrement = false, $unsigned = false);
+            // $table->mediumInteger($column, $autoIncrement = false, $unsigned = false);
+            // $table->smallInteger($column, $autoIncrement = false, $unsigned = false);
+            // $table->text($column);
+            // $table->time($column);
+            // $table->timestamp($column);
+            // $table->tinyInteger($column, $autoIncrement = false, $unsigned = false);
+            // $table->string($column, $length = 255);
+            
+            // $table->dropColumn('DDDD');
         });
+        
+        // \Schema::table('columns', function (Blueprint $table) {
+        // $table->dropColumn('COLUMN_COPY');
+        // // $columnDefine = $table->tinyInteger('COLUMN_COPY');
+        // // $columnDefine->default(1);
+        // // $columnDefine->comment('是否从接口输入获取，1否，2是');
+        // // $columnDefine->after('IS_NULLABLE');
+        // });
+        
+        exit();
         
         \Schema::table('columns', function (Blueprint $table) {
             $table->tinyInteger('IS_INPUT')
@@ -384,6 +446,19 @@ EOL;
 
     public function run($id = 2)
     {
+        $tArray = [
+            'required|exists:tables',
+            'exists:table',
+            'exists:table|',
+            'exists:table,',
+            'exists:auto.table,',
+        ];
+        foreach ($tArray as $v){
+            $rest = $this->validateRuleAddConnect($v);
+            dump($rest);
+        }
+        exit();
+        
         $_table = Tables::find($id);
         
         $_columnConfig = Columns::queryColumnsConfig($_table['id']);

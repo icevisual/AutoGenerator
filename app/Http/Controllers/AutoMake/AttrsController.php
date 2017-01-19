@@ -9,8 +9,8 @@ class AttrsController extends Controller
 {
     protected $_customValidateConfig = [
         'rules' => [
-            'id' => 'required|exists:attrs',
-            'attr_name' => 'required|unique:attrs,attr_name',
+            'id' => 'required|exists:auto.attrs',
+            'attr_name' => 'required|unique:auto.attrs,attr_name',
             'attr_name_cn' => 'required',
             'attr_type' => 'required',
             'form_type' => 'required',
