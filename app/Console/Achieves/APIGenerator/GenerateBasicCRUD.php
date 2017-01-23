@@ -87,9 +87,9 @@ class GenerateBasicCRUD
         return substr($ret, 0, 0 - strlen(PHP_EOL));
     }
 
-    protected function ruleAddConnect($rule,$connection = 'auto')
+    protected function ruleAddConnect($rule,$connection,$needle = 'exists')
     {
-        $needle = 'exists:';
+        $needle = trim($needle,':').':';
         $haystack = $rule;
         if (($pos = strpos($haystack, $needle)) !== false) {
             $rest = substr($haystack, $pos + strlen($needle));
@@ -120,8 +120,8 @@ class GenerateBasicCRUD
         
         foreach ($columnConfig as $v) {
             if ($v['IS_INPUT'] == Columns::IS_INPUT_YES) {
-                
-                $_customValidateConfig['rules'][$v['COLUMN_NAME']] = $v['COLUMN_VALIDATE'];
+                $_customValidateConfig['rules'][$v['COLUMN_NAME']] = $this->ruleAddConnect($v['COLUMN_VALIDATE'], $table['CONNECTION']);
+//                 $_customValidateConfig['rules'][$v['COLUMN_NAME']] = $v['COLUMN_VALIDATE'];
                 $_customValidateConfig['attributes'][$v['COLUMN_NAME']] = $v['COLUMN_NAME_CN'];
             }
         }
@@ -381,6 +381,12 @@ EOL;
             $Builder->drop($_table['TABLE_NAME']);
         }
         
+        // 4 个类型
+        // $table->bigInteger($column, $autoIncrement = false, $unsigned = false);
+        // $table->char($column, $length = 255);
+        // $table->date($column);
+        // $table->decimal($column, $total = 8, $places = 2);
+        
         // nginx
         $Builder->create($_table['TABLE_NAME'], function (Blueprint $table) use($map, $_columnConfig) {
             $table->charset = 'utf8';
@@ -434,30 +440,41 @@ EOL;
         // // $columnDefine->after('IS_NULLABLE');
         // });
         
-        exit();
+//         exit();
         
-        \Schema::table('columns', function (Blueprint $table) {
-            $table->tinyInteger('IS_INPUT')
-                ->default(1)
-                ->comment('是否从接口输入获取，1否，2是')
-                ->after('IS_NULLABLE');
-        });
+//         \Schema::table('columns', function (Blueprint $table) {
+//             $table->tinyInteger('IS_INPUT')
+//                 ->default(1)
+//                 ->comment('是否从接口输入获取，1否，2是')
+//                 ->after('IS_NULLABLE');
+//         });
     }
+    
+    
+    public function makeTestCase(){
+        
+        // mk Create Test Case
+        // 
+        
+        
+        
+    }
+    
 
     public function run($id = 2)
     {
-        $tArray = [
-            'required|exists:tables',
-            'exists:table',
-            'exists:table|',
-            'exists:table,',
-            'exists:auto.table,',
-        ];
-        foreach ($tArray as $v){
-            $rest = $this->validateRuleAddConnect($v);
-            dump($rest);
-        }
-        exit();
+//         $tArray = [
+//             'required|exists:tables',
+//             'exists:table',
+//             'exists:table|',
+//             'exists:table,',
+//             'exists:auto.table,',
+//         ];
+//         foreach ($tArray as $v){
+//             $rest = $this->ruleAddConnect($v);
+//             dump($rest);
+//         }
+//         exit();
         
         $_table = Tables::find($id);
         
