@@ -84,12 +84,15 @@ class TestRoutes extends TestCase
     /**
      * detail
      *
-     * 
+     * @param array $params
+     *            <pre>
+     *            'id' => '', //String id
+     *            </pre>
      */
     public function api_attrs_detail($params = [])
     {
         $data = [
-
+            'id' => array_get($params,'id',''),// id String
         ];
         $ret = $this->getJson(route('api_attrs_detail'), $data)->toJson();
         return $ret;
@@ -100,6 +103,7 @@ class TestRoutes extends TestCase
      *
      * @param array $params
      *            <pre>
+     *            'id' => '', //String id
      *            'attr_name' => '', //String 属性名称
      *            'attr_name_cn' => '', //String 显示中文名
      *            'attr_type' => '', //String 属性数据类型
@@ -109,6 +113,7 @@ class TestRoutes extends TestCase
     public function api_attrs_update($params = [])
     {
         $data = [
+            'id' => array_get($params,'id',''),// id String
             'attr_name' => array_get($params,'attr_name',''),// 属性名称 String
             'attr_name_cn' => array_get($params,'attr_name_cn',''),// 显示中文名 String
             'attr_type' => array_get($params,'attr_type',''),// 属性数据类型 String
@@ -121,12 +126,15 @@ class TestRoutes extends TestCase
     /**
      * delete
      *
-     * 
+     * @param array $params
+     *            <pre>
+     *            'id' => '', //String id
+     *            </pre>
      */
     public function api_attrs_delete($params = [])
     {
         $data = [
-
+            'id' => array_get($params,'id',''),// id String
         ];
         $ret = $this->deleteJson(route('api_attrs_delete'), $data)->toJson();
         return $ret;
@@ -175,12 +183,15 @@ class TestRoutes extends TestCase
     /**
      * detail
      *
-     * 
+     * @param array $params
+     *            <pre>
+     *            'id' => '', //String id
+     *            </pre>
      */
     public function api_component_detail($params = [])
     {
         $data = [
-
+            'id' => array_get($params,'id',''),// id String
         ];
         $ret = $this->getJson(route('api_component_detail'), $data)->toJson();
         return $ret;
@@ -191,6 +202,7 @@ class TestRoutes extends TestCase
      *
      * @param array $params
      *            <pre>
+     *            'id' => '', //String id
      *            'component_name' => '', //String 组件名称
      *            'component_desc' => '', //String 组件描述
      *            'attrs' => '', //String 属性数据类型
@@ -199,6 +211,7 @@ class TestRoutes extends TestCase
     public function api_component_update($params = [])
     {
         $data = [
+            'id' => array_get($params,'id',''),// id String
             'component_name' => array_get($params,'component_name',''),// 组件名称 String
             'component_desc' => array_get($params,'component_desc',''),// 组件描述 String
             'attrs' => array_get($params,'attrs',''),// 属性数据类型 String
@@ -210,12 +223,15 @@ class TestRoutes extends TestCase
     /**
      * delete
      *
-     * 
+     * @param array $params
+     *            <pre>
+     *            'id' => '', //String id
+     *            </pre>
      */
     public function api_component_delete($params = [])
     {
         $data = [
-
+            'id' => array_get($params,'id',''),// id String
         ];
         $ret = $this->deleteJson(route('api_component_delete'), $data)->toJson();
         return $ret;
@@ -266,12 +282,15 @@ class TestRoutes extends TestCase
     /**
      * detail
      *
-     * 
+     * @param array $params
+     *            <pre>
+     *            'id' => '', //String id
+     *            </pre>
      */
     public function api_table_detail($params = [])
     {
         $data = [
-
+            'id' => array_get($params,'id',''),// id String
         ];
         $ret = $this->getJson(route('api_table_detail'), $data)->toJson();
         return $ret;
@@ -282,6 +301,7 @@ class TestRoutes extends TestCase
      *
      * @param array $params
      *            <pre>
+     *            'id' => '', //String id
      *            'TABLE_NAME' => '', //String 控件名称
      *            'TABLE_COMMENT' => '', //String 控件描述
      *            'CONNECTION' => '', //String 控件描述
@@ -291,6 +311,7 @@ class TestRoutes extends TestCase
     public function api_update_tables($params = [])
     {
         $data = [
+            'id' => array_get($params,'id',''),// id String
             'TABLE_NAME' => array_get($params,'TABLE_NAME',''),// 控件名称 String
             'TABLE_COMMENT' => array_get($params,'TABLE_COMMENT',''),// 控件描述 String
             'CONNECTION' => array_get($params,'CONNECTION',''),// 控件描述 String
@@ -303,12 +324,15 @@ class TestRoutes extends TestCase
     /**
      * delete
      *
-     * 
+     * @param array $params
+     *            <pre>
+     *            'id' => '', //String id
+     *            </pre>
      */
     public function api_delete_query($params = [])
     {
         $data = [
-
+            'id' => array_get($params,'id',''),// id String
         ];
         $ret = $this->deleteJson(route('api_delete_query'), $data)->toJson();
         return $ret;
@@ -317,12 +341,15 @@ class TestRoutes extends TestCase
     /**
      * tableDeploy
      *
-     * 
+     * @param array $params
+     *            <pre>
+     *            'id' => '', //String id
+     *            </pre>
      */
     public function api_tables_deploy($params = [])
     {
         $data = [
-
+            'id' => array_get($params,'id',''),// id String
         ];
         $ret = $this->getJson(route('api_tables_deploy'), $data)->toJson();
         return $ret;
@@ -333,12 +360,14 @@ class TestRoutes extends TestCase
      *
      * @param array $params
      *            <pre>
+     *            'id' => '', //String id
      *            'validate' => '', //String 属性数据类型
      *            </pre>
      */
     public function api_save_table_deploy($params = [])
     {
         $data = [
+            'id' => array_get($params,'id',''),// id String
             'validate' => array_get($params,'validate',''),// 属性数据类型 String
         ];
         $ret = $this->postJson(route('api_save_table_deploy'), $data)->toJson();
@@ -454,12 +483,15 @@ class TestRoutes extends TestCase
     /**
      * detail
      *
-     * 
+     * @param array $params
+     *            <pre>
+     *            'id' => '', //String id
+     *            </pre>
      */
     public function api_auto_attrs_detail($params = [])
     {
         $data = [
-
+            'id' => array_get($params,'id',''),// id String
         ];
         $ret = $this->getJson(route('api_auto_attrs_detail'), $data)->toJson();
         return $ret;
@@ -470,6 +502,7 @@ class TestRoutes extends TestCase
      *
      * @param array $params
      *            <pre>
+     *            'id' => '', //String id
      *            'attr_name' => '', //Varchar 属性名字
      *            'attr_name_cn' => '', //Varchar 显示中文名
      *            'attr_type' => '', //Varchar 属性类别
@@ -479,6 +512,7 @@ class TestRoutes extends TestCase
     public function api_auto_attrs_update($params = [])
     {
         $data = [
+            'id' => array_get($params,'id',''),// id String
             'attr_name' => array_get($params,'attr_name',''),// 属性名字 Varchar
             'attr_name_cn' => array_get($params,'attr_name_cn',''),// 显示中文名 Varchar
             'attr_type' => array_get($params,'attr_type',''),// 属性类别 Varchar
@@ -491,12 +525,15 @@ class TestRoutes extends TestCase
     /**
      * delete
      *
-     * 
+     * @param array $params
+     *            <pre>
+     *            'id' => '', //String id
+     *            </pre>
      */
     public function api_auto_attrs_delete($params = [])
     {
         $data = [
-
+            'id' => array_get($params,'id',''),// id String
         ];
         $ret = $this->deleteJson(route('api_auto_attrs_delete'), $data)->toJson();
         return $ret;

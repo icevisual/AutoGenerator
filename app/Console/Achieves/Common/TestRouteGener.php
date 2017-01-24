@@ -37,6 +37,64 @@ class TestRouteGener
         return $this->filterParamsAndAnns($codes);
     }
 
+    
+    /**
+     * 获取函数的参数
+     * @param unknown $codesArray
+     * @return multitype:multitype:string unknown
+     */
+    public function findFunctionParameters($codesArray){
+        $params = [];
+        $funcPa = '';
+        $findTag = false;
+        foreach ($codesArray as $line){
+            if(!$findTag){
+                if(($p1 = strpos($line, '(')) !== false){
+                    $findTag = true;
+                    if( ($p2 = strpos($line, ')')) !== false){
+                        $funcPa = trim(substr($line, $p1 + 1,$p2 - $p1 - 1));
+                        break;
+                    }else{
+                        $funcPa = trim(substr($line, $p1 + 1));
+                    }
+                }
+            }else{
+                if( ($p2 = strpos($line, ')')) !== false){
+                    $funcPa .= trim(substr($line, 0,$p2));
+                    break;
+                }else{
+                    $funcPa .= trim($line);
+                }
+        
+            }
+        }
+        
+        if($funcPa){
+            foreach (explode(',', $funcPa) as $v){
+                $v = substr(trim($v), 1);
+        
+                if(strpos($v, '=') !== false){
+                    // has default value
+                    $segs =  explode('=', $v,2);
+        
+                    $params[trim($segs[0])] = [
+                        'type' => 'String',
+                        'name' => $segs[0],
+                        'default' => trim($segs[1],' \''),
+                    ];
+                }else{
+                    $params[$v] =[
+                        'type' => 'String',
+                        'name' => $v,
+                    ];
+                }
+        
+            }
+        }
+        return $params;
+    }
+    
+    
     /**
      * 判别所需参数，现以Input::get()判定
      *
@@ -48,6 +106,9 @@ class TestRouteGener
         $params = array();
         if (! is_array($codes))
             return false;
+        
+        $params = $this->findFunctionParameters($codes);
+        
         array_walk($codes, function ($v, $k) use(&$params, $codes) {
             $regs = [
                 '/(?:Input::get|\$request->input)\s*\(\s*[\'\"]([\w\d_]*)[\'\"]\s*(?:\s*,\s*[\'\"]?([\s\w_\-]*)[\'\"]?\s*)?\)/',
@@ -313,6 +374,7 @@ EOF;
     {
         $functionStr = '';
         foreach ($data as $v) {
+            dump($data);
             $as = array_get($v, 'as');
             $funcData = [
                 'describe' => $v['uriName'],
