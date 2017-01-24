@@ -1,5 +1,5 @@
 -- ----------------------------
--- Date: 2017-01-16 22:33:50
+-- Date: 2017-01-24 21:04:11
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,7 +36,7 @@ CREATE TABLE `op_columns` (
   `COLUMN_COMMENT` varchar(1024) NOT NULL COMMENT '备注',
   `COLUMN_VALIDATE` varchar(255) DEFAULT NULL COMMENT '字段验证规则',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for op_component
@@ -114,7 +114,7 @@ CREATE TABLE `op_request_log` (
   `memory_usage` decimal(10,4) NOT NULL DEFAULT '0.0000' COMMENT '内存使用量MB',
   `created_at` timestamp NULL DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6111 DEFAULT CHARSET=utf8 COMMENT='请求日志';
+) ENGINE=InnoDB AUTO_INCREMENT=6199 DEFAULT CHARSET=utf8 COMMENT='请求日志';
 
 -- ----------------------------
 -- Table structure for op_request_params
@@ -141,5 +141,5 @@ CREATE TABLE `op_tables` (
   `TABLE_COMMENT` varchar(255) DEFAULT NULL COMMENT '表备注',
   `CONNECTION` varchar(64) NOT NULL DEFAULT 'mysql' COMMENT '数据库连接',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='TABLES表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='TABLES表';
 
