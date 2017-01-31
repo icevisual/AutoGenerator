@@ -281,6 +281,7 @@ class TestRouteGener
     
     public function randerFunctionNotRetJson($data){
         extract($data);
+        $method = strtolower($method);
         $template = <<<EOF
     
     /**
@@ -293,7 +294,7 @@ class TestRouteGener
         \$data = [
 $paramKeyValueAnnType
         ];
-        \$ret = \$this->post($route, \$data);
+        \$ret = \$this->{$method}Json($route, \$data);
         return \$ret;
     }
 EOF;
@@ -369,12 +370,33 @@ $functions
 EOF;
         return  $template.PHP_EOL;
     }
+    
+    
+    public function parseUriWithParameter($data){
+    	
+    	$uri = $data['uri'];
+    	$pattern = '/\{(\w+)\}/';
+    	preg_match_all($pattern, $data['uri'],$matches);
+    	$ret = [
+    		'uri' => '',
+    		'param' => []
+    	];
+    	if(isset($matches[0]) && $matches[0]){
+    		foreach ($matches[0] as $key => $holder){
+    			$uri = str_replace($holder, "'.\$data['{$matches[1][$key]}'].'", $uri);
+    		}
+    		$ret['uri'] = $uri;
+    		$ret['param'] = $matches[1];
+			return $ret;
+    	}
+    	return false;
+    }
 
     public function gener($data)
     {
         $functionStr = '';
         foreach ($data as $v) {
-            dump($data);
+            $uriParsed = false;
             $as = array_get($v, 'as');
             $funcData = [
                 'describe' => $v['uriName'],
@@ -384,13 +406,29 @@ EOF;
                 'route' => '',
                 'paramAnn' => '',
             ];
+            if(isset($v['uri'])){
+            	$uriParsed = $this->parseUriWithParameter($v);
+            }
             if(!$as){
                 $funcData['functionName'] = str_replace('/','_', $v['uri']);
                 $funcData['route'] = '\''.$v['uri'].'\'';
+                if($uriParsed){
+                	$funcData['route'] = '\''.$uriParsed['uri'].'\'';
+                }
             }else{
                 $funcData['functionName'] = $as;
                 $funcData['route'] = 'route(\''.$as.'\')';
+                if($uriParsed){
+//                 	dump(implode("','", $uriParsed['param']));
+                	$funcData['route'] = 'route(\''.$as.'\',array_only($data,['.'\''.implode("','", $uriParsed['param']).'\''.']))';
+                	
+//                 	dump($funcData['route']);
+                	
+                }
             }
+            
+            
+            
             if(!empty($v['params'])){
                 $input = [];
                 foreach ($v['params'] as $ka => $pa){
