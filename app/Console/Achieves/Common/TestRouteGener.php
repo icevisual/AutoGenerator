@@ -282,6 +282,14 @@ class TestRouteGener
     public function randerFunctionNotRetJson($data){
         extract($data);
         $method = strtolower($method);
+        
+        if('get' == $method){
+        	$route = "        \$ret = \$this->{$method}Json({$route}.'?'.http_build_query(\$data));";
+        }else{
+        	$route = "        \$ret = \$this->{$method}Json({$route},\$data);";
+        }
+        
+        
         $template = <<<EOF
     
     /**
@@ -294,7 +302,7 @@ class TestRouteGener
         \$data = [
 $paramKeyValueAnnType
         ];
-        \$ret = \$this->{$method}Json($route, \$data);
+$route
         return \$ret;
     }
 EOF;
@@ -303,6 +311,13 @@ EOF;
     public function randerFunction($data){
         extract($data);
         $method = strtolower($method);
+        
+        if('get' == $method){
+        	$route = "        \$ret = \$this->{$method}Json({$route}.'?'.http_build_query(\$data))->toJson();";
+        }else{
+        	$route = "        \$ret = \$this->{$method}Json({$route},\$data)->toJson();";
+        }
+        
         $template = <<<EOF
         
     /**
@@ -315,7 +330,7 @@ EOF;
         \$data = [
 $paramKeyValueAnnType
         ];
-        \$ret = \$this->{$method}Json($route, \$data)->toJson();
+$route
         return \$ret;
     }
 EOF;
@@ -387,7 +402,7 @@ EOF;
     		}
     		$ret['uri'] = $uri;
     		$ret['param'] = $matches[1];
-			return $ret;
+ 			return $ret;
     	}
     	return false;
     }
@@ -419,11 +434,7 @@ EOF;
                 $funcData['functionName'] = $as;
                 $funcData['route'] = 'route(\''.$as.'\')';
                 if($uriParsed){
-//                 	dump(implode("','", $uriParsed['param']));
                 	$funcData['route'] = 'route(\''.$as.'\',array_only($data,['.'\''.implode("','", $uriParsed['param']).'\''.']))';
-                	
-//                 	dump($funcData['route']);
-                	
                 }
             }
             
