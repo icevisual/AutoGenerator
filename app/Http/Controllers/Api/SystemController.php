@@ -20,7 +20,7 @@ class SystemController extends Controller
                 if (isset($v['type']) && array_get($v, 'attrs.ajax')) {
                     if($v['type'] == 'table'){
                         $queryUri = array_get($v, 'attrs.uris.query.url');
-                        $ret = curl_get( 'http://'.\Request::getHost().'/'.$queryUri);
+                        $ret = curl_get( 'http://'.\Request::getHost().':'.\Request::getPort().'/'.$queryUri);
                         array_set($json[$k], 'data', $ret['data']);
                     }
                 }
