@@ -34,6 +34,33 @@ class Test extends Command
         parent::__construct();
     }
 
+    
+    public function tttt($a,$b =1){
+        
+    }
+    
+    /**
+     * @param unknown $class_method
+     * Class name and method name delimited by ::.
+     */
+    public function getMethodParametersWithReflection($class_method)
+    {
+        $ReflectionMethod = new \ReflectionMethod($class_method);
+    
+        $paArray = $ReflectionMethod->getParameters();
+    
+        $params = [];
+    
+        foreach ($paArray as $v){
+            $pa = [];
+            if($v->isDefaultValueAvailable()){
+                $pa['default'] = $v->getDefaultValue();
+            }
+            $pa['name'] = $v->getName();
+            $params[$v->getName()] = $pa;
+        }
+        return $params;
+    }
     /**
      * Execute the console command.
      *
@@ -41,6 +68,12 @@ class Test extends Command
      */
     public function handle()
     {
+        $class_method = __CLASS__.'::tttt';
+        
+        dd($this->getMethodParametersWithReflection($class_method));
+        exit;
+        
+        
         
         dd(unserialize('a:7:{s:9:"last_time";s:10:"1484879493";s:7:"last_ip";s:15:"183.128.128.151";s:10:"login_fail";i:0;s:10:"headimgurl";s:129:"http://wx.qlogo.cn/mmopen/HmVQlX9WkBvjyp913zkQfxegoicPYmvJoGv5ZLUCCoggiaWbrNZsPicZG8NLQFDXNgwiak37OEvKibdJgz4fwSSWnWsOeOWaqzRym/0";s:8:"nickname";s:10:"小'));
         

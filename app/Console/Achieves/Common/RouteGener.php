@@ -4,6 +4,7 @@ namespace App\Console\Achieves\Common;
 use Route;
 use App\Models\Common\Parameters;
 use App\Models\Common\RequestLog;
+use function GuzzleHttp\json_encode;
 
 class RouteGener
 {
@@ -34,80 +35,103 @@ class RouteGener
     public function getInputParamsAndAnns($action)
     {
         $codes = getFunctionDeclaration($action);
-        return $this->filterParamsAndAnns($codes);
+        return $this->filterParamsAndAnns($codes,$action);
     }
 
-    
     /**
-     * 获取函数的参数
-     * @param unknown $codesArray
-     * @return multitype:multitype:string unknown
+     * @param unknown $class_method
+     * Class name and method name delimited by ::. 
      */
-    public function findFunctionParameters($codesArray){
+    public function getMethodParametersWithReflection($class_method)
+    {
+        $ReflectionMethod = new \ReflectionMethod($class_method);
+        $paArray = $ReflectionMethod->getParameters();
         $params = [];
-        $funcPa = '';
-        $findTag = false;
-        foreach ($codesArray as $line){
-            if(!$findTag){
-                if(($p1 = strpos($line, '(')) !== false){
-                    $findTag = true;
-                    if( ($p2 = strpos($line, ')')) !== false){
-                        $funcPa = trim(substr($line, $p1 + 1,$p2 - $p1 - 1));
-                        break;
-                    }else{
-                        $funcPa = trim(substr($line, $p1 + 1));
-                    }
-                }
-            }else{
-                if( ($p2 = strpos($line, ')')) !== false){
-                    $funcPa .= trim(substr($line, 0,$p2));
-                    break;
-                }else{
-                    $funcPa .= trim($line);
-                }
-        
+        foreach ($paArray as $v){
+            $pa = [];
+            $pa['type'] = 'String';
+            if($v->isDefaultValueAvailable()){
+                $pa['default'] = $v->getDefaultValue();
             }
-        }
-        
-        if($funcPa){
-            foreach (explode(',', $funcPa) as $v){
-                $v = substr(trim($v), 1);
-        
-                if(strpos($v, '=') !== false){
-                    // has default value
-                    $segs =  explode('=', $v,2);
-        
-                    $params[trim($segs[0])] = [
-                        'type' => 'String',
-                        'name' => $segs[0],
-                        'default' => trim($segs[1],' \''),
-                    ];
-                }else{
-                    $params[$v] =[
-                        'type' => 'String',
-                        'name' => $v,
-                    ];
-                }
-        
-            }
+            $pa['name'] = $v->getName();
+            $params[$v->getName()] = $pa;
         }
         return $params;
     }
     
-    
+    /**
+     * 获取函数的参数
+     * 
+     * @param unknown $codesArray            
+     * @return multitype:multitype:string unknown
+     */
+    public function findFunctionParameters($codesArray)
+    {
+        $params = [];
+        $funcPa = '';
+        $findTag = false;
+        foreach ($codesArray as $line) {
+            if (! $findTag) {
+                if (($p1 = strpos($line, '(')) !== false) {
+                    $findTag = true;
+                    if (($p2 = strpos($line, ')')) !== false) {
+                        $funcPa = trim(substr($line, $p1 + 1, $p2 - $p1 - 1));
+                        break;
+                    } else {
+                        $funcPa = trim(substr($line, $p1 + 1));
+                    }
+                }
+            } else {
+                if (($p2 = strpos($line, ')')) !== false) {
+                    $funcPa .= trim(substr($line, 0, $p2));
+                    break;
+                } else {
+                    $funcPa .= trim($line);
+                }
+            }
+        }
+        
+        if ($funcPa) {
+            foreach (explode(',', $funcPa) as $v) {
+                $v = substr(trim($v), 1);
+                
+                if (strpos($v, '=') !== false) {
+                    // has default value
+                    $segs = explode('=', $v, 2);
+                    
+                    $params[trim($segs[0])] = [
+                        'type' => 'String',
+                        'name' => $segs[0],
+                        'default' => trim($segs[1], ' \'')
+                    ];
+                } else {
+                    $params[$v] = [
+                        'type' => 'String',
+                        'name' => $v
+                    ];
+                }
+            }
+        }
+        return $params;
+    }
+
     /**
      * 判别所需参数，现以Input::get()判定
      *
      * @param unknown $codes            
      * @return multitype:boolean
      */
-    public function filterParamsAndAnns($codes)
+    public function filterParamsAndAnns($codes,$action)
     {
         $params = array();
         if (! is_array($codes))
             return false;
-        
-        $params = $this->findFunctionParameters($codes);
+        $params1 = $this->findFunctionParameters($codes);
+        $params = $this->getMethodParametersWithReflection($action[0].'::'.$action[1]);
+
+        if(json_encode($params1) != json_encode($params)){
+            dd($params1,$params);
+        }
         
         array_walk($codes, function ($v, $k) use(&$params, $codes) {
             $regs = [
@@ -213,15 +237,20 @@ class RouteGener
     }
 
     /**
-     * 
-     * @param string $env
-     * @param string $apidocAnnstorageFile
+     *
+     * @param string $env            
+     * @param string $apidocAnnstorageFile            
      */
     public function run($apidocAnnstorageFile = '')
     {
-        // Add route matcher & output file & 
-        $ignoreRoutes = [
-        ];
+        // Add route matcher & output file &
+        
+        
+        
+        
+        
+        
+        $ignoreRoutes = [];
         
         $handlePrefix = 'api';
         
@@ -244,7 +273,7 @@ class RouteGener
                 continue;
             }
             $actionData = $v->getAction();
-            // 分割action
+            // 分割action , 不解析 Closure
             $action = $this->compileAction($action);
             if (! $action || ! method_exists($action[0], $action[1])) {
                 continue;
@@ -279,17 +308,17 @@ class RouteGener
         
         return ($routesSelect);
     }
-    
-    public function randerFunctionNotRetJson($data){
+
+    public function randerFunctionNotRetJson($data)
+    {
         extract($data);
         $method = strtolower($method);
         
-        if('get' == $method){
-        	$route = "        \$ret = \$this->{$method}Json({$route}.'?'.http_build_query(\$data));";
-        }else{
-        	$route = "        \$ret = \$this->{$method}Json({$route},\$data);";
+        if ('get' == $method) {
+            $route = "        \$ret = \$this->{$method}Json({$route}.'?'.http_build_query(\$data));";
+        } else {
+            $route = "        \$ret = \$this->{$method}Json({$route},\$data);";
         }
-        
         
         $template = <<<EOF
     
@@ -307,16 +336,18 @@ $route
         return \$ret;
     }
 EOF;
-        return  $template.PHP_EOL;
-    }   
-    public function randerFunction($data){
+        return $template . PHP_EOL;
+    }
+
+    public function randerFunction($data)
+    {
         extract($data);
         $method = strtolower($method);
         
-        if('get' == $method){
-        	$route = "        \$ret = \$this->{$method}Json({$route}.'?'.http_build_query(\$data))->toJson();";
-        }else{
-        	$route = "        \$ret = \$this->{$method}Json({$route},\$data)->toJson();";
+        if ('get' == $method) {
+            $route = "        \$ret = \$this->{$method}Json({$route}.'?'.http_build_query(\$data))->toJson();";
+        } else {
+            $route = "        \$ret = \$this->{$method}Json({$route},\$data)->toJson();";
         }
         
         $template = <<<EOF
@@ -335,44 +366,44 @@ $route
         return \$ret;
     }
 EOF;
-        return  $template.PHP_EOL;
+        return $template . PHP_EOL;
     }
-    
-    public function randerParamLine ($data){
+
+    public function randerParamLine($data)
+    {
         $ret = '';
-        foreach ($data as $v){
+        foreach ($data as $v) {
             extract($v);
             $ret .= <<<EOF
             '$key' => array_get(\$params,'$key',''),// $name $type
 EOF;
             $ret .= PHP_EOL;
         }
-        return rtrim($ret,"\r\n") ;
+        return rtrim($ret, "\r\n");
     }
-    
-    
-    public function randerParamAnn ($data){
-        
-        $ret =<<<EOF
+
+    public function randerParamAnn($data)
+    {
+        $ret = <<<EOF
      * @param array \$params
      *            <pre>
 EOF;
         $ret .= PHP_EOL;
-        foreach ($data as $v){
+        foreach ($data as $v) {
             extract($v);
             $ret .= <<<EOF
      *            '$key' => '', //$type $name
 EOF;
             $ret .= PHP_EOL;
         }
-        $ret .=<<<EOF
+        $ret .= <<<EOF
      *            </pre>
 EOF;
-        return rtrim(ltrim($ret,' *'),"\r\n") ;
+        return rtrim(ltrim($ret, ' *'), "\r\n");
     }
-    
 
-    public function randerTemplate ($data){
+    public function randerTemplate($data)
+    {
         extract($data);
         $template = <<<EOF
 <?php 
@@ -384,28 +415,27 @@ class TestRoutes extends TestCase
 $functions
 }
 EOF;
-        return  $template.PHP_EOL;
+        return $template . PHP_EOL;
     }
-    
-    
-    public function parseUriWithParameter($data){
-    	
-    	$uri = $data['uri'];
-    	$pattern = '/\{(\w+)\}/';
-    	preg_match_all($pattern, $data['uri'],$matches);
-    	$ret = [
-    		'uri' => '',
-    		'param' => []
-    	];
-    	if(isset($matches[0]) && $matches[0]){
-    		foreach ($matches[0] as $key => $holder){
-    			$uri = str_replace($holder, "'.\$data['{$matches[1][$key]}'].'", $uri);
-    		}
-    		$ret['uri'] = $uri;
-    		$ret['param'] = $matches[1];
- 			return $ret;
-    	}
-    	return false;
+
+    public function parseUriWithParameter($data)
+    {
+        $uri = $data['uri'];
+        $pattern = '/\{(\w+)\}/';
+        preg_match_all($pattern, $data['uri'], $matches);
+        $ret = [
+            'uri' => '',
+            'param' => []
+        ];
+        if (isset($matches[0]) && $matches[0]) {
+            foreach ($matches[0] as $key => $holder) {
+                $uri = str_replace($holder, "'.\$data['{$matches[1][$key]}'].'", $uri);
+            }
+            $ret['uri'] = $uri;
+            $ret['param'] = $matches[1];
+            return $ret;
+        }
+        return false;
     }
 
     public function gener($data)
@@ -420,50 +450,48 @@ EOF;
                 'functionName' => '',
                 'paramKeyValueAnnType' => '',
                 'route' => '',
-                'paramAnn' => '',
+                'paramAnn' => ''
             ];
-            if(isset($v['uri'])){
-            	$uriParsed = $this->parseUriWithParameter($v);
+            if (isset($v['uri'])) {
+                $uriParsed = $this->parseUriWithParameter($v);
             }
-            if(!$as){
-                $funcData['functionName'] = str_replace('/','_', $v['uri']);
-                $funcData['route'] = '\''.$v['uri'].'\'';
-                if($uriParsed){
-                	$funcData['route'] = '\''.$uriParsed['uri'].'\'';
+            if (! $as) {
+                $funcData['functionName'] = str_replace('/', '_', $v['uri']);
+                $funcData['route'] = '\'' . $v['uri'] . '\'';
+                if ($uriParsed) {
+                    $funcData['route'] = '\'' . $uriParsed['uri'] . '\'';
                 }
-            }else{
+            } else {
                 $funcData['functionName'] = $as;
-                $funcData['route'] = 'route(\''.$as.'\')';
-                if($uriParsed){
-                	$funcData['route'] = 'route(\''.$as.'\',array_only($data,['.'\''.implode("','", $uriParsed['param']).'\''.']))';
+                $funcData['route'] = 'route(\'' . $as . '\')';
+                if ($uriParsed) {
+                    $funcData['route'] = 'route(\'' . $as . '\',array_only($data,[' . '\'' . implode("','", $uriParsed['param']) . '\'' . ']))';
                 }
             }
             
-            
-            
-            if(!empty($v['params'])){
+            if (! empty($v['params'])) {
                 $input = [];
-                foreach ($v['params'] as $ka => $pa){
+                foreach ($v['params'] as $ka => $pa) {
                     $input[] = [
                         'key' => $ka,
                         'name' => $pa['name'],
-                        'type' => $pa['type'],
+                        'type' => $pa['type']
                     ];
                 }
-                $funcData['paramAnn'] = $this->randerParamAnn($input) ;
-                $funcData['paramKeyValueAnnType'] = $this->randerParamLine($input) ;
+                $funcData['paramAnn'] = $this->randerParamAnn($input);
+                $funcData['paramKeyValueAnnType'] = $this->randerParamLine($input);
             }
             // 获取图像验证码，无需返回JSON
-            if(isset($v['apiContentType']) && strtolower(substr($v['apiContentType'], -4)) != 'json'){
+            if (isset($v['apiContentType']) && strtolower(substr($v['apiContentType'], - 4)) != 'json') {
                 $functionStr .= $this->randerFunctionNotRetJson($funcData);
-            }else{
+            } else {
                 $functionStr .= $this->randerFunction($funcData);
             }
         }
         $str = $this->randerTemplate([
             'functions' => $functionStr
         ]);
-        file_put_contents(base_path('tests').DIRECTORY_SEPARATOR.'TestRoutes.php', $str);
+        file_put_contents(base_path('tests') . DIRECTORY_SEPARATOR.'TestRoutes.php', $str);
     }
 
 }
