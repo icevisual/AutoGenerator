@@ -456,7 +456,7 @@ EOL;
         // mk Create Test Case
         // 
         
-        
+        \Artisan::call($command);
         
     }
     

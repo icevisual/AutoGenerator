@@ -37,6 +37,64 @@ class RouteGener
         return $this->filterParamsAndAnns($codes);
     }
 
+    
+    /**
+     * 获取函数的参数
+     * @param unknown $codesArray
+     * @return multitype:multitype:string unknown
+     */
+    public function findFunctionParameters($codesArray){
+        $params = [];
+        $funcPa = '';
+        $findTag = false;
+        foreach ($codesArray as $line){
+            if(!$findTag){
+                if(($p1 = strpos($line, '(')) !== false){
+                    $findTag = true;
+                    if( ($p2 = strpos($line, ')')) !== false){
+                        $funcPa = trim(substr($line, $p1 + 1,$p2 - $p1 - 1));
+                        break;
+                    }else{
+                        $funcPa = trim(substr($line, $p1 + 1));
+                    }
+                }
+            }else{
+                if( ($p2 = strpos($line, ')')) !== false){
+                    $funcPa .= trim(substr($line, 0,$p2));
+                    break;
+                }else{
+                    $funcPa .= trim($line);
+                }
+        
+            }
+        }
+        
+        if($funcPa){
+            foreach (explode(',', $funcPa) as $v){
+                $v = substr(trim($v), 1);
+        
+                if(strpos($v, '=') !== false){
+                    // has default value
+                    $segs =  explode('=', $v,2);
+        
+                    $params[trim($segs[0])] = [
+                        'type' => 'String',
+                        'name' => $segs[0],
+                        'default' => trim($segs[1],' \''),
+                    ];
+                }else{
+                    $params[$v] =[
+                        'type' => 'String',
+                        'name' => $v,
+                    ];
+                }
+        
+            }
+        }
+        return $params;
+    }
+    
+    
     /**
      * 判别所需参数，现以Input::get()判定
      *
@@ -48,6 +106,9 @@ class RouteGener
         $params = array();
         if (! is_array($codes))
             return false;
+        
+        $params = $this->findFunctionParameters($codes);
+        
         array_walk($codes, function ($v, $k) use(&$params, $codes) {
             $regs = [
                 '/(?:Input::get|\$request->input)\s*\(\s*[\'\"]([\w\d_]*)[\'\"]\s*(?:\s*,\s*[\'\"]?([\s\w_\-]*)[\'\"]?\s*)?\)/',
@@ -151,9 +212,6 @@ class RouteGener
         return $name ? $name : 'unknown';
     }
 
-    
-    public $storagePath = '';
-    
     /**
      * 
      * @param string $env
@@ -161,6 +219,7 @@ class RouteGener
      */
     public function run($apidocAnnstorageFile = '')
     {
+        // Add route matcher & output file & 
         $ignoreRoutes = [
         ];
         
@@ -223,6 +282,15 @@ class RouteGener
     
     public function randerFunctionNotRetJson($data){
         extract($data);
+        $method = strtolower($method);
+        
+        if('get' == $method){
+        	$route = "        \$ret = \$this->{$method}Json({$route}.'?'.http_build_query(\$data));";
+        }else{
+        	$route = "        \$ret = \$this->{$method}Json({$route},\$data);";
+        }
+        
+        
         $template = <<<EOF
     
     /**
@@ -235,7 +303,7 @@ class RouteGener
         \$data = [
 $paramKeyValueAnnType
         ];
-        \$ret = \$this->post($route, \$data);
+$route
         return \$ret;
     }
 EOF;
@@ -244,6 +312,13 @@ EOF;
     public function randerFunction($data){
         extract($data);
         $method = strtolower($method);
+        
+        if('get' == $method){
+        	$route = "        \$ret = \$this->{$method}Json({$route}.'?'.http_build_query(\$data))->toJson();";
+        }else{
+        	$route = "        \$ret = \$this->{$method}Json({$route},\$data)->toJson();";
+        }
+        
         $template = <<<EOF
         
     /**
@@ -256,7 +331,7 @@ EOF;
         \$data = [
 $paramKeyValueAnnType
         ];
-        \$ret = \$this->{$method}Json($route, \$data)->toJson();
+$route
         return \$ret;
     }
 EOF;
@@ -311,11 +386,33 @@ $functions
 EOF;
         return  $template.PHP_EOL;
     }
+    
+    
+    public function parseUriWithParameter($data){
+    	
+    	$uri = $data['uri'];
+    	$pattern = '/\{(\w+)\}/';
+    	preg_match_all($pattern, $data['uri'],$matches);
+    	$ret = [
+    		'uri' => '',
+    		'param' => []
+    	];
+    	if(isset($matches[0]) && $matches[0]){
+    		foreach ($matches[0] as $key => $holder){
+    			$uri = str_replace($holder, "'.\$data['{$matches[1][$key]}'].'", $uri);
+    		}
+    		$ret['uri'] = $uri;
+    		$ret['param'] = $matches[1];
+ 			return $ret;
+    	}
+    	return false;
+    }
 
     public function gener($data)
     {
         $functionStr = '';
         foreach ($data as $v) {
+            $uriParsed = false;
             $as = array_get($v, 'as');
             $funcData = [
                 'describe' => $v['uriName'],
@@ -325,13 +422,25 @@ EOF;
                 'route' => '',
                 'paramAnn' => '',
             ];
+            if(isset($v['uri'])){
+            	$uriParsed = $this->parseUriWithParameter($v);
+            }
             if(!$as){
                 $funcData['functionName'] = str_replace('/','_', $v['uri']);
                 $funcData['route'] = '\''.$v['uri'].'\'';
+                if($uriParsed){
+                	$funcData['route'] = '\''.$uriParsed['uri'].'\'';
+                }
             }else{
                 $funcData['functionName'] = $as;
                 $funcData['route'] = 'route(\''.$as.'\')';
+                if($uriParsed){
+                	$funcData['route'] = 'route(\''.$as.'\',array_only($data,['.'\''.implode("','", $uriParsed['param']).'\''.']))';
+                }
             }
+            
+            
+            
             if(!empty($v['params'])){
                 $input = [];
                 foreach ($v['params'] as $ka => $pa){
