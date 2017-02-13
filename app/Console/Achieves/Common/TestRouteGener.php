@@ -4,252 +4,99 @@ namespace App\Console\Achieves\Common;
 use Route;
 use App\Models\Common\Parameters;
 use App\Models\Common\RequestLog;
-use function GuzzleHttp\json_encode;
+use Illuminate\Support\Str;
 
-class TestRouteGener
+class TestRouteGener extends RouteAnalyzer
 {
 
-    /**
-     * 分割action
-     *
-     * @param unknown $action_name            
-     * @return multitype:|boolean
-     */
-    public function compileAction($action_name)
+    protected $storagePath = '/tests/TestRoutes.php';
+
+    protected $filterSetting = [
+        'except' => [],
+        'only' => [],
+        'prefix' => ['api/auto']
+    ];
+    
+    
+    public function getFilterSetting($key = ''){
+        if($key){
+            return array_get($this->filterSetting, $key,false);
+        }
+        return $this->filterSetting;
+    }
+    
+
+    public function setStoragePath($storagePath)
     {
-        if ('Closure' != $action_name) {
-            if (strpos($action_name, '@')) {
-                $action = explode('@', $action_name);
-                return $action;
+        $storagePath && $this->storagePath = $storagePath;
+    }
+
+    public function getStoragePath()
+    {
+        $storagePath = preg_replace('/[\/\\\\]/', DIRECTORY_SEPARATOR, trim($this->storagePath, "\/"));
+        return base_path($storagePath);
+    }
+
+    public function filterUri($uri)
+    {
+        $filterHandlers = array_keys($this->filterSetting);
+        
+        foreach ($filterHandlers as $handler){
+            if(empty($this->getFilterSetting($handler))){
+                continue;
+            }
+            $handlerName = 'filter'.ucfirst(strtolower($handler)).'Uri';
+            if(method_exists($this, $handlerName)){
+                $handlerResult = call_user_func_array([
+                    $this,$handlerName
+                ], [$uri]);
+                if(false === $handlerResult){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
+    public function filterExceptUri($uri)
+    {
+        foreach ($this->getFilterSetting('except') as $k => $v){
+            if(Str::is($v, $uri)){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public function filterOnlyUri($uri)
+    {
+        foreach ($this->getFilterSetting('only') as $k => $v){
+            if(Str::is($v, $uri)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public function filterPrefixUri($uri)
+    {
+        foreach ($this->getFilterSetting('prefix') as $k => $v){
+            if(Str::is($v.'*', $uri)){
+                return true;
             }
         }
         return false;
     }
 
     /**
-     * 获取action指向方法的所需参数和参数备注
      *
-     * @param unknown $action            
-     * @return multitype:boolean
+     * @param string $storagePath            
+     * @param unknown $fileter            
      */
-    public function getInputParamsAndAnns($action)
+    public function run($storagePath = '', $fileter = [])
     {
-        $codes = getFunctionDeclaration($action);
-        return $this->filterParamsAndAnns($codes,$action);
-    }
-
-    /**
-     * @param unknown $class_method
-     * Class name and method name delimited by ::. 
-     */
-    public function getMethodParametersWithReflection($class_method)
-    {
-        $ReflectionMethod = new \ReflectionMethod($class_method);
-        $paArray = $ReflectionMethod->getParameters();
-        $params = [];
-        foreach ($paArray as $v){
-            $pa = [];
-            $pa['type'] = 'String';
-            if($v->isDefaultValueAvailable()){
-                $pa['default'] = $v->getDefaultValue();
-            }
-            $pa['name'] = $v->getName();
-            $params[$v->getName()] = $pa;
-        }
-        return $params;
-    }
-    
-    /**
-     * 获取函数的参数
-     * 
-     * @param unknown $codesArray            
-     * @return multitype:multitype:string unknown
-     */
-    public function findFunctionParameters($codesArray)
-    {
-        $params = [];
-        $funcPa = '';
-        $findTag = false;
-        foreach ($codesArray as $line) {
-            if (! $findTag) {
-                if (($p1 = strpos($line, '(')) !== false) {
-                    $findTag = true;
-                    if (($p2 = strpos($line, ')')) !== false) {
-                        $funcPa = trim(substr($line, $p1 + 1, $p2 - $p1 - 1));
-                        break;
-                    } else {
-                        $funcPa = trim(substr($line, $p1 + 1));
-                    }
-                }
-            } else {
-                if (($p2 = strpos($line, ')')) !== false) {
-                    $funcPa .= trim(substr($line, 0, $p2));
-                    break;
-                } else {
-                    $funcPa .= trim($line);
-                }
-            }
-        }
-        
-        if ($funcPa) {
-            foreach (explode(',', $funcPa) as $v) {
-                $v = substr(trim($v), 1);
-                
-                if (strpos($v, '=') !== false) {
-                    // has default value
-                    $segs = explode('=', $v, 2);
-                    
-                    $params[trim($segs[0])] = [
-                        'type' => 'String',
-                        'name' => $segs[0],
-                        'default' => trim($segs[1], ' \'')
-                    ];
-                } else {
-                    $params[$v] = [
-                        'type' => 'String',
-                        'name' => $v
-                    ];
-                }
-            }
-        }
-        return $params;
-    }
-
-    /**
-     * 判别所需参数，现以Input::get()判定
-     *
-     * @param unknown $codes            
-     * @return multitype:boolean
-     */
-    public function filterParamsAndAnns($codes,$action)
-    {
-        $params = array();
-        if (! is_array($codes))
-            return false;
-        $params1 = $this->findFunctionParameters($codes);
-        $params = $this->getMethodParametersWithReflection($action[0].'::'.$action[1]);
-
-        if(json_encode($params1) != json_encode($params)){
-            dd($params1,$params);
-        }
-        
-        array_walk($codes, function ($v, $k) use(&$params, $codes) {
-            $regs = [
-                '/(?:Input::get|\$request->input)\s*\(\s*[\'\"]([\w\d_]*)[\'\"]\s*(?:\s*,\s*[\'\"]?([\s\w_\-]*)[\'\"]?\s*)?\)/',
-                '/\$_(?:POST|GET)\s*\[[\'\"]([\w\d_]*)[\'\"]\]/'
-            ];
-            $hit = false;
-            foreach ($regs as $regex) {
-                $r = preg_match($regex, $v, $matchs);
-                if ($r) {
-                    $hit = true;
-                    $params[$matchs[1]] = [];
-                    if (isset($matchs[2])) {
-                        // 设置默认值
-                        $params[$matchs[1]] = [
-                            'default' => $matchs[2]
-                        ];
-                    }
-                    break;
-                }
-            }
-            if ($hit) {
-                if (isset($codes[$k - 1])) {
-                    // 获取 参数名称、类别
-                    $ann = trim($codes[$k - 1]);
-                    if (strpos($ann, '//') === 0) {
-                        list ($params[$matchs[1]]['type'], $params[$matchs[1]]['name']) = $this->getPossibleTypeAndName(trim($ann, "/ \r\n"));
-                    } else {
-                        $ann = explode("//", $v, 2);
-                        if (isset($ann[1])) {
-                            $ann = trim($ann[1], "/ \r\n");
-                            list ($params[$matchs[1]]['type'], $params[$matchs[1]]['name']) = $this->getPossibleTypeAndName(trim($ann, "/ \r\n"));
-                        } else {
-                            $params[$matchs[1]]['name'] = $this->getDefaultParamName($matchs[1]);
-                            $params[$matchs[1]]['type'] = 'String';
-                        }
-                    }
-                }
-            }
-        });
-        return $params;
-    }
-
-    /**
-     * 分析备注。获取参数类别和名称
-     *
-     * @param unknown $ann            
-     * @return multitype:string unknown
-     */
-    protected function getPossibleTypeAndName($ann)
-    {
-        // TODO 根据参数名称 自学习类别
-        if (strpos($ann, ' ') === false) {
-            return [
-                'String',
-                $ann
-            ];
-        }
-        $segments = explode(" ", $ann, 2);
-        $standardTypesArray = [
-            'string',
-            'array',
-            'object',
-            'int',
-            'integer',
-            'float',
-            'double',
-            'bool',
-            'boolean',
-            'file',
-            'long',
-            'char',
-            'short',
-            'varchar',
-            'date',
-            'time',
-            'datatime'
-        ];
-        $standardTypesArray = array_flip($standardTypesArray);
-        if (isset($standardTypesArray[strtolower($segments[0])])) {
-            return [
-                ucfirst(strtolower($segments[0])),
-                trim($segments[1])
-            ];
-        }
-        if (isset($standardTypesArray[strtolower($segments[1])])) {
-            return [
-                ucfirst(strtolower($segments[1])),
-                trim($segments[0])
-            ];
-        }
-        return [
-            'String',
-            $ann
-        ];
-    }
-
-    protected function getDefaultParamName($property)
-    {
-        // fill Default Map , from exists params of other api , 自学习算法
-        $name = Parameters::searchParameters($property);
-        return $name ? $name : 'unknown';
-    }
-
-    /**
-     *
-     * @param string $env            
-     * @param string $apidocAnnstorageFile            
-     */
-    public function run($apidocAnnstorageFile = '')
-    {
+        $this->setStoragePath($storagePath);
         // Add route matcher & output file &
-        
-        
-        
-        
-        
-        
         $ignoreRoutes = [];
         
         $handlePrefix = 'api';
@@ -265,13 +112,11 @@ class TestRouteGener
             $uri = $v->getPath();
             $action = $v->getActionName();
             
-            if (in_array($uri, $ignoreRoutes)) {
+            
+            if(false === $this->filterUri($uri)){
                 continue;
             }
             
-            if (strpos($uri, $handlePrefix) !== 0) {
-                continue;
-            }
             $actionData = $v->getAction();
             // 分割action , 不解析 Closure
             $action = $this->compileAction($action);
@@ -491,9 +336,8 @@ EOF;
         $str = $this->randerTemplate([
             'functions' => $functionStr
         ]);
-        file_put_contents(base_path('tests') . DIRECTORY_SEPARATOR.'TestRoutes.php', $str);
+        file_put_contents($this->getStoragePath(), $str);
     }
-
 }
 
 

@@ -1318,7 +1318,7 @@ if (! function_exists('mark')) {
 
     function dmt_mark($point1 = '', $point2 = '', $unit = 'MB', $decimals = 4)
     {
-        redline($point1 . ' - ' . $point2);
+        dump($point1 . ' - ' . $point2);
         $res = mt_mark($point1, $point2, $unit, $decimals);
         dump($res);
     }

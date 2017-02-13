@@ -27,9 +27,11 @@ class TestRoute extends Command
      */
     public function handle()
     {
+        mt_mark('start');
         $ApidocAnnGener = new  \App\Console\Achieves\Common\TestRouteGener();
         $ApidocAnnGener->run();
         $this->comment(PHP_EOL . '--END--' . PHP_EOL);
+        dmt_mark('start','end');
     }
     
 }
