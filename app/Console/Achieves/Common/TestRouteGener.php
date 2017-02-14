@@ -25,6 +25,14 @@ class TestRouteGener extends RouteAnalyzer
         return $this->filterSetting;
     }
     
+    public function setFilterSetting(array $setting)
+    {
+        foreach ($this->filterSetting as $k => $v){
+            if(isset($setting[$k])){
+                $this->filterSetting[$k] = is_array($setting[$k]) ? $setting[$k] : [$setting[$k]];
+            }
+        }
+    }
 
     public function setStoragePath($storagePath)
     {
@@ -36,6 +44,13 @@ class TestRouteGener extends RouteAnalyzer
         $storagePath = preg_replace('/[\/\\\\]/', DIRECTORY_SEPARATOR, trim($this->storagePath, "\/"));
         return base_path($storagePath);
     }
+    
+    public function getStorageClassName()
+    {
+        $pathinfo = pathinfo($this->storagePath,PATHINFO_FILENAME);
+        return $pathinfo;
+    }
+    
 
     public function filterUri($uri)
     {
@@ -93,14 +108,11 @@ class TestRouteGener extends RouteAnalyzer
      * @param string $storagePath            
      * @param unknown $fileter            
      */
-    public function run($storagePath = '', $fileter = [])
+    public function run($storagePath = '', $setting = [])
     {
         $this->setStoragePath($storagePath);
+        $this->setFilterSetting($setting);
         // Add route matcher & output file &
-        $ignoreRoutes = [];
-        
-        $handlePrefix = 'api';
-        
         $routes = \Route::getRoutes();
         
         $routesSelect = [];
@@ -111,7 +123,6 @@ class TestRouteGener extends RouteAnalyzer
             $methods = $v->getMethods();
             $uri = $v->getPath();
             $action = $v->getActionName();
-            
             
             if(false === $this->filterUri($uri)){
                 continue;
@@ -250,12 +261,11 @@ EOF;
     public function randerTemplate($data)
     {
         extract($data);
+        $className = $this->getStorageClassName();
         $template = <<<EOF
 <?php 
 
-use App\Services\Open\OpenServices;
-
-class TestRoutes extends TestCase
+class $className extends TestCase
 {
 $functions
 }

@@ -29,7 +29,9 @@ class TestRoute extends Command
     {
         mt_mark('start');
         $ApidocAnnGener = new  \App\Console\Achieves\Common\TestRouteGener();
-        $ApidocAnnGener->run();
+        $ApidocAnnGener->run('/tests/TestRoutes.php',[
+            'prefix' => 'api'
+        ]);
         $this->comment(PHP_EOL . '--END--' . PHP_EOL);
         dmt_mark('start','end');
     }
