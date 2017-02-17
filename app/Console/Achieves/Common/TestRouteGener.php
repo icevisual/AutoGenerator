@@ -108,7 +108,7 @@ class TestRouteGener extends RouteAnalyzer
      * @param string $storagePath            
      * @param unknown $fileter            
      */
-    public function run($storagePath = '', $setting = [])
+    public function make($storagePath = '', $setting = [])
     {
         $this->setStoragePath($storagePath);
         $this->setFilterSetting($setting);

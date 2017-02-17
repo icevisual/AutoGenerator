@@ -4,6 +4,7 @@ namespace App\Console\Achieves\APIGenerator;
 use Illuminate\Database\Schema\Blueprint;
 use App\Models\System\Tables;
 use App\Models\System\Columns;
+use App\Console\Achieves\Common\TestRouteGener;
 
 class GenerateBasicCRUD
 {
@@ -452,11 +453,15 @@ EOL;
     
     
     public function makeTestCase(){
-        
         // mk Create Test Case
         // 
+        $TestRouteGener = new TestRouteGener();
+        $TestRouteGener->make('tests/AutoMake/TestAutoMake.php',[
+            'only' => 'api/auto*'
+        ]);
         
-        \Artisan::call($command);
+        
+        
         
     }
     
