@@ -68,6 +68,12 @@ class Test extends Command
      */
     public function handle()
     {
+        
+        
+        
+        
+        
+        
         $class_method = __CLASS__.'::tttt';
         
         dd($this->getMethodParametersWithReflection($class_method));
