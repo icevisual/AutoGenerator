@@ -11,6 +11,89 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     
+    
+    public function __construct(){
+        
+        $SidebarMenu = $this->getSidebarMenu(\Request::getPathInfo());
+        
+        \View::share('SidebarMenu',$SidebarMenu);
+        
+    }
+    
+    public function getSidebarMenu($pathname){
+        // DB staticize
+        $data = [
+            [
+                'group' => 'MAIN NAVIGATION',
+                'menus' => [
+                    [
+                        'icon' => 'fa-dashboard',
+                        'title' => 'System',
+                        'submenus' => [
+                            [
+                                'href' => route('query_tables'),
+                                'icon' => 'fa-circle-o',
+                                'title' => 'QUERY TABLES'
+                            ],
+                            [
+                                'href' => route('table_create'),
+                                'icon' => 'fa-circle-o',
+                                'title' => 'TABLE CREATE'
+                            ]
+                        ]
+                    ],
+                    [
+                        'icon' => 'fa-files-o',
+                        'title' => 'Layout Options',
+                        'submenus' => [
+                            [
+                                'href' => route('attrs_list'),
+                                'icon' => 'fa-circle-o',
+                                'title' => 'ATTRS LIST'
+                            ],
+                            [
+                                'href' => route('attrs_create'),
+                                'icon' => 'fa-circle-o',
+                                'title' => 'ATTRS CREATE'
+                            ],
+                            [
+                                'href' => route('components_query'),
+                                'icon' => 'fa-circle-o',
+                                'title' => 'COMPONENTS LIST'
+                            ],
+                            [
+                                'href' => route('component_create'),
+                                'icon' => 'fa-circle-o',
+                                'title' => 'COMPONENTS CREATE'
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+        
+        $pathname = preg_replace('/\/\d+/', '', $pathname);
+        
+        foreach ($data as $k => $v) {
+            // Group
+            foreach ($v['menus'] as $k1 => $v1) {
+                // menu
+                foreach ($v1['submenus'] as $k2 => $v2) {
+                    // submenus
+                    $parse_url = parse_url($v2['href']);
+                    if ($parse_url['path'] == $pathname) {
+                        $data[$k]['menus'][$k1]['submenus'][$k2]['active'] = true;
+                        $data[$k]['menus'][$k1]['active'] = true;
+                        break 3;
+                    }
+                }
+            }
+        }
+        return $data;
+    }
+    
+    
+    
     public static function setHeaders()
     {
         $header['Access-Control-Allow-Origin'] = '*';

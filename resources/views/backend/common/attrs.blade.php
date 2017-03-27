@@ -23,3 +23,25 @@
           </div>   <!-- /.row -->
         </section><!-- /.content -->
 @stop
+
+@section('javascript')
+<script>
+require(['initialize'], function(EVue) {
+    var $ = require('jQuery'),
+        Vue = require('Vue'),
+        Utils = require('Utils');
+    
+    var d = {!!$formConfig!!}; 
+    var vmForm = new EVue({
+        'el' : '#formDemo',
+        'data' : {
+            'pageConfig' : d ,
+        },
+        'methods' : {
+            
+        }
+    });
+})
+</script>
+@stop
+

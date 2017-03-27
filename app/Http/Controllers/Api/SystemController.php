@@ -37,6 +37,7 @@ class SystemController extends Controller
      */
     public function sidebarMenu()
     {
+        // DB staticize
         $data = [
             [
                 'group' => 'MAIN NAVIGATION',
