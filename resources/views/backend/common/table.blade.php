@@ -1,4 +1,4 @@
-@extends('backend.layouts.template1')
+@extends('backend.layouts.Template1')
 @section('contentWrapper')
         <!-- Content Header (Page header) -->
         <section class="content-header">

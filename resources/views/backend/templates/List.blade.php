@@ -15,17 +15,36 @@
         <!-- Main content -->
         <section class="content" id="formDemo">
           <div class="row">
-            <!-- left column -->
-            <div class="col-md-6">
-              <horizontal-form :data-selector="pageConfig.component_form" @formvalidate="submitComponent" ></horizontal-form>
-              <common-table :data-selector="pageConfig.component_attrs_table" @tableaddbind="tableaddbind" ></common-table>
-            </div><!--/.col (left) -->
-              
-            <div class="col-md-6">
-              <common-table :data-selector="pageConfig.attrs_bind_table" @tableattrunbind="attrUnbind" ></common-table>
-                   
-            </div><!--/.col (right) -->
+            
+            <div class="col-md-12">
+                <common-table :data-selector="pageConfig.attrs_table"  ></common-table>
+            </div>
             
           </div>   <!-- /.row -->
         </section><!-- /.content -->
 @stop
+
+@section('javascript')
+<script>
+require(['initialize'], function(EVue) {
+    var $ = require('jQuery'),
+        Vue = require('Vue'),
+        Utils = require('Utils');
+    
+    var d = {!!$formConfig!!}; 
+    if(!Utils.apiReqSuccess(d)){
+        return alert(Utils.apiReqMsg(d));
+    }
+    var vmForm = new EVue({
+        'el' : '#formDemo',
+        'data' : {
+            'pageConfig' : Utils.apiReqData(d) ,
+        },
+        'methods' : {
+            
+        }
+    });
+})
+</script>
+@stop
+

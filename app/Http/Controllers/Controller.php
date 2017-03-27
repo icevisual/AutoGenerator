@@ -20,6 +20,20 @@ class Controller extends BaseController
         
     }
     
+    
+    public function renderList($config){
+        return view('backend.templates.List', [
+            'formConfig' => $config
+        ]);
+    }
+    
+    public function renderForm($config){
+        return view('backend.templates.Form', [
+            'formConfig' => $config
+        ]);
+    }
+    
+    
     public function getSidebarMenu($pathname){
         // DB staticize
         $data = [
