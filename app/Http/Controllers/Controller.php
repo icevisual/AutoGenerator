@@ -20,6 +20,20 @@ class Controller extends BaseController
         
     }
     
+    public function invokeRoute($routeName){
+        $routeAll = \Route::getRoutes();
+        $route = $routeAll->getByName($routeName);
+        if(!$route){
+            return false;
+        }
+        $action = $route->getAction();
+        $uses = explode('@', $action['uses']);
+        $response = (new $uses[0])->$uses[1]();
+        if($response instanceof  \Illuminate\Http\JsonResponse ){
+            return $data = $response->getData(true);
+        }
+        return false;
+    }
     
     public function renderList($config){
         return view('backend.templates.List', [

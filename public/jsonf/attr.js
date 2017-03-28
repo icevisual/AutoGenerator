@@ -1,4 +1,23 @@
 {
+    "layout" : {
+        "content-header": "General Form Elements",
+        "content-header-small": "preview of simple tables",
+        "content": [
+            {
+                "col-class": "col-md-6",
+                "dcontent": [
+                    {
+                        "ele": "horizontal-form",
+                        "selector": "attr_form"
+                    },
+                    {
+                        "ele": "common-table",
+                        "selector": "attr_table"
+                    }
+                ]
+            }
+        ]
+    },
     "attr_form": {
         "attrs": {
             "caption" : "新建组件属性",

@@ -3,12 +3,16 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Exceptions\ServiceException;
+use App\Models\Form\Attrs;
 
 class ComponentAttrsController extends Controller
 {
 
     public function query()
     {
+        $list = $this->invokeRoute('api_attrs_list');
+        $listJson = json_encode($list['data']);
+        
         $data =<<<EOL
 {
     "attrs_table": {
@@ -57,75 +61,118 @@ class ComponentAttrsController extends Controller
                 "form_type": "渲染类型"
             }
         },
-        "data": {
-            "total": 7,
-            "current_page": 1,
-            "last_page": 1,
-            "per_page": 10000,
-            "list": [
-                {
-                    "id": 6,
-                    "attr_name": "name",
-                    "attr_name_cn": "名称",
-                    "attr_type": "string",
-                    "form_type": "input"
-                },
-                {
-                    "id": 7,
-                    "attr_name": "type",
-                    "attr_name_cn": "类型",
-                    "attr_type": "array",
-                    "form_type": "select"
-                },
-                {
-                    "id": 8,
-                    "attr_name": "charLength",
-                    "attr_name_cn": "字符长度",
-                    "attr_type": "integer",
-                    "form_type": "input"
-                },
-                {
-                    "id": 9,
-                    "attr_name": "require",
-                    "attr_name_cn": "是否必填",
-                    "attr_type": "boolean",
-                    "form_type": "checkbox"
-                },
-                {
-                    "id": 10,
-                    "attr_name": "width",
-                    "attr_name_cn": "宽度",
-                    "attr_type": "integer",
-                    "form_type": "input"
-                },
-                {
-                    "id": 15,
-                    "attr_name": "height",
-                    "attr_name_cn": "高度",
-                    "attr_type": "integer",
-                    "form_type": "input"
-                },
-                {
-                    "id": 19,
-                    "attr_name": "keyOrValue",
-                    "attr_name_cn": "值",
-                    "attr_type": "array",
-                    "form_type": "keyOrValue"
-                }
-            ]
-        }
+        "data": $listJson
     }
 }        
-        
 EOL;
-        return view('backend.common.attrs', [
-            'formConfig' => $data
-        ]);
+        
+        return $this->renderList($data);
     }
 
     public function create()
     {
-        return view('backend.common.attr');
+        
+        $data =<<<EOL
+{
+    "attr_form": {
+        "attrs": {
+            "caption" : "新建组件属性",
+            "formColor" : "box-info",
+            "buttons": [{
+                "name" : "Submit",
+                "class" : "btn-info",
+                "event" : "submit"
+            }],
+            "action" : {
+                "uri" : "/api/attr",
+                "method" : "POST",
+                "success" : {
+                    "redirect" : "/attrs"
+                }
+            }
+        },
+        "fields": {
+            "attr_name": {
+                "name": "属性名",
+                "type": "input",
+                "attrs": {
+                    "type": "text",
+                    "placeholder": "属性名"
+                },
+                "value": ""
+            },
+            "attr_name_cn": {
+                "name": "显示中文名",
+                "type": "input",
+                "attrs": {
+                    "type": "text",
+                    "placeholder": "显示中文名"
+                },
+                "value": ""
+            },
+            "attr_type": {
+                "name": "属性类别",
+                "type": "select",
+                "value": "string",
+                "data": [
+                    {
+                        "value": "string",
+                        "text": "string"
+                    },
+                    {
+                        "value": "integer",
+                        "text": "integer"
+                    },
+                    {
+                        "value": "float",
+                        "text": "float"
+                    },
+                    {
+                        "value": "boolean",
+                        "text": "boolean"
+                    },
+                    {
+                        "value": "array",
+                        "text": "array"
+                    },
+                    {
+                        "value": "json",
+                        "text": "json"
+                    }
+                ]
+            },
+            "form_type":{
+                "name": "渲染类别",
+                "type": "select",
+                "value": "input",
+                "data": [
+                    {
+                        "value": "input",
+                        "text": "input"
+                    },
+                    {
+                        "value": "select",
+                        "text": "select"
+                    },
+                    {
+                        "value": "checkbox",
+                        "text": "checkbox"
+                    },
+                    {
+                        "value": "radio",
+                        "text": "radio"
+                    },
+                    {
+                        "value": "keyOrValue",
+                        "text": "keyOrValue"
+                    }
+                ]
+            }
+        }
+    }
+}        
+EOL;
+        return $this->renderForm($data);
     }
     
 }

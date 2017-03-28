@@ -32,13 +32,18 @@ require(['initialize'], function(EVue) {
         Utils = require('Utils');
     
     var d = {!!$formConfig!!}; 
-    if(!Utils.apiReqSuccess(d)){
-        return alert(Utils.apiReqMsg(d));
+    var pageConfig = d;
+    if(undefined !== d['code'] && undefined !== d['data']){
+        if(!Utils.apiReqSuccess(d)){
+            return alert(Utils.apiReqMsg(d));
+        }
+        pageConfig = Utils.apiReqData(d);
     }
+
     var vmForm = new EVue({
         'el' : '#formDemo',
         'data' : {
-            'pageConfig' : Utils.apiReqData(d) ,
+            'pageConfig' : pageConfig ,
         },
         'methods' : {
             
