@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 use App\Http\Controllers\Controller;
 use App\Exceptions\ServiceException;
 use App\Models\Form\Attrs;
+use function GuzzleHttp\json_decode;
 
 class ComponentAttrsController extends Controller
 {
@@ -13,6 +14,26 @@ class ComponentAttrsController extends Controller
         $list = $this->invokeRoute('api_attrs_list');
         $listJson = json_encode($list['data']);
         
+        $layout =<<<EOL
+{
+    "content-header": "General Form Elements",
+    "content-header-small": "preview of simple tables",
+    "content": [
+        [
+            {
+                "col-class": "col-md-12",
+                "dcontent": [
+                    {
+                        "ele": "common-table",
+                        "selector": "attrs_table"
+                    }
+                ]
+            }
+        ]
+    ]
+}
+EOL;
+        $layout = json_decode($layout,1);
         $data =<<<EOL
 {
     "attrs_table": {
@@ -65,13 +86,35 @@ class ComponentAttrsController extends Controller
     }
 }        
 EOL;
-        
-        return $this->renderList($data);
+        return $this->renderTemplate([
+            'formConfig' => $data,
+            'layout' => $layout
+        ]);
     }
 
     public function create()
     {
         
+        $layout =<<<EOL
+{
+    "content-header": "General Form Elements",
+    "content-header-small": "preview of simple tables",
+    "content": [
+        [
+            {
+                "col-class": "col-md-6",
+                "dcontent": [
+                    {
+                        "ele": "horizontal-form",
+                        "selector": "attr_form"
+                    }
+                ]
+            }
+        ]
+    ]
+}  
+EOL;
+        $layout = json_decode($layout,1);
         $data =<<<EOL
 {
     "attr_form": {
@@ -172,7 +215,10 @@ EOL;
     }
 }        
 EOL;
-        return $this->renderForm($data);
+        return $this->renderTemplate([
+            'formConfig' => $data,
+            'layout' => $layout
+        ]);
     }
     
 }
