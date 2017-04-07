@@ -12,6 +12,7 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
             "action" : { // form 属性
                 "uri" : "/api/attr",
                 "method" : "POST",
+                "isAjax" : true,// 默认 true
                 "success" : {// form 提交成功 
                     "redirect" : "/attrs" // 成功跳转
                 }
@@ -75,8 +76,8 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
           <div class="col-sm-10">\
               <template v-if="\'input\' == item.type">\
                 <input v-if="\'password\' == item.attrs.type" type="password" v-model="item.value" :placeholder="item.attrs.placeholder" :name="index" class="form-control" >\
-                <input v-else-if="\'hidden\' == item.attrs.type" type="hidden" v-model="item.value" :placeholder="item.attrs.placeholder" :name="index" class="form-control" >\
-                <input v-else type="text" v-model="item.value" :placeholder="item.attrs.placeholder" :name="index" class="form-control" >\
+                <input v-if="\'hidden\' == item.attrs.type" type="hidden" v-model="item.value" :placeholder="item.attrs.placeholder" :name="index" class="form-control" >\
+                <input v-if="\'text\' == item.attrs.type" v-model="item.value" :placeholder="item.attrs.placeholder" :name="index" class="form-control" >\
               </template>\
               <template v-if="\'select\' == item.type">\
                 <select v-model="item.value" :name="index" class="form-control">\
@@ -136,6 +137,9 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
                 console.log(formValidateRet);
                 if(formValidateRet !== false){
                     var this$1 = this;
+                    if(false === this.formConfig.attrs.action.isAjax){
+                        return $(this.$el).find('form').submit();
+                    }
                     $.ajax({
                         'url' : this.formConfig.attrs.action.uri,
                         'method' : this.formConfig.attrs.action.method,

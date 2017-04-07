@@ -45,6 +45,40 @@
                 },
                 "value": ""
             },
+            "attr_name_input": {
+                "name": "属性名",
+                "tag": "input",
+                "validate" : {
+                    "rules" : "required|max:10",
+                    "messages" : {
+                        "required" : "该字段必填",
+                        "max" : "该字段最多占 10 个字符"
+                    }
+                },
+                "renderAttrs" : {
+                    "type": "text",
+                    "placeholder": "属性名"
+                },
+                "event" : {
+                    "click" : "1" 
+                },
+                "value": ""
+            },
+            "attr_type_select": {
+                "name": "属性类别",
+                "tag": "select",
+                "value": "string",
+                "data": [
+                    {
+                        "value": "string",
+                        "text": "string"
+                    },
+                    {
+                        "value": "integer",
+                        "text": "integer"
+                    }
+                ]
+            },
             "attr_name_cn": {
                 "name": "显示中文名",
                 "type": "input",
