@@ -6,7 +6,7 @@ require.config({
         'AdvancedTableList' : 'Components/AdvancedTableList',
     },
 });
-define(['HorizontalForm','CommonTableList'],function() {
+define(['HorizontalForm','CommonTableList','CommonForm'],function() {
     
     
 });
