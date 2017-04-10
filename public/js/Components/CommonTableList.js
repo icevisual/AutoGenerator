@@ -117,14 +117,14 @@ define(['Vue','Utils'],function(Vue,Utils) {
             <td v-if="tableConfig.attrs.hidden[key1]" class="hide">\
               <input type="hidden" :name="\'row-\' + key + \'-\' + key1" :value="item1">\
             </td>\
-            <td v-if="tableConfig.attrs.advancedColumn && tableConfig.attrs.advancedColumn[key1]">\
+            <td v-else-if="tableConfig.attrs.advancedColumn && tableConfig.attrs.advancedColumn[key1]">\
               <template v-if="tableConfig.attrs.advancedColumn[key1].type == \'input\'">\
               <div class="input-group-sm">\
                 <input type="text" v-model="item[key1]" class="form-control" :name="\'row-\' + key" :value="item1">\
               </div>\
               </template>\
             </td>\
-            <td v-if="tableConfig.attrs.rowhtml[key1]" v-html="item[key1]"></td>\
+            <td v-else-if="tableConfig.attrs.rowhtml && tableConfig.attrs.rowhtml[key1]" v-html="item[key1]"></td>\
             <td v-else>{{item[key1]}}</td>\
           </template>\
           <template v-if="tableConfig.attrs.operation">\
