@@ -126,6 +126,18 @@ Route::group([
                 'title' => 'COMPONENTS CREATE'
             ],
         ]);
+        
+        
+        Route::get('/page/layout/{id?}', [
+            'as' => 'web_page_design',
+            'uses' => 'Web\PageController@layout',
+            'submenus' => [
+                'icon' => 'fa-circle-o',
+                'title' => 'Page Layout'
+            ],
+        ]);
+        
+        
     });
 });
 

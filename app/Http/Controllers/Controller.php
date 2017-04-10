@@ -60,7 +60,15 @@ class Controller extends BaseController
                                 'href' => route('table_create'),
                                 'icon' => 'fa-circle-o',
                                 'title' => 'TABLE CREATE'
+                            ],
+                            [
+                                'href' => route('web_page_design'),
+                                'icon' => 'fa-circle-o',
+                                'title' => 'Page Design'
                             ]
+                            
+                            
+                            
                         ]
                     ],
                     [

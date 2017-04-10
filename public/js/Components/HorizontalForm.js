@@ -181,6 +181,7 @@ define(['Vue','jQuery','Utils'],function(Vue,$,Utils) {
                 var eventPrefix = 'form';
                 var emitEventType = e.target.getAttribute("data-event");
                 var btnKey = e.target.getAttribute("data-key");
+                console.log('emitEventType',emitEventType);
                 if(this.isAutoHanding(emitEventType)){
                     this.autoProcess(emitEventType,e);
                 }else{
