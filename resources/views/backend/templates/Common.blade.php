@@ -19,16 +19,14 @@
 @foreach($row as $col)
             <div class="{{$col['col-class']}}">
 @foreach($col['dcontent'] as $com)
-              <{{$com['ele']}} :data-selector="pageConfig.{{$com['selector']}}"  ></{{$com['ele']}}>
+              <{{$com['ele']}} :data-selector="pageConfig.{{$com['selector']}}"></{{$com['ele']}}>
 @endforeach
             </div><!--/.col (right) -->
 @endforeach
-          </div>   <!-- /.row -->
+          </div><!-- /.row -->
 @endforeach
         </section><!-- /.content -->
 @stop
-
-
 @section('javascript')
 <script>
 require(['initialize'], function(EVue) {
@@ -44,7 +42,6 @@ require(['initialize'], function(EVue) {
         }
         pageConfig = Utils.apiReqData(d);
     }
-
     var vmForm = new EVue({
         'el' : '#formDemo',
         'data' : {

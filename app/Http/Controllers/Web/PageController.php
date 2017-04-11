@@ -10,7 +10,6 @@ class PageController extends Controller
     
     
     public function layout(){
-        
         $layout =<<<EOL
 {
     "content-header": "General Form Elements",
@@ -20,6 +19,10 @@ class PageController extends Controller
             {
                 "col-class": "col-md-3",
                 "dcontent": [
+                    {
+                        "ele": "common-form",
+                        "selector": "config_form"
+                    },
                     {
                         "ele": "common-form",
                         "selector": "layout_form"
@@ -47,7 +50,7 @@ EOL;
         "attrs": {
             "caption": "属性表",
             "RESTful" : true,
-            "ajax" : true,
+            "ajax" : false,
             "uris" : {
                 "query" : {
                     "url" : "/api/attrs",
@@ -75,13 +78,11 @@ EOL;
                 "delete" : true
             },
             "header": {
-                "attr_name" : {
+                "node_type" : {
                     "name": "属性名",
                     "width":"200px"
                 },
-                "attr_name_cn" : "显示名称",
-                "attr_type" : "数据类型",
-                "form_type" : "渲染类型"
+                "selector" : "显示名称"
             }
         },
         "data": {
@@ -90,6 +91,44 @@ EOL;
             "last_page": 1,
             "per_page": 10,
             "list" : []
+        }
+    },
+    "config_form": {
+        "attrs": {
+            "caption" : "配置管理",
+            "formColor" : "box-info",
+            "buttons": [{
+                "name" : "Add Node",
+                "class" : "btn-info",
+                "event" : "addnode"
+            }],
+            "action" : {
+                "uri" : "/api/attr",
+                "method" : "POST",
+                "success" : {
+                    "redirect" : "/attrs"
+                }
+            }
+        },
+        "fields": {
+            "content-header": {
+                "name": "标题",
+                "type": "input",
+                "attrs": {
+                    "type": "text",
+                    "placeholder": "标题"
+                },
+                "value": ""
+            },
+            "content-header-smell": {
+                "name": "小标题",
+                "type": "input",
+                "attrs": {
+                    "type": "text",
+                    "placeholder": "小标题"
+                },
+                "value": ""
+            }
         }
     },
     "layout_form": {
@@ -110,7 +149,7 @@ EOL;
             }
         },
         "fields": {
-            "ele": {
+            "node_type": {
                 "name": "节点类别",
                 "type": "select",
                 "value": "horizontal-form",
